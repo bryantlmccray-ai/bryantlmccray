@@ -59,8 +59,13 @@ export default {
         },
       },
       fontFamily: {
-        serif: ['var(--font-serif)'],
-        sans: ['var(--font-sans)'],
+        serif: ["var(--font-serif)"],
+        sans: ["var(--font-sans)"],
+      },
+      fontSize: {
+        "display": ["clamp(2.5rem, 8vw, 5rem)", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
+        "headline": ["clamp(1.75rem, 4vw, 2.5rem)", { lineHeight: "1.2", letterSpacing: "-0.02em" }],
+        "subhead": ["clamp(1.125rem, 2vw, 1.375rem)", { lineHeight: "1.4" }],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -68,9 +73,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
+        subtle: "var(--shadow-subtle)",
         soft: "var(--shadow-soft)",
-        card: "var(--shadow-card)",
-        accent: "var(--shadow-accent)",
       },
       keyframes: {
         "accordion-down": {
