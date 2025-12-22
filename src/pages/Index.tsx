@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import heroAnimation from "@/assets/hero-animation.mp4";
+import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 
 const featuredWork = [
   {
@@ -153,7 +154,7 @@ const Index = () => {
               className="aspect-video relative group cursor-pointer overflow-hidden border border-border"
             >
               <img 
-                src="https://img.youtube.com/vi/popbs1y_L9A/maxresdefault.jpg" 
+                src={pressReelThumbnail} 
                 alt="Press Reel Thumbnail"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
