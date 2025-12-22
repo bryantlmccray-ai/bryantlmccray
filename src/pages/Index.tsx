@@ -29,10 +29,10 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-24 md:pt-40 md:pb-32">
+      <section className="pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
         <div className="editorial-container">
-          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12">
-            <div className="flex-1 max-w-2xl">
+          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-0">
+            <div className="flex-1 max-w-2xl z-10">
               <h1 className="font-serif text-display text-foreground mb-6 opacity-start animate-fade-up">
                 Bryant McCray
               </h1>
@@ -48,13 +48,13 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="w-full md:w-80 lg:w-96 opacity-start animate-fade-in animation-delay-200">
+            <div className="w-full md:w-[500px] lg:w-[600px] md:-mr-24 lg:-mr-32 opacity-start animate-fade-in animation-delay-200">
               <video 
                 autoPlay 
                 loop 
                 muted 
                 playsInline
-                className="w-full h-auto rounded-sm"
+                className="w-full h-auto"
               >
                 <source src={heroAnimation} type="video/mp4" />
               </video>
