@@ -13,10 +13,10 @@ const featuredWork = [
     link: "https://www.youtube.com/watch?v=Y0PQ2o0cTZw&t=46s",
   },
   {
-    title: "The Cost of Care",
+    title: "Healing in the Stacks",
     category: "Community",
-    description: "Inside the lives of family caregivers navigating an impossible system.",
-    link: null,
+    description: "After a shooting at a Shaker Heights library, a community finds its way back together.",
+    link: "https://www.youtube.com/watch?v=ervpUsDZP1k&t=43s",
   },
   {
     title: "After the Headlines",
