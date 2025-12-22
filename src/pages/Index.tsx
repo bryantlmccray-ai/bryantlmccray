@@ -38,7 +38,7 @@ const Index = () => {
               </h1>
               
               <p className="text-subhead text-muted-foreground mb-8 opacity-start animate-fade-up animation-delay-100">
-                Journalist. Storyteller. Observer of what actually matters.
+                Journalist. Storyteller. Communication Strategist.
               </p>
               
               <div className="accent-line mb-8 opacity-start animate-fade-in animation-delay-200" />
