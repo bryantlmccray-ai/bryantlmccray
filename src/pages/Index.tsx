@@ -51,7 +51,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="w-full md:w-[500px] lg:w-[600px] md:-mr-24 lg:-mr-32 opacity-start animate-fade-in animation-delay-200">
+            <div className="w-full md:w-[600px] lg:w-[750px] md:-mr-32 lg:-mr-48 opacity-start animate-fade-in animation-delay-200">
               <video 
                 autoPlay 
                 loop 
