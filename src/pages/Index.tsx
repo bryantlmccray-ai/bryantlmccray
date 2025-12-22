@@ -47,7 +47,7 @@ const Index = () => {
               <div className="accent-line mb-8 opacity-start animate-fade-in animation-delay-200" />
               
               <p className="text-lg text-foreground/80 leading-relaxed max-w-xl opacity-start animate-fade-up animation-delay-300">
-                Emmy-nominated reporter covering culture, community, and consequence.
+                Emmy-nominated reporter covering culture, community, and local change.
               </p>
             </div>
             
