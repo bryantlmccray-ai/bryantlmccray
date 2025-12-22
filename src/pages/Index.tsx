@@ -19,10 +19,10 @@ const featuredWork = [
     link: "https://www.youtube.com/watch?v=ervpUsDZP1k&t=43s",
   },
   {
-    title: "After the Headlines",
-    category: "Breaking News",
-    description: "What happens to communities when the cameras leave.",
-    link: null,
+    title: "12 Years to Justice",
+    category: "Investigation",
+    description: "A nurse murdered in broad daylight—and 12 years later, her own divorce attorney is charged with the crime.",
+    link: "https://www.youtube.com/watch?v=oXRPe8KKv8c",
   },
 ];
 
