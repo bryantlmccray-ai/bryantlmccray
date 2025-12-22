@@ -140,17 +140,29 @@ const Index = () => {
                 enterprise reporting, and community-driven storytelling.
               </p>
               <Button variant="editorial" size="sm" asChild>
-                <Link to="/work" className="flex items-center gap-2">
+                <a href="https://www.youtube.com/watch?v=popbs1y_L9A" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                   Watch Reel <ArrowRight className="h-4 w-4" />
-                </Link>
+                </a>
               </Button>
             </div>
             
-            <div className="aspect-video bg-foreground/5 border border-border flex items-center justify-center group cursor-pointer hover:bg-foreground/10 transition-colors duration-300">
-              <div className="w-16 h-16 rounded-full border border-foreground/20 flex items-center justify-center group-hover:border-accent group-hover:text-accent transition-colors duration-300">
-                <Play className="h-6 w-6 ml-1" />
+            <a 
+              href="https://www.youtube.com/watch?v=popbs1y_L9A" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="aspect-video relative group cursor-pointer overflow-hidden border border-border"
+            >
+              <img 
+                src="https://img.youtube.com/vi/popbs1y_L9A/maxresdefault.jpg" 
+                alt="Press Reel Thumbnail"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center group-hover:bg-background transition-colors duration-300">
+                  <Play className="h-6 w-6 ml-1 text-foreground" />
+                </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </section>
