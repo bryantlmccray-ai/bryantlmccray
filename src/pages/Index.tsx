@@ -7,19 +7,22 @@ import heroAnimation from "@/assets/hero-animation.mp4";
 
 const featuredWork = [
   {
-    title: "When the Water Rose",
-    category: "Enterprise Reporting",
-    description: "A look at how one neighborhood responded to historic flooding, and what recovery really requires.",
+    title: "A Shared Purpose",
+    category: "Community",
+    description: "A pastor and his wife, both activists, share not just a birthday but a lifelong mission for change.",
+    link: "https://www.youtube.com/watch?v=Y0PQ2o0cTZw&t=46s",
   },
   {
     title: "The Cost of Care",
     category: "Community",
     description: "Inside the lives of family caregivers navigating an impossible system.",
+    link: null,
   },
   {
     title: "After the Headlines",
     category: "Breaking News",
     description: "What happens to communities when the cameras leave.",
+    link: null,
   },
 ];
 
@@ -78,11 +81,8 @@ const Index = () => {
           </div>
 
           <div className="space-y-8">
-            {featuredWork.map((item, index) => (
-              <article 
-                key={index}
-                className="group py-8 border-b border-border last:border-b-0 cursor-pointer"
-              >
+            {featuredWork.map((item, index) => {
+              const content = (
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                   <div className="flex-1">
                     <p className="text-xs text-accent tracking-widest uppercase mb-2">
@@ -99,8 +99,27 @@ const Index = () => {
                     <Play className="h-5 w-5" />
                   </div>
                 </div>
-              </article>
-            ))}
+              );
+
+              return item.link ? (
+                <a
+                  key={index}
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block group py-8 border-b border-border last:border-b-0 cursor-pointer"
+                >
+                  {content}
+                </a>
+              ) : (
+                <article 
+                  key={index}
+                  className="group py-8 border-b border-border last:border-b-0 cursor-pointer"
+                >
+                  {content}
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
