@@ -3,6 +3,7 @@ import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import heroAnimation from "@/assets/hero-animation.mp4";
 
 const featuredWork = [
   {
@@ -30,20 +31,34 @@ const Index = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-24 md:pt-40 md:pb-32">
         <div className="editorial-container">
-          <div className="max-w-3xl">
-            <h1 className="font-serif text-display text-foreground mb-6 opacity-start animate-fade-up">
-              Bryant McCray
-            </h1>
+          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12">
+            <div className="flex-1 max-w-2xl">
+              <h1 className="font-serif text-display text-foreground mb-6 opacity-start animate-fade-up">
+                Bryant McCray
+              </h1>
+              
+              <p className="text-subhead text-muted-foreground mb-8 opacity-start animate-fade-up animation-delay-100">
+                Journalist. Storyteller. Observer of what actually matters.
+              </p>
+              
+              <div className="accent-line mb-8 opacity-start animate-fade-in animation-delay-200" />
+              
+              <p className="text-lg text-foreground/80 leading-relaxed max-w-xl opacity-start animate-fade-up animation-delay-300">
+                Emmy-nominated reporter covering culture, community, and consequence.
+              </p>
+            </div>
             
-            <p className="text-subhead text-muted-foreground mb-8 opacity-start animate-fade-up animation-delay-100">
-              Journalist. Storyteller. Observer of what actually matters.
-            </p>
-            
-            <div className="accent-line mb-8 opacity-start animate-fade-in animation-delay-200" />
-            
-            <p className="text-lg text-foreground/80 leading-relaxed max-w-xl opacity-start animate-fade-up animation-delay-300">
-              Emmy-nominated reporter covering culture, community, and consequence.
-            </p>
+            <div className="w-full md:w-80 lg:w-96 opacity-start animate-fade-in animation-delay-200">
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className="w-full h-auto rounded-sm"
+              >
+                <source src={heroAnimation} type="video/mp4" />
+              </video>
+            </div>
           </div>
         </div>
       </section>
