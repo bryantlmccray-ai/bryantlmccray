@@ -1,8 +1,22 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+
+import galleryEmmy from "@/assets/gallery-emmy.jpeg";
+import galleryInterview1 from "@/assets/gallery-interview-1.jpeg";
+import galleryInterview2 from "@/assets/gallery-interview-2.jpeg";
+import galleryHosting from "@/assets/gallery-hosting.jpeg";
+
+const galleryImages = [
+  { src: galleryEmmy, alt: "At the Chicago/Midwest Emmy Awards" },
+  { src: galleryInterview1, alt: "Studio interview session" },
+  { src: galleryInterview2, alt: "On-stage interview at theater" },
+  { src: galleryHosting, alt: "Hosting an event" },
+];
 
 const experience = [
   {
@@ -50,6 +64,8 @@ const affiliations = [
 ];
 
 const Experience = () => {
+  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+
   return (
     <PageTransition>
       <main className="min-h-screen bg-background">
@@ -70,13 +86,58 @@ const Experience = () => {
             </FadeIn>
             
             <FadeIn delay={0.2}>
-              <p className="text-muted-foreground max-w-xl leading-relaxed">
+              <p className="text-muted-foreground max-w-xl leading-relaxed mb-10">
                 Emmy-nominated reporter with experience across broadcast and digital platforms. 
                 Skilled in on-air delivery, enterprise reporting, and audience-centered storytelling.
               </p>
             </FadeIn>
+
+            {/* Mini Gallery */}
+            <FadeIn delay={0.3}>
+              <div className="flex gap-3 md:gap-4">
+                {galleryImages.map((image, index) => (
+                  <motion.div
+                    key={index}
+                    className="relative w-20 h-20 md:w-24 md:h-24 overflow-hidden rounded-sm cursor-pointer"
+                    whileHover={{ scale: 1.15, zIndex: 10 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    onClick={() => setSelectedImage(image)}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover"
+                    />
+                    <motion.div 
+                      className="absolute inset-0 bg-background/20"
+                      whileHover={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </FadeIn>
           </div>
         </section>
+
+        {/* Lightbox Dialog */}
+        <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+          <DialogContent className="max-w-4xl p-2 bg-background/95 backdrop-blur-sm border-border">
+            <AnimatePresence>
+              {selectedImage && (
+                <motion.img
+                  src={selectedImage.src}
+                  alt={selectedImage.alt}
+                  className="w-full h-auto max-h-[80vh] object-contain rounded-sm"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                />
+              )}
+            </AnimatePresence>
+          </DialogContent>
+        </Dialog>
 
         {/* Experience Timeline */}
         <section className="py-16 border-t border-border">
