@@ -18,8 +18,8 @@ const experience = [
     description: "Enterprise reporting and live breaking news coverage.",
   },
   {
-    role: "Associate Producer",
-    organization: "Morning News Program",
+    role: "Producer and Broadcast Reporter",
+    organization: "WFRV",
     period: "2016 – 2018",
     description: "Story development, guest coordination, and segment production.",
   },
