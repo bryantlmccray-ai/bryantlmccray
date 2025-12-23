@@ -12,18 +12,21 @@ const featuredWork = [
     category: "Community",
     description: "A pastor and his wife, both activists, share not just a birthday but a lifelong mission for change.",
     link: "https://www.youtube.com/watch?v=Y0PQ2o0cTZw&t=46s",
+    thumbnail: "https://img.youtube.com/vi/Y0PQ2o0cTZw/mqdefault.jpg",
   },
   {
     title: "Healing in the Stacks",
     category: "Community",
     description: "After a shooting at a Shaker Heights library, a community finds its way back together.",
     link: "https://www.youtube.com/watch?v=ervpUsDZP1k&t=43s",
+    thumbnail: "https://img.youtube.com/vi/ervpUsDZP1k/mqdefault.jpg",
   },
   {
     title: "12 Years to Justice",
     category: "Investigation",
     description: "A nurse murdered in broad daylight—and 12 years later, her own divorce attorney is charged with the crime.",
     link: "https://www.youtube.com/watch?v=oXRPe8KKv8c",
+    thumbnail: "https://img.youtube.com/vi/oXRPe8KKv8c/mqdefault.jpg",
   },
 ];
 
@@ -84,20 +87,29 @@ const Index = () => {
           <div className="space-y-8">
             {featuredWork.map((item, index) => {
               const content = (
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                  <div className="flex-1">
-                    <p className="text-xs text-accent tracking-widest uppercase mb-2">
-                      {item.category}
-                    </p>
-                    <h3 className="font-serif text-2xl text-foreground group-hover:text-accent transition-colors duration-300 mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-muted-foreground max-w-lg">
-                      {item.description}
-                    </p>
+                <div className="flex flex-col md:flex-row md:items-start gap-6">
+                  <div className="w-full md:w-40 lg:w-48 flex-shrink-0 overflow-hidden">
+                    <img 
+                      src={item.thumbnail} 
+                      alt={item.title}
+                      className="w-full aspect-video object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
                   </div>
-                  <div className="flex items-center text-muted-foreground group-hover:text-accent transition-colors duration-300">
-                    <Play className="h-5 w-5" />
+                  <div className="flex-1 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                    <div className="flex-1">
+                      <p className="text-xs text-accent tracking-widest uppercase mb-2">
+                        {item.category}
+                      </p>
+                      <h3 className="font-serif text-2xl text-foreground group-hover:text-accent transition-colors duration-300 mb-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-muted-foreground max-w-lg">
+                        {item.description}
+                      </p>
+                    </div>
+                    <div className="flex items-center text-muted-foreground group-hover:text-accent transition-colors duration-300">
+                      <Play className="h-5 w-5" />
+                    </div>
                   </div>
                 </div>
               );
