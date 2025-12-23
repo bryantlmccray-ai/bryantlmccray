@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, AlertCircle, Plane } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
@@ -9,6 +9,21 @@ import { FadeIn, StaggerContainer, StaggerItem, HoverLift } from "@/components/S
 import heroAnimation from "@/assets/hero-animation.mp4";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
+
+const breakingNews = [
+  {
+    title: "Shots Fired in Wooster",
+    description: "Breaking coverage of an officer-involved shooting that shook a quiet Ohio community.",
+    link: "https://youtu.be/MHjfBwxI8OM?si=2Qi_JRnPl30TK_5q",
+    icon: AlertCircle,
+  },
+  {
+    title: "Tragedy in the Skies",
+    description: "A fatal plane crash in Tuscarawas County leaves investigators searching for answers.",
+    link: "https://youtu.be/o4EkSIXOqlI?si=LRyI_iXu3RUDw4a9",
+    icon: Plane,
+  },
+];
 
 const featuredWork = [
   {
@@ -174,6 +189,68 @@ const Index = () => {
                         {content}
                       </article>
                     )}
+                  </StaggerItem>
+                );
+              })}
+            </StaggerContainer>
+          </div>
+        </section>
+
+        {/* Breaking News Section */}
+        <section className="py-20 border-t border-border bg-foreground/[0.02]">
+          <div className="editorial-container">
+            <FadeIn>
+              <div className="mb-12">
+                <p className="text-xs text-red-500 tracking-widest uppercase mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                  Breaking News
+                </p>
+                <h2 className="font-serif text-headline text-foreground">
+                  When It Happens
+                </h2>
+                <p className="text-muted-foreground mt-4 max-w-xl">
+                  Live field reporting from critical moments—bringing clarity to chaos when communities need it most.
+                </p>
+              </div>
+            </FadeIn>
+
+            <StaggerContainer className="grid md:grid-cols-2 gap-8">
+              {breakingNews.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <StaggerItem key={index}>
+                    <motion.a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group block p-8 border border-border bg-background hover:border-accent/50 transition-colors duration-300"
+                      whileHover={{ y: -5, scale: 1.02 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <div className="flex items-start gap-4">
+                        <motion.div 
+                          className="w-12 h-12 flex items-center justify-center bg-accent/10 text-accent rounded-sm flex-shrink-0"
+                          whileHover={{ rotate: 10, scale: 1.1 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <Icon className="h-6 w-6" />
+                        </motion.div>
+                        <div className="flex-1">
+                          <h3 className="font-serif text-xl text-foreground group-hover:text-accent transition-colors duration-300 mb-2">
+                            {item.title}
+                          </h3>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            {item.description}
+                          </p>
+                        </div>
+                        <motion.div
+                          className="text-muted-foreground group-hover:text-accent transition-colors duration-300"
+                          whileHover={{ scale: 1.2 }}
+                        >
+                          <Play className="h-5 w-5" />
+                        </motion.div>
+                      </div>
+                    </motion.a>
                   </StaggerItem>
                 );
               })}
