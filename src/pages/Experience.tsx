@@ -9,12 +9,12 @@ const experience = [
     role: "Broadcast Reporter",
     organization: "CBS 58",
     period: "2022 – 2024",
-    description: "Enterprise reporting, live breaking news coverage, and daily anchor segments.",
+    description: "Enterprise reporting and live breaking news coverage.",
   },
   {
     role: "Multimedia Journalist",
-    organization: "Local ABC Affiliate",
-    period: "2018 – 2021",
+    organization: "WKYC",
+    period: "2024 – 2025",
     description: "Solo video journalist covering community stories and regional events.",
   },
   {
