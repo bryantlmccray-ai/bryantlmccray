@@ -84,21 +84,17 @@ const Index = () => {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                className="w-full md:w-[600px] lg:w-[750px] md:-mr-32 lg:-mr-48 overflow-hidden relative"
+                className="w-full md:w-[600px] lg:w-[750px] md:-mr-32 lg:-mr-48"
               >
-                <div className="relative w-full" style={{ paddingBottom: '45%' }}>
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline
-                    className="absolute top-0 left-0 w-full scale-125 origin-top"
-                  >
-                    <source src={heroAnimation} type="video/mp4" />
-                  </video>
-                </div>
-                {/* Gradient blur overlay to hide watermark */}
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-background via-background/80 to-transparent" />
+                <video 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full"
+                >
+                  <source src={heroAnimation} type="video/mp4" />
+                </video>
               </motion.div>
             </div>
           </div>
