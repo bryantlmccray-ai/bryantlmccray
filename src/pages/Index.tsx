@@ -249,7 +249,7 @@ const Index = () => {
               className="inline-block"
             >
               <Button variant="editorial" size="sm" asChild>
-                <a href="mailto:hello@bryantmccray.com">
+                <a href="mailto:Bryant.l.mccray@gmail.com">
                   Get in Touch
                 </a>
               </Button>

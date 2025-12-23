@@ -10,7 +10,7 @@ const Footer = () => {
             For inquiries, collaborations, or editorial work.
           </p>
           <Button variant="editorial" size="sm" asChild>
-            <a href="mailto:hello@bryantmccray.com" className="flex items-center gap-2">
+            <a href="mailto:Bryant.l.mccray@gmail.com" className="flex items-center gap-2">
               <Mail className="h-4 w-4" />
               Get in Touch
             </a>
