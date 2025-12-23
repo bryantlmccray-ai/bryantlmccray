@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn } from "@/components/ScrollAnimations";
+import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 
 const categories = [
   "All",
@@ -21,7 +22,7 @@ const workItems = [
     category: "Investigation",
     description: "A nurse murdered in broad daylight—and 12 years later, her own divorce attorney is charged with the crime.",
     year: "2024",
-    thumbnail: "https://img.youtube.com/vi/oXRPe8KKv8c/mqdefault.jpg",
+    thumbnail: justiceThumb,
     link: "https://www.youtube.com/watch?v=oXRPe8KKv8c",
   },
   {
