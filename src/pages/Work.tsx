@@ -44,6 +44,14 @@ const workItems = [
     link: "https://youtu.be/MHjfBwxI8OM",
   },
   {
+    title: "Double Shooting at Apartment Complex",
+    category: "Breaking News",
+    description: "Breaking coverage as a man and woman are shot at a local apartment complex, with police investigating the scene.",
+    year: "2024",
+    thumbnail: "https://img.youtube.com/vi/3knlPCluuCI/mqdefault.jpg",
+    link: "https://youtu.be/3knlPCluuCI",
+  },
+  {
     title: "Tragedy in the Skies",
     category: "Breaking News",
     description: "A fatal plane crash in Tuscarawas County leaves investigators searching for answers.",
