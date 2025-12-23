@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn } from "@/components/ScrollAnimations";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
+import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 
 const categories = [
   "All",
@@ -80,6 +81,14 @@ const workItems = [
     year: "2024",
     thumbnail: "https://img.youtube.com/vi/ss6WG4hkhUw/mqdefault.jpg",
     link: "https://youtu.be/ss6WG4hkhUw",
+  },
+  {
+    title: "On-Air Highlights",
+    category: "On-Air Segments",
+    description: "A collection of on-air segments showcasing breaking news coverage, enterprise reporting, and community-driven storytelling.",
+    year: "2024",
+    thumbnail: pressReelThumbnail,
+    link: "https://www.youtube.com/watch?v=popbs1y_L9A",
   },
 ];
 
