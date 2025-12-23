@@ -1,94 +1,118 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import PageTransition from "@/components/PageTransition";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
+import { motion } from "framer-motion";
 
 const About = () => {
   return (
-    <main className="min-h-screen bg-background">
-      <Navigation />
-      
-      <section className="pt-32 pb-24 md:pt-40 md:pb-32">
-        <div className="editorial-container">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
-            {/* Portrait */}
-            <div className="lg:col-span-5 order-2 lg:order-1">
-              <div className="aspect-[4/5] bg-foreground/5 border border-border">
-                <div className="w-full h-full flex items-center justify-center">
-                  <span className="font-serif text-6xl text-foreground/20">BM</span>
-                </div>
+    <PageTransition>
+      <main className="min-h-screen bg-background">
+        <Navigation />
+        
+        <section className="pt-32 pb-24 md:pt-40 md:pb-32">
+          <div className="editorial-container">
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+              {/* Portrait */}
+              <FadeIn direction="left" className="lg:col-span-5 order-2 lg:order-1">
+                <motion.div 
+                  className="aspect-[4/5] bg-foreground/5 border border-border overflow-hidden"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <div className="w-full h-full flex items-center justify-center">
+                    <span className="font-serif text-6xl text-foreground/20">BM</span>
+                  </div>
+                </motion.div>
+              </FadeIn>
+
+              {/* Content */}
+              <div className="lg:col-span-7 order-1 lg:order-2">
+                <FadeIn>
+                  <p className="text-xs text-accent tracking-widest uppercase mb-4">
+                    About
+                  </p>
+                </FadeIn>
+                
+                <FadeIn delay={0.1}>
+                  <h1 className="font-serif text-headline text-foreground mb-8">
+                    I'm a journalist drawn to the space where people, systems, and moments collide.
+                  </h1>
+                </FadeIn>
+
+                <FadeIn delay={0.2}>
+                  <div className="accent-line mb-10" />
+                </FadeIn>
+
+                <FadeIn delay={0.3}>
+                  <div className="space-y-6 text-foreground/80 leading-relaxed">
+                    <p>
+                      My work centers on clarity over noise and empathy over spectacle. Whether 
+                      covering breaking news or long-form stories, I approach reporting with 
+                      the same goal: to make complex realities understandable without stripping 
+                      them of their humanity.
+                    </p>
+
+                    <p>
+                      I've worked in local and regional newsrooms, covering everything from 
+                      community resilience to cultural shifts shaping how we live. I believe 
+                      good journalism doesn't shout. It listens first.
+                    </p>
+                  </div>
+                </FadeIn>
+
+                {/* Pull Quote */}
+                <FadeIn delay={0.4}>
+                  <blockquote className="mt-12 pt-8 border-t border-border">
+                    <p className="font-serif text-2xl md:text-3xl text-foreground italic leading-relaxed">
+                      "The story isn't just what happened. It's who it happened to."
+                    </p>
+                  </blockquote>
+                </FadeIn>
               </div>
             </div>
-
-            {/* Content */}
-            <div className="lg:col-span-7 order-1 lg:order-2">
-              <p className="text-xs text-accent tracking-widest uppercase mb-4 opacity-start animate-fade-in">
-                About
-              </p>
-              
-              <h1 className="font-serif text-headline text-foreground mb-8 opacity-start animate-fade-up animation-delay-100">
-                I'm a journalist drawn to the space where people, systems, and moments collide.
-              </h1>
-
-              <div className="accent-line mb-10 opacity-start animate-fade-in animation-delay-200" />
-
-              <div className="space-y-6 text-foreground/80 leading-relaxed opacity-start animate-fade-up animation-delay-300">
-                <p>
-                  My work centers on clarity over noise and empathy over spectacle. Whether 
-                  covering breaking news or long-form stories, I approach reporting with 
-                  the same goal: to make complex realities understandable without stripping 
-                  them of their humanity.
-                </p>
-
-                <p>
-                  I've worked in local and regional newsrooms, covering everything from 
-                  community resilience to cultural shifts shaping how we live. I believe 
-                  good journalism doesn't shout. It listens first.
-                </p>
-              </div>
-
-              {/* Pull Quote */}
-              <blockquote className="mt-12 pt-8 border-t border-border opacity-start animate-fade-up animation-delay-400">
-                <p className="font-serif text-2xl md:text-3xl text-foreground italic leading-relaxed">
-                  "The story isn't just what happened. It's who it happened to."
-                </p>
-              </blockquote>
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Values Section */}
-      <section className="py-20 border-t border-border">
-        <div className="editorial-container">
-          <div className="grid md:grid-cols-3 gap-12">
-            {[
-              {
-                title: "Clarity",
-                description: "Making the complex accessible without sacrificing nuance or depth.",
-              },
-              {
-                title: "Empathy",
-                description: "Every story is about people. Treating subjects with dignity shapes better journalism.",
-              },
-              {
-                title: "Patience",
-                description: "The best stories reveal themselves to those willing to listen longer.",
-              },
-            ].map((value, index) => (
-              <div key={index}>
-                <h3 className="font-serif text-xl text-foreground mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {value.description}
-                </p>
-              </div>
-            ))}
+        {/* Values Section */}
+        <section className="py-20 border-t border-border">
+          <div className="editorial-container">
+            <StaggerContainer className="grid md:grid-cols-3 gap-12">
+              {[
+                {
+                  title: "Clarity",
+                  description: "Making the complex accessible without sacrificing nuance or depth.",
+                },
+                {
+                  title: "Empathy",
+                  description: "Every story is about people. Treating subjects with dignity shapes better journalism.",
+                },
+                {
+                  title: "Patience",
+                  description: "The best stories reveal themselves to those willing to listen longer.",
+                },
+              ].map((value, index) => (
+                <StaggerItem key={index}>
+                  <motion.div 
+                    whileHover={{ y: -5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <h3 className="font-serif text-xl text-foreground mb-3">
+                      {value.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {value.description}
+                    </p>
+                  </motion.div>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <Footer />
-    </main>
+        <Footer />
+      </main>
+    </PageTransition>
   );
 };
 
