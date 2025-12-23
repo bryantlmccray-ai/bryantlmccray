@@ -32,40 +32,28 @@ const workItems = [
     link: "https://youtu.be/o4EkSIXOqlI",
   },
   {
-    title: "When the Water Rose",
+    title: "The TikTok Question",
     category: "Enterprise Reporting",
-    description: "A look at how one neighborhood responded to historic flooding, and what recovery really requires.",
+    description: "As a potential ban looms, exploring what's at stake for creators, businesses, and national security.",
     year: "2024",
+    thumbnail: "https://img.youtube.com/vi/kyz0-Brc8GI/mqdefault.jpg",
+    link: "https://youtu.be/kyz0-Brc8GI",
   },
   {
-    title: "The Cost of Care",
+    title: "Home for the Holidays",
     category: "Culture & Community",
-    description: "Inside the lives of family caregivers navigating an impossible system.",
-    year: "2024",
-  },
-  {
-    title: "Election Night Coverage",
-    category: "On-Air Segments",
-    description: "Live reporting from polling locations across the region.",
-    year: "2024",
-  },
-  {
-    title: "The Vanishing Middle",
-    category: "Enterprise Reporting",
-    description: "How rising costs are reshaping neighborhood demographics.",
+    description: "A heartwarming look at what it means to come home—and the people who make it possible.",
     year: "2023",
+    thumbnail: "https://img.youtube.com/vi/ADHN2dIr-ZA/mqdefault.jpg",
+    link: "https://youtu.be/ADHN2dIr-ZA",
   },
   {
-    title: "First Responders",
+    title: "After the Storm",
     category: "Culture & Community",
-    description: "Profiles of the people who show up when others need help most.",
-    year: "2023",
-  },
-  {
-    title: "Morning Briefing",
-    category: "On-Air Segments",
-    description: "Daily news anchor segments covering regional and national stories.",
-    year: "2023",
+    description: "How one community rallied together to help Hurricane Helene victims rebuild their lives.",
+    year: "2024",
+    thumbnail: "https://img.youtube.com/vi/ss6WG4hkhUw/mqdefault.jpg",
+    link: "https://youtu.be/ss6WG4hkhUw",
   },
 ];
 
@@ -146,94 +134,70 @@ const Work = () => {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {filteredWork.map((item, index) => {
-                    const content = (
-                      <div className="grid md:grid-cols-12 gap-6 items-start">
-                        {/* Thumbnail */}
-                        <div className="md:col-span-4">
-                          <motion.div 
-                            className="aspect-video bg-foreground/5 border border-border flex items-center justify-center group-hover:bg-foreground/10 transition-colors duration-300 overflow-hidden relative"
-                            whileHover={{ scale: 1.02 }}
-                          >
-                            {item.thumbnail ? (
-                              <>
-                                <img 
-                                  src={item.thumbnail} 
-                                  alt={item.title}
-                                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                />
-                                <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300 flex items-center justify-center">
-                                  <motion.div 
-                                    className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center"
-                                    whileHover={{ scale: 1.1 }}
-                                  >
-                                    <Play className="h-5 w-5 ml-0.5 text-foreground" />
-                                  </motion.div>
-                                </div>
-                              </>
-                            ) : (
-                              <motion.div
-                                whileHover={{ scale: 1.2, rotate: 15 }}
-                                transition={{ duration: 0.2 }}
-                              >
-                                <Play className="h-8 w-8 text-foreground/30 group-hover:text-accent transition-colors duration-300" />
-                              </motion.div>
-                            )}
-                          </motion.div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="md:col-span-8">
-                          <div className="flex items-start justify-between gap-4">
-                            <div>
-                              <div className="flex items-center gap-4 mb-2">
-                                <p className="text-xs text-accent tracking-widest uppercase">
-                                  {item.category}
-                                </p>
-                                <span className="text-xs text-muted-foreground">
-                                  {item.year}
-                                </span>
+                  {filteredWork.map((item, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                    >
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group block py-10 border-b border-border cursor-pointer"
+                      >
+                        <motion.div 
+                          className="grid md:grid-cols-12 gap-6 items-start"
+                          whileHover={{ x: 10 }}
+                        >
+                          {/* Thumbnail */}
+                          <div className="md:col-span-4">
+                            <motion.div 
+                              className="aspect-video border border-border overflow-hidden relative"
+                              whileHover={{ scale: 1.02 }}
+                            >
+                              <img 
+                                src={item.thumbnail} 
+                                alt={item.title}
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300 flex items-center justify-center">
+                                <motion.div 
+                                  className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center"
+                                  whileHover={{ scale: 1.1 }}
+                                >
+                                  <Play className="h-5 w-5 ml-0.5 text-foreground" />
+                                </motion.div>
                               </div>
-                              <h2 className="font-serif text-2xl text-foreground group-hover:text-accent transition-colors duration-300 mb-3">
-                                {item.title}
-                              </h2>
-                              <p className="text-muted-foreground max-w-lg">
-                                {item.description}
-                              </p>
+                            </motion.div>
+                          </div>
+
+                          {/* Content */}
+                          <div className="md:col-span-8">
+                            <div className="flex items-start justify-between gap-4">
+                              <div>
+                                <div className="flex items-center gap-4 mb-2">
+                                  <p className="text-xs text-accent tracking-widest uppercase">
+                                    {item.category}
+                                  </p>
+                                  <span className="text-xs text-muted-foreground">
+                                    {item.year}
+                                  </span>
+                                </div>
+                                <h2 className="font-serif text-2xl text-foreground group-hover:text-accent transition-colors duration-300 mb-3">
+                                  {item.title}
+                                </h2>
+                                <p className="text-muted-foreground max-w-lg">
+                                  {item.description}
+                                </p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    );
-
-                    return (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: index * 0.1 }}
-                      >
-                        {item.link ? (
-                          <a
-                            href={item.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group block py-10 border-b border-border cursor-pointer"
-                          >
-                            <motion.div whileHover={{ x: 10 }}>
-                              {content}
-                            </motion.div>
-                          </a>
-                        ) : (
-                          <article className="group py-10 border-b border-border cursor-pointer">
-                            <motion.div whileHover={{ x: 10 }}>
-                              {content}
-                            </motion.div>
-                          </article>
-                        )}
-                      </motion.div>
-                    );
-                  })}
+                        </motion.div>
+                      </a>
+                    </motion.div>
+                  ))}
                 </motion.div>
               </AnimatePresence>
             </div>
