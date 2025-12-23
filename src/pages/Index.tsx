@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import heroAnimation from "@/assets/hero-animation.mp4";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
+import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 
 const featuredWork = [
   {
@@ -26,7 +27,7 @@ const featuredWork = [
     category: "Investigation",
     description: "A nurse murdered in broad daylight—and 12 years later, her own divorce attorney is charged with the crime.",
     link: "https://www.youtube.com/watch?v=oXRPe8KKv8c",
-    thumbnail: "https://img.youtube.com/vi/oXRPe8KKv8c/mqdefault.jpg",
+    thumbnail: justiceThumb,
   },
 ];
 
