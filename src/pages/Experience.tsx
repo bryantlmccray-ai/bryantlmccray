@@ -59,8 +59,7 @@ const awards = [
 
 const affiliations = [
   "National Association of Black Journalists",
-  "Society of Professional Journalists",
-  "Investigative Reporters and Editors",
+  "Milwaukee Press Club",
 ];
 
 const Experience = () => {
