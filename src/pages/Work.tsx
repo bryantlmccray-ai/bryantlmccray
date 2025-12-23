@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import { FadeIn } from "@/components/ScrollAnimations";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
+import hazardousRoadsThumb from "@/assets/hazardous-roads-thumbnail.jpg";
 
 const categories = [
   "All",
@@ -81,6 +82,14 @@ const workItems = [
     year: "2024",
     thumbnail: "https://img.youtube.com/vi/ss6WG4hkhUw/mqdefault.jpg",
     link: "https://youtu.be/ss6WG4hkhUw",
+  },
+  {
+    title: "Whiteout in Northeast Ohio",
+    category: "Culture & Community",
+    description: "Live coverage as a winter storm blankets the region, bringing hazardous roads and community resilience.",
+    year: "2024",
+    thumbnail: hazardousRoadsThumb,
+    link: "https://youtu.be/W_MycGns4b4",
   },
   {
     title: "On-Air Highlights",
