@@ -16,6 +16,22 @@ const categories = [
 
 const workItems = [
   {
+    title: "Shots Fired in Wooster",
+    category: "Breaking News",
+    description: "Breaking coverage of an officer-involved shooting that shook a quiet Ohio community.",
+    year: "2024",
+    thumbnail: "https://img.youtube.com/vi/MHjfBwxI8OM/mqdefault.jpg",
+    link: "https://youtu.be/MHjfBwxI8OM",
+  },
+  {
+    title: "Tragedy in the Skies",
+    category: "Breaking News",
+    description: "A fatal plane crash in Tuscarawas County leaves investigators searching for answers.",
+    year: "2024",
+    thumbnail: "https://img.youtube.com/vi/o4EkSIXOqlI/mqdefault.jpg",
+    link: "https://youtu.be/o4EkSIXOqlI",
+  },
+  {
     title: "When the Water Rose",
     category: "Enterprise Reporting",
     description: "A look at how one neighborhood responded to historic flooding, and what recovery really requires.",
@@ -25,12 +41,6 @@ const workItems = [
     title: "The Cost of Care",
     category: "Culture & Community",
     description: "Inside the lives of family caregivers navigating an impossible system.",
-    year: "2024",
-  },
-  {
-    title: "After the Headlines",
-    category: "Breaking News",
-    description: "What happens to communities when the cameras leave.",
     year: "2024",
   },
   {
@@ -55,12 +65,6 @@ const workItems = [
     title: "Morning Briefing",
     category: "On-Air Segments",
     description: "Daily news anchor segments covering regional and national stories.",
-    year: "2023",
-  },
-  {
-    title: "Storm Coverage",
-    category: "Breaking News",
-    description: "Live field reporting during severe weather events.",
     year: "2023",
   },
 ];
@@ -142,28 +146,39 @@ const Work = () => {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {filteredWork.map((item, index) => (
-                    <motion.article 
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: index * 0.1 }}
-                      className="group py-10 border-b border-border cursor-pointer"
-                      whileHover={{ x: 10 }}
-                    >
+                  {filteredWork.map((item, index) => {
+                    const content = (
                       <div className="grid md:grid-cols-12 gap-6 items-start">
                         {/* Thumbnail */}
                         <div className="md:col-span-4">
                           <motion.div 
-                            className="aspect-video bg-foreground/5 border border-border flex items-center justify-center group-hover:bg-foreground/10 transition-colors duration-300 overflow-hidden"
+                            className="aspect-video bg-foreground/5 border border-border flex items-center justify-center group-hover:bg-foreground/10 transition-colors duration-300 overflow-hidden relative"
                             whileHover={{ scale: 1.02 }}
                           >
-                            <motion.div
-                              whileHover={{ scale: 1.2, rotate: 15 }}
-                              transition={{ duration: 0.2 }}
-                            >
-                              <Play className="h-8 w-8 text-foreground/30 group-hover:text-accent transition-colors duration-300" />
-                            </motion.div>
+                            {item.thumbnail ? (
+                              <>
+                                <img 
+                                  src={item.thumbnail} 
+                                  alt={item.title}
+                                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300 flex items-center justify-center">
+                                  <motion.div 
+                                    className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center"
+                                    whileHover={{ scale: 1.1 }}
+                                  >
+                                    <Play className="h-5 w-5 ml-0.5 text-foreground" />
+                                  </motion.div>
+                                </div>
+                              </>
+                            ) : (
+                              <motion.div
+                                whileHover={{ scale: 1.2, rotate: 15 }}
+                                transition={{ duration: 0.2 }}
+                              >
+                                <Play className="h-8 w-8 text-foreground/30 group-hover:text-accent transition-colors duration-300" />
+                              </motion.div>
+                            )}
                           </motion.div>
                         </div>
 
@@ -189,8 +204,36 @@ const Work = () => {
                           </div>
                         </div>
                       </div>
-                    </motion.article>
-                  ))}
+                    );
+
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                      >
+                        {item.link ? (
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group block py-10 border-b border-border cursor-pointer"
+                          >
+                            <motion.div whileHover={{ x: 10 }}>
+                              {content}
+                            </motion.div>
+                          </a>
+                        ) : (
+                          <article className="group py-10 border-b border-border cursor-pointer">
+                            <motion.div whileHover={{ x: 10 }}>
+                              {content}
+                            </motion.div>
+                          </article>
+                        )}
+                      </motion.div>
+                    );
+                  })}
                 </motion.div>
               </AnimatePresence>
             </div>
