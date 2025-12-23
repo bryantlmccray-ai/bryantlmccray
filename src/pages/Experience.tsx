@@ -28,13 +28,13 @@ const experience = [
 const awards = [
   {
     title: "Emmy Nomination",
-    category: "Outstanding Enterprise Reporting",
-    year: "2024",
+    category: "Eye on AI: Deepfake Technology",
+    year: "2023",
   },
   {
-    title: "Regional Press Award",
-    category: "Best Breaking News Coverage",
-    year: "2023",
+    title: "Nomination Newcomer of the Year",
+    category: "Greater Cleveland Association of Black Journalists (GCABJ)",
+    year: "2024",
   },
   {
     title: "Journalism Excellence Award",
