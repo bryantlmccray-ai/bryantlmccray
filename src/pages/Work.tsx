@@ -9,12 +9,21 @@ import { FadeIn } from "@/components/ScrollAnimations";
 const categories = [
   "All",
   "Breaking News",
+  "Investigation",
   "Enterprise Reporting",
   "Culture & Community",
   "On-Air Segments",
 ];
 
 const workItems = [
+  {
+    title: "12 Years to Justice",
+    category: "Investigation",
+    description: "A nurse murdered in broad daylight—and 12 years later, her own divorce attorney is charged with the crime.",
+    year: "2024",
+    thumbnail: "https://img.youtube.com/vi/oXRPe8KKv8c/mqdefault.jpg",
+    link: "https://www.youtube.com/watch?v=oXRPe8KKv8c",
+  },
   {
     title: "Shots Fired in Wooster",
     category: "Breaking News",
@@ -38,6 +47,22 @@ const workItems = [
     year: "2024",
     thumbnail: "https://img.youtube.com/vi/kyz0-Brc8GI/mqdefault.jpg",
     link: "https://youtu.be/kyz0-Brc8GI",
+  },
+  {
+    title: "A Shared Purpose",
+    category: "Culture & Community",
+    description: "A pastor and his wife, both activists, share not just a birthday but a lifelong mission for change.",
+    year: "2024",
+    thumbnail: "https://img.youtube.com/vi/Y0PQ2o0cTZw/mqdefault.jpg",
+    link: "https://www.youtube.com/watch?v=Y0PQ2o0cTZw",
+  },
+  {
+    title: "Healing in the Stacks",
+    category: "Culture & Community",
+    description: "After a shooting at a Shaker Heights library, a community finds its way back together.",
+    year: "2024",
+    thumbnail: "https://img.youtube.com/vi/ervpUsDZP1k/mqdefault.jpg",
+    link: "https://www.youtube.com/watch?v=ervpUsDZP1k",
   },
   {
     title: "Home for the Holidays",
