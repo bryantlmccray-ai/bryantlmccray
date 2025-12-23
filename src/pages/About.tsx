@@ -70,7 +70,7 @@ const About = () => {
                 
                 <FadeIn delay={0.1}>
                   <h1 className="font-serif text-headline text-foreground mb-8">
-                    I'm a journalist drawn to the space where people, systems, and moments collide.
+                    I believe in clarity, not noise. In listening, not performing. In telling the truth as cleanly as possible.
                   </h1>
                 </FadeIn>
 
@@ -81,27 +81,26 @@ const About = () => {
                 <FadeIn delay={0.3}>
                   <div className="space-y-6 text-foreground/80 leading-relaxed">
                     <p>
-                      My work centers on clarity over noise and empathy over spectacle. Whether 
-                      covering breaking news or long-form stories, I approach reporting with 
-                      the same goal: to make complex realities understandable without stripping 
-                      them of their humanity.
+                      The truth is, I grew up in Chicago, and that shaped how I see the world 
+                      and how I report. It's a city that teaches you quickly what matters and 
+                      what doesn't. People don't want to be impressed. They want to be understood. 
+                      If you waste their time or talk around the point, they notice.
+                    </p>
+
+                    <p>
+                      I grew up watching how stories play out on real blocks, not abstract ideas. 
+                      That's why I try to report the same way. When I'm covering breaking news or 
+                      spending time on a longer story, my job is to explain what's happening without 
+                      stripping away the people inside it.
                     </p>
 
                     <p>
                       I've worked in local and regional newsrooms, covering everything from 
-                      community resilience to cultural shifts shaping how we live. I believe 
-                      good journalism doesn't shout. It listens first.
+                      community-level issues to broader shifts in how we live. I don't believe 
+                      good journalism needs hype or theatrics. I believe it needs attention, 
+                      honesty, and the discipline to listen before speaking.
                     </p>
                   </div>
-                </FadeIn>
-
-                {/* Pull Quote */}
-                <FadeIn delay={0.4}>
-                  <blockquote className="mt-12 pt-8 border-t border-border">
-                    <p className="font-serif text-2xl md:text-3xl text-foreground italic leading-relaxed">
-                      "The story isn't just what happened. It's who it happened to."
-                    </p>
-                  </blockquote>
                 </FadeIn>
               </div>
             </div>
