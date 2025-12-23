@@ -91,7 +91,7 @@ const Index = () => {
                   loop 
                   muted 
                   playsInline
-                  className="w-[115%] max-w-none"
+                  className="w-[115%] max-w-none -ml-[7.5%]"
                 >
                   <source src={heroAnimation} type="video/mp4" />
                 </video>
