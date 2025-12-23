@@ -28,6 +28,14 @@ const workItems = [
     link: "https://www.youtube.com/watch?v=oXRPe8KKv8c",
   },
   {
+    title: "Chaos at South Euclid McDonald's",
+    category: "Breaking News",
+    description: "More than 40 juveniles face charges after a large fight breaks out at a South Euclid McDonald's, prompting a massive police response.",
+    year: "2023",
+    thumbnail: "https://img.youtube.com/vi/Je3uO8vkWgo/mqdefault.jpg",
+    link: "https://youtu.be/Je3uO8vkWgo",
+  },
+  {
     title: "Shots Fired in Wooster",
     category: "Breaking News",
     description: "Breaking coverage of an officer-involved shooting that shook a quiet Ohio community.",
