@@ -6,16 +6,16 @@ import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimat
 
 const experience = [
   {
-    role: "Broadcast Reporter",
-    organization: "CBS 58",
-    period: "2022 – 2024",
-    description: "Enterprise reporting and live breaking news coverage.",
-  },
-  {
     role: "Multimedia Journalist",
     organization: "WKYC",
     period: "2024 – 2025",
     description: "Solo video journalist covering community stories and regional events.",
+  },
+  {
+    role: "Broadcast Reporter",
+    organization: "CBS 58",
+    period: "2022 – 2024",
+    description: "Enterprise reporting and live breaking news coverage.",
   },
   {
     role: "Associate Producer",
