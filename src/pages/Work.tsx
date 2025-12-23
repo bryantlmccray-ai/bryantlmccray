@@ -28,12 +28,12 @@ const workItems = [
     link: "https://www.youtube.com/watch?v=oXRPe8KKv8c",
   },
   {
-    title: "Chaos at South Euclid McDonald's",
+    title: "Deputy-Involved Shooting at Staples",
     category: "Breaking News",
-    description: "More than 40 juveniles face charges after a large fight breaks out at a South Euclid McDonald's, prompting a massive police response.",
-    year: "2023",
-    thumbnail: "https://img.youtube.com/vi/Je3uO8vkWgo/mqdefault.jpg",
-    link: "https://youtu.be/Je3uO8vkWgo",
+    description: "Breaking coverage of a fatal deputy-involved shooting in a Staples parking lot, with live reporting from the scene.",
+    year: "2024",
+    thumbnail: "https://img.youtube.com/vi/YsZdpk5RJ3w/mqdefault.jpg",
+    link: "https://youtu.be/YsZdpk5RJ3w",
   },
   {
     title: "Shots Fired in Wooster",
