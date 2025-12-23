@@ -50,11 +50,6 @@ const awards = [
     category: "Greater Cleveland Association of Black Journalists (GCABJ)",
     year: "2024",
   },
-  {
-    title: "Journalism Excellence Award",
-    category: "Community Reporting",
-    year: "2022",
-  },
 ];
 
 const affiliations = [
