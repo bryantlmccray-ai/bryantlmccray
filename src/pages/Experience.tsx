@@ -9,7 +9,7 @@ const experience = [
     role: "Multimedia Journalist",
     organization: "WKYC",
     period: "2024 – 2025",
-    description: "Solo video journalist covering community stories and regional events.",
+    description: "Video journalist covering community stories and regional events.",
   },
   {
     role: "Broadcast Reporter",
