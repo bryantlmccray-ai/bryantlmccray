@@ -1,15 +1,32 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn, StaggerContainer, StaggerItem, HoverLift } from "@/components/ScrollAnimations";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import heroAnimation from "@/assets/hero-animation.mp4";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 
+// Extract YouTube video ID from various URL formats
+const getYouTubeId = (url: string): string | null => {
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+};
 const featuredWork = [
   {
     title: "A Shared Purpose",
@@ -35,6 +52,9 @@ const featuredWork = [
 ];
 
 const Index = () => {
+  const [selectedVideo, setSelectedVideo] = useState<{ title: string; link: string } | null>(null);
+  const videoId = selectedVideo ? getYouTubeId(selectedVideo.link) : null;
+
   return (
     <PageTransition>
       <main className="min-h-screen bg-background">
@@ -160,20 +180,12 @@ const Index = () => {
 
                 return (
                   <StaggerItem key={index}>
-                    {item.link ? (
-                      <a
-                        href={item.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block group py-8 border-b border-border last:border-b-0 cursor-pointer"
-                      >
-                        {content}
-                      </a>
-                    ) : (
-                      <article className="group py-8 border-b border-border last:border-b-0 cursor-pointer">
-                        {content}
-                      </article>
-                    )}
+                    <button
+                      onClick={() => setSelectedVideo({ title: item.title, link: item.link })}
+                      className="block group py-8 border-b border-border last:border-b-0 cursor-pointer w-full text-left"
+                    >
+                      {content}
+                    </button>
                   </StaggerItem>
                 );
               })}
@@ -197,10 +209,13 @@ const Index = () => {
                     enterprise reporting, and community-driven storytelling.
                   </p>
                   <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
-                    <Button variant="editorial" size="sm" asChild>
-                      <a href="https://www.youtube.com/watch?v=popbs1y_L9A" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                        Watch Reel <ArrowRight className="h-4 w-4" />
-                      </a>
+                    <Button 
+                      variant="editorial" 
+                      size="sm" 
+                      onClick={() => setSelectedVideo({ title: "On-Air Highlights", link: "https://www.youtube.com/watch?v=popbs1y_L9A" })}
+                      className="flex items-center gap-2"
+                    >
+                      Watch Reel <ArrowRight className="h-4 w-4" />
                     </Button>
                   </motion.div>
                 </div>
@@ -208,11 +223,9 @@ const Index = () => {
               
               <FadeIn direction="right" delay={0.2}>
                 <HoverLift>
-                  <a 
-                    href="https://www.youtube.com/watch?v=popbs1y_L9A" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="aspect-video relative group cursor-pointer overflow-hidden border border-border block"
+                  <button 
+                    onClick={() => setSelectedVideo({ title: "On-Air Highlights", link: "https://www.youtube.com/watch?v=popbs1y_L9A" })}
+                    className="aspect-video relative group cursor-pointer overflow-hidden border border-border block w-full"
                   >
                     <motion.img 
                       src={pressReelThumbnail} 
@@ -230,7 +243,7 @@ const Index = () => {
                         <Play className="h-6 w-6 ml-1 text-foreground" />
                       </motion.div>
                     </div>
-                  </a>
+                  </button>
                 </HoverLift>
               </FadeIn>
             </div>
@@ -258,6 +271,32 @@ const Index = () => {
         </FadeIn>
 
         <Footer />
+
+        {/* Video Modal */}
+        <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
+          <DialogContent className="max-w-4xl w-[90vw] p-0 bg-background border-border overflow-hidden">
+            <DialogTitle className="sr-only">{selectedVideo?.title}</DialogTitle>
+            <div className="relative">
+              <button
+                onClick={() => setSelectedVideo(null)}
+                className="absolute -top-10 right-0 z-50 p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="h-6 w-6" />
+              </button>
+              {videoId && (
+                <div className="aspect-video w-full">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                    title={selectedVideo?.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                  />
+                </div>
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
       </main>
     </PageTransition>
   );
