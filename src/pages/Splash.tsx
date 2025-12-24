@@ -56,7 +56,7 @@ const Splash = () => {
         />
 
         {/* Name - big and bold */}
-        <div className="overflow-hidden">
+        <div className="overflow-hidden pb-4">
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -66,7 +66,7 @@ const Splash = () => {
             Bryant
           </motion.h1>
         </div>
-        <div className="overflow-hidden">
+        <div className="overflow-hidden pb-4">
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
