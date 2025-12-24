@@ -108,6 +108,14 @@ const workItems = [
     link: "https://youtu.be/W_MycGns4b4",
   },
   {
+    title: "Downtown Cleveland Comes Alive",
+    category: "Culture & Community",
+    description: "A look at a bustling Friday night in downtown Cleveland as residents and visitors fill the streets.",
+    year: "2023",
+    thumbnail: "https://img.youtube.com/vi/Q5GPykcqaAE/mqdefault.jpg",
+    link: "https://youtu.be/Q5GPykcqaAE",
+  },
+  {
     title: "On-Air Highlights",
     category: "On-Air Segments",
     description: "A collection of on-air segments showcasing breaking news coverage, enterprise reporting, and community-driven storytelling.",
