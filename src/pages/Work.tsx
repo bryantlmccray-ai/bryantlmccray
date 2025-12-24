@@ -1,14 +1,30 @@
 import { useState } from "react";
-import { Play } from "lucide-react";
+import { Play, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn } from "@/components/ScrollAnimations";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import hazardousRoadsThumb from "@/assets/hazardous-roads-thumbnail.jpg";
 
+// Extract YouTube video ID from various URL formats
+const getYouTubeId = (url: string): string | null => {
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+  ];
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+};
 const categories = [
   "All",
   "Breaking News",
@@ -127,11 +143,13 @@ const workItems = [
 
 const Work = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [selectedVideo, setSelectedVideo] = useState<{ title: string; link: string } | null>(null);
 
   const filteredWork = activeCategory === "All" 
     ? workItems 
     : workItems.filter(item => item.category === activeCategory);
 
+  const videoId = selectedVideo ? getYouTubeId(selectedVideo.link) : null;
   return (
     <PageTransition>
       <main className="min-h-screen bg-background">
@@ -209,11 +227,9 @@ const Work = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: index * 0.1 }}
                     >
-                      <a
-                        href={item.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group block py-10 border-b border-border cursor-pointer"
+                      <button
+                        onClick={() => setSelectedVideo({ title: item.title, link: item.link })}
+                        className="group block py-10 border-b border-border cursor-pointer w-full text-left"
                       >
                         <motion.div 
                           className="grid md:grid-cols-12 gap-6 items-start"
@@ -263,7 +279,7 @@ const Work = () => {
                             </div>
                           </div>
                         </motion.div>
-                      </a>
+                      </button>
                     </motion.div>
                   ))}
                 </motion.div>
@@ -273,6 +289,32 @@ const Work = () => {
         </section>
 
         <Footer />
+
+        {/* Video Modal */}
+        <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
+          <DialogContent className="max-w-4xl w-[90vw] p-0 bg-background border-border overflow-hidden">
+            <DialogTitle className="sr-only">{selectedVideo?.title}</DialogTitle>
+            <div className="relative">
+              <button
+                onClick={() => setSelectedVideo(null)}
+                className="absolute -top-10 right-0 z-50 p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="h-6 w-6" />
+              </button>
+              {videoId && (
+                <div className="aspect-video w-full">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                    title={selectedVideo?.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                  />
+                </div>
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
       </main>
     </PageTransition>
   );
