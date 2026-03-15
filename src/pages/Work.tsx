@@ -142,7 +142,69 @@ const workItems = [
   },
 ];
 
-const Work = () => {
+const tickerStats = [
+  { label: "Apps Sent", end: 147 },
+  { label: "Avg Match", end: 82, suffix: "%" },
+  { label: "Templates", end: 6 },
+  { label: "Daily Waves", end: 3 },
+];
+
+const VenturesTicker = () => {
+  const [counts, setCounts] = useState(tickerStats.map(() => 0));
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!visible) return;
+    const duration = 1800;
+    const steps = 40;
+    const interval = duration / steps;
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      setCounts(tickerStats.map(s => Math.round((step / steps) * s.end)));
+      if (step >= steps) clearInterval(timer);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [visible]);
+
+  return (
+    <div ref={ref} className="editorial-container pb-10 pt-6">
+      <Link
+        to="/mccray-ventures"
+        onClick={() => window.scrollTo(0, 0)}
+        className="group block border border-border rounded-lg p-5 hover:border-accent/50 hover:bg-accent/5 transition-all duration-500"
+      >
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-6">
+            {tickerStats.map((stat, i) => (
+              <div key={i} className="text-center">
+                <p className="font-serif text-xl text-foreground tabular-nums transition-colors group-hover:text-accent duration-300">
+                  {counts[i]}{stat.suffix || ""}
+                </p>
+                <p className="text-[9px] text-muted-foreground tracking-widest uppercase">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+          <span className="text-[10px] text-muted-foreground group-hover:text-accent transition-colors duration-300 tracking-wider uppercase">
+            McCray Ventures, LLC →
+          </span>
+        </div>
+      </Link>
+    </div>
+  );
+};
+
+
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedVideo, setSelectedVideo] = useState<{ title: string; link: string } | null>(null);
 
