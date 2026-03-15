@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -68,6 +69,10 @@ const infraItems = [
 ];
 
 const McCrayVentures = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <PageTransition>
       <main className="min-h-screen bg-background">
