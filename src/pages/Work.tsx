@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Play, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navigation from "@/components/Navigation";
@@ -287,6 +288,13 @@ const Work = () => {
             </div>
           </div>
         </section>
+
+        {/* McCray Ventures Link */}
+        <div className="editorial-container pb-8">
+          <Link to="/mccray-ventures" className="text-[10px] text-muted-foreground hover:text-accent transition-colors duration-300 underline-offset-2 hover:underline">
+            McCray Ventures, LLC
+          </Link>
+        </div>
 
         <Footer />
 

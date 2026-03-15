@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Work from "./pages/Work";
 import Experience from "./pages/Experience";
+import McCrayVentures from "./pages/McCrayVentures";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const AnimatedRoutes = () => {
         <Route path="/about" element={<About />} />
         <Route path="/work" element={<Work />} />
         <Route path="/experience" element={<Experience />} />
+        <Route path="/mccray-ventures" element={<McCrayVentures />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
