@@ -106,27 +106,8 @@ const McCrayVentures = () => {
           </div>
         </section>
 
-        {/* Stats */}
-        <section className="py-12 border-y border-border">
-          <div className="editorial-container">
-            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {[
-                { label: "Scripts", value: "5", note: "Python + HTML" },
-                { label: "Resume Templates", value: "6", note: "Auto-selected per JD" },
-                { label: "Match Threshold", value: "70%", note: "Claude AI scoring" },
-                { label: "Daily Waves", value: "3", note: "6am · 12pm · 6pm" },
-              ].map((stat, i) => (
-                <StaggerItem key={i}>
-                  <div className="text-center md:text-left">
-                    <p className="text-xs text-muted-foreground tracking-widest uppercase mb-2">{stat.label}</p>
-                    <p className="font-serif text-4xl text-foreground mb-1">{stat.value}</p>
-                    <p className="text-xs text-accent">{stat.note}</p>
-                  </div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          </div>
-        </section>
+        {/* Animated Ticker Stats */}
+        <TickerStats />
 
         {/* Execution Pipeline */}
         <section className="py-20">
