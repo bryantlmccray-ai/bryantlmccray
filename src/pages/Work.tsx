@@ -288,6 +288,13 @@ const Work = () => {
           </div>
         </section>
 
+        {/* McCray Ventures Link */}
+        <div className="editorial-container pb-8">
+          <Link to="/mccray-ventures" className="text-[10px] text-muted-foreground hover:text-accent transition-colors duration-300 underline-offset-2 hover:underline">
+            McCray Ventures, LLC
+          </Link>
+        </div>
+
         <Footer />
 
         {/* Video Modal */}

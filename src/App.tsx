@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Work from "./pages/Work";
 import Experience from "./pages/Experience";
+import McCrayVentures from "./pages/McCrayVentures";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
