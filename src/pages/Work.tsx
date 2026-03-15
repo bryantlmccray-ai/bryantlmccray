@@ -204,7 +204,7 @@ const VenturesTicker = () => {
   );
 };
 
-
+const Work = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedVideo, setSelectedVideo] = useState<{ title: string; link: string } | null>(null);
 
