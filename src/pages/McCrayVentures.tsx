@@ -68,7 +68,10 @@ const infraItems = [
   { label: "Dependencies", value: "playwright · httpx · supabase · python-dotenv" },
 ];
 
-const McCrayVentures = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <PageTransition>
       <main className="min-h-screen bg-background">
