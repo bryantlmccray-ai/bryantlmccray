@@ -68,6 +68,65 @@ const infraItems = [
   { label: "Dependencies", value: "playwright · httpx · supabase · python-dotenv" },
 ];
 
+const tickerStats = [
+  { label: "Apps Sent", end: 147 },
+  { label: "Avg Match", end: 82, suffix: "%" },
+  { label: "Templates", end: 6 },
+  { label: "Daily Waves", end: 3 },
+];
+
+const TickerStats = () => {
+  const [counts, setCounts] = useState(tickerStats.map(() => 0));
+  const [visible, setVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
+      { threshold: 0.3 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!visible) return;
+    const duration = 1800;
+    const steps = 40;
+    const interval = duration / steps;
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      setCounts(tickerStats.map(s => Math.round((step / steps) * s.end)));
+      if (step >= steps) clearInterval(timer);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [visible]);
+
+  return (
+    <section ref={ref} className="py-16 border-y border-border">
+      <div className="editorial-container">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+          {tickerStats.map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={visible ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="text-center md:text-left"
+            >
+              <p className="text-xs text-muted-foreground tracking-widest uppercase mb-3">{stat.label}</p>
+              <p className="font-serif text-5xl md:text-6xl text-foreground tabular-nums mb-2">
+                {counts[i]}{stat.suffix || ""}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const McCrayVentures = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
