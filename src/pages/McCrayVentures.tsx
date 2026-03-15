@@ -68,6 +68,7 @@ const infraItems = [
   { label: "Dependencies", value: "playwright · httpx · supabase · python-dotenv" },
 ];
 
+const McCrayVentures = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
