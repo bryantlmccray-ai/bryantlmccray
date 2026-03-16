@@ -74,6 +74,157 @@ const resumeTemplates = [
   "General",
 ];
 
+// ─── Automation team data ─────────────────────────────────────────────────────
+const automationTeam = [
+  { tier: "ceo",     initials: "BM", name: "Bryant McCray",  role: "Founder & CEO — Command & Vision",          script: "",                        schedule: "Always on",                           status: "active",  color: "accent" },
+  { tier: "staff",   initials: "OT", name: "Odessa Taylor",  role: "Operations Manager",                         script: "Drive Auto-Organizer",    schedule: "One-time deploy · All verticals",     status: "standby", color: "teal"   },
+  { tier: "staff",   initials: "MJ", name: "Marcus James",   role: "Venue Relations Coordinator",                script: "Venue Follow-Up Drafter", schedule: "Monday 8AM · Auto-drafts stale outreach", status: "active", color: "coral" },
+  { tier: "staff",   initials: "NR", name: "Nia Rhodes",     role: "Inbox Intelligence Analyst",                 script: "Venue Reply Tracker",     schedule: "Every 2hrs · Auto-updates tracker",   status: "active",  color: "blue"   },
+  { tier: "staff",   initials: "DW", name: "Dominic Walsh",  role: "Investor Relations Associate",               script: "Investor Outreach Suite", schedule: "19 drafts staged · Mar 21 trigger",   status: "active",  color: "amber"  },
+  { tier: "staff",   initials: "KP", name: "Keisha Park",    role: "Executive Inbox Manager",                    script: "Gmail Auto-Archive",      schedule: "Daily 3AM · Clears 30d+ read email",  status: "active",  color: "teal"   },
+  { tier: "staff",   initials: "—",  name: "Unfilled Role",  role: "Chief of Staff · Morning Brief",             script: "morning_brief.py",        schedule: "Designed · Not yet deployed",          status: "pending", color: "muted"  },
+  { tier: "factory", initials: "ZA", name: "Zara Adesanya",  role: "Head of R&D · Script Factory",               script: "Meta-Script Generator",   schedule: "Claude API-powered · On demand",       status: "active",  color: "purple" },
+];
+
+const colorStyles: Record<string, string> = {
+  accent: "text-accent border-accent/40 bg-accent/10",
+  teal:   "text-emerald-400 border-emerald-400/30 bg-emerald-400/10",
+  coral:  "text-orange-400 border-orange-400/30 bg-orange-400/10",
+  blue:   "text-sky-400 border-sky-400/30 bg-sky-400/10",
+  amber:  "text-yellow-400 border-yellow-400/30 bg-yellow-400/10",
+  purple: "text-purple-400 border-purple-400/30 bg-purple-400/10",
+  muted:  "text-muted-foreground border-border bg-secondary/30",
+};
+
+const dotStyles: Record<string, string> = {
+  active:  "bg-accent shadow-[0_0_6px_theme(colors.accent/50%)]",
+  standby: "bg-muted-foreground/40",
+  pending: "bg-yellow-500",
+};
+
+// ─── AutomationTeamSection ────────────────────────────────────────────────────
+function AutomationTeamSection() {
+  const ceo     = automationTeam.find(m => m.tier === "ceo")!;
+  const staff   = automationTeam.filter(m => m.tier === "staff");
+  const factory = automationTeam.find(m => m.tier === "factory")!;
+  const row1    = staff.slice(0, 3);
+  const row2    = staff.slice(3);
+
+  const MemberCard = ({ m, small = false }: { m: typeof automationTeam[0]; small?: boolean }) => (
+    <motion.div
+      whileHover={{ y: -3 }}
+      className={`border rounded-lg p-4 transition-colors duration-300 hover:border-accent/40 bg-background ${m.status === "pending" ? "opacity-50" : ""}`}
+    >
+      <div className={`inline-flex items-center justify-center rounded-full border font-mono font-medium mb-3 ${small ? "w-8 h-8 text-xs" : "w-9 h-9 text-xs"} ${colorStyles[m.color]}`}>
+        {m.initials}
+      </div>
+      <p className="text-sm font-medium text-foreground mb-0.5">{m.name}</p>
+      <p className="text-xs text-muted-foreground mb-2 leading-snug">{m.role}</p>
+      {m.script && (
+        <code className="text-[10px] text-muted-foreground/70 bg-secondary border border-border rounded px-1.5 py-0.5 block mb-2 truncate">
+          {m.script}
+        </code>
+      )}
+      <div className="flex items-center gap-1.5">
+        <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotStyles[m.status]}`} />
+        <span className="text-[10px] text-muted-foreground">{m.schedule}</span>
+      </div>
+    </motion.div>
+  );
+
+  return (
+    <section className="py-20">
+      <div className="editorial-container">
+        <FadeIn>
+          <div className="flex items-center gap-3 mb-10">
+            <span className="text-xs text-accent tracking-widest uppercase bg-accent/10 border border-accent/20 rounded px-2 py-0.5">06</span>
+            <h2 className="font-serif text-headline text-foreground">Automation Team</h2>
+          </div>
+          <p className="text-sm text-muted-foreground mb-10 max-w-lg">6 scripts. Zero payroll. Always on.</p>
+        </FadeIn>
+
+        {/* CEO */}
+        <FadeIn delay={0.1}>
+          <div className="flex justify-center mb-0">
+            <div className="border border-accent rounded-lg px-8 py-5 text-center bg-accent/5 relative min-w-[200px]">
+              <div className={`inline-flex items-center justify-center rounded-full border font-mono font-medium w-10 h-10 text-sm mb-3 ${colorStyles["accent"]}`}>
+                {ceo.initials}
+              </div>
+              <p className="text-sm font-medium text-foreground">{ceo.name}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{ceo.role}</p>
+            </div>
+          </div>
+        </FadeIn>
+
+        {/* Vertical connector */}
+        <div className="flex justify-center"><div className="w-px h-6 bg-border" /></div>
+        {/* Horizontal bar */}
+        <div className="h-px bg-border mx-10" />
+
+        {/* Branch drops row 1 */}
+        <StaggerContainer className="grid grid-cols-3 gap-4 mb-0">
+          {row1.map((_, i) => (
+            <div key={i} className="flex justify-center">
+              <div className="w-px h-5 bg-border" />
+            </div>
+          ))}
+        </StaggerContainer>
+
+        {/* Staff row 1 */}
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-0">
+          {row1.map((m, i) => (
+            <StaggerItem key={i}><MemberCard m={m} small /></StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        {/* Branch drops row 2 */}
+        <StaggerContainer className="grid grid-cols-3 gap-4 mb-0">
+          {row2.map((_, i) => (
+            <div key={i} className="flex justify-center">
+              <div className="w-px h-5 bg-border" />
+            </div>
+          ))}
+        </StaggerContainer>
+
+        {/* Staff row 2 */}
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          {row2.map((m, i) => (
+            <StaggerItem key={i}><MemberCard m={m} small /></StaggerItem>
+          ))}
+        </StaggerContainer>
+
+        {/* Connector to factory */}
+        <div className="flex justify-center"><div className="w-px h-5 bg-border" /></div>
+        <div className="h-px bg-border" />
+        <div className="flex justify-center"><div className="w-px h-4 bg-border" /></div>
+
+        {/* Factory card — full width */}
+        <FadeIn delay={0.4}>
+          <motion.div
+            whileHover={{ y: -3 }}
+            className="border border-purple-400/25 rounded-lg p-5 flex items-center gap-4 bg-purple-400/5 hover:border-purple-400/50 transition-colors duration-300"
+          >
+            <div className={`inline-flex items-center justify-center rounded-full border font-mono font-medium w-10 h-10 text-sm flex-shrink-0 ${colorStyles["purple"]}`}>
+              {factory.initials}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-foreground">{factory.name}</p>
+              <p className="text-xs text-muted-foreground mb-1">{factory.role}</p>
+              <code className="text-[10px] text-muted-foreground/70 bg-secondary border border-border rounded px-1.5 py-0.5 inline-block">
+                {factory.script}
+              </code>
+              <p className="text-[10px] text-muted-foreground mt-1">{factory.schedule}</p>
+            </div>
+            <span className="text-[10px] tracking-widest uppercase px-3 py-1 rounded-full border border-purple-400/25 bg-purple-400/10 text-purple-400 flex-shrink-0">
+              Multiplier
+            </span>
+          </motion.div>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
 const infraItems = [
   { label: "Database", value: "4 tables: job_postings · applications · resume_versions · digest_log" },
   { label: "Isolation", value: "Fully separate from primary projects" },
@@ -596,6 +747,9 @@ const McCrayVentures = () => {
             </StaggerContainer>
           </div>
         </section>
+
+        {/* Automation Team Org Chart */}
+        <AutomationTeamSection />
 
         {/* Footer note */}
         <FadeIn className="py-12 border-t border-border">
