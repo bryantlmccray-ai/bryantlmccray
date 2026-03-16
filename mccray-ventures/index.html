@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Automation Team — McCray Ventures</title>
+
+  <script>
+    const SUPABASE_URL = 'https://yjidsifrdmaxubkmqung.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlqaWRzaWZyZG1heHVia21xdW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2ODk0MzMsImV4cCI6MjA2NjI2NTQzM30.tehK7_DavEkBmfQPxB29wVOiu8HlXLZnz97ZLkVRRfA';
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold:        #C9A84C;
+      --gold-light:  #E8D5A3;
+      --gold-dim:    #7A6330;
+      --ink:         #0E0E0E;
+      --ink-2:       #1C1C1C;
+      --ink-3:       #2A2A2A;
+      --muted:       #6B6B6B;
+      --muted-2:     #4A4A4A;
+      --border:      rgba(201,168,76,0.18);
+      --border-soft: rgba(255,255,255,0.06);
+      --font-body:   'DM Sans', sans-serif;
+      --font-mono:   'DM Mono', monospace;
+      --radius:      10px;
+      --radius-lg:   16px;
+      --transition:  0.2s ease;
+    }
+    body {
+      background: var(--ink);
+      color: #E8E8E4;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 48px 24px 80px;
+      min-height: 100vh;
+    }
+    .org-header { text-align: center; margin-bottom: 48px; }
+    .org-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .org-headline { font-size: clamp(22px, 4vw, 32px); font-weight: 300; letter-spacing: -0.02em; color: #F2F0EA; margin-bottom: 6px; }
+    .org-sub { font-size: 13px; color: var(--muted); font-weight: 300; }
+    .state-msg { text-align: center; padding: 60px 0; color: var(--muted); font-size: 13px; font-family: var(--font-mono); }
+    .state-msg .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-right: 8px; animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    .ceo-row { display: flex; justify-content: center; margin-bottom: 0; }
+    .ceo-card { background: var(--ink-2); border: 1px solid var(--gold); border-radius: var(--radius-lg); padding: 20px 32px; text-align: center; min-width: 220px; position: relative; }
+    .ceo-card::before { content: ''; position: absolute; inset: 0; border-radius: var(--radius-lg); background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 70%); pointer-events: none; }
+    .avatar { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 13px; font-weight: 500; margin: 0 auto 10px; border: 1px solid; }
+    .avatar-gold   { background: rgba(201,168,76,0.12); color: var(--gold);    border-color: rgba(201,168,76,0.3); }
+    .avatar-teal   { background: rgba(29,158,117,0.12); color: #1D9E75;        border-color: rgba(29,158,117,0.3); }
+    .avatar-coral  { background: rgba(216,90,48,0.12);  color: #D85A30;        border-color: rgba(216,90,48,0.3); }
+    .avatar-blue   { background: rgba(24,95,165,0.15);  color: #5BA4E6;        border-color: rgba(91,164,230,0.3); }
+    .avatar-amber  { background: rgba(186,117,23,0.12); color: #EF9F27;        border-color: rgba(239,159,39,0.3); }
+    .avatar-purple { background: rgba(83,74,183,0.15);  color: #9D96F0;        border-color: rgba(157,150,240,0.3); }
+    .avatar-gray   { background: rgba(136,135,128,0.1); color: var(--muted);   border-color: rgba(136,135,128,0.2); }
+    .card-name { font-size: 15px; font-weight: 500; color: #F2F0EA; }
+    .card-role { font-size: 12px; color: var(--muted); margin-top: 2px; font-weight: 300; }
+    .connector-v { width: 1px; background: var(--border); margin: 0 auto; }
+    .connector-h { height: 1px; background: var(--border); margin: 0 40px; }
+    .branch-row { display: flex; justify-content: space-around; }
+    .branch-drop { width: 1px; height: 20px; background: var(--border); margin: 0 auto; }
+    .staff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 12px; }
+    .staff-card { background: var(--ink-2); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 16px; transition: border-color var(--transition), transform var(--transition); position: relative; overflow: hidden; }
+    .staff-card:hover { border-color: rgba(201,168,76,0.25); transform: translateY(-2px); }
+    .staff-card.pending { opacity: 0.55; }
+    .staff-card .avatar { margin-bottom: 10px; width: 36px; height: 36px; font-size: 11px; }
+    .script-pill { display: inline-block; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.04em; color: var(--muted); background: var(--ink-3); border: 1px solid var(--border-soft); border-radius: 4px; padding: 2px 7px; margin: 6px 0 8px; }
+    .schedule-line { font-size: 11px; color: var(--muted); font-weight: 300; display: flex; align-items: center; gap: 6px; }
+    .status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .dot-active  { background: #1D9E75; box-shadow: 0 0 6px rgba(29,158,117,0.5); }
+    .dot-standby { background: var(--muted-2); }
+    .dot-pending { background: #BA7517; }
+    .factory-card { background: var(--ink-2); border: 1px solid rgba(157,150,240,0.25); border-radius: var(--radius-lg); padding: 18px 20px; display: flex; align-items: center; gap: 16px; transition: border-color var(--transition), transform var(--transition); position: relative; overflow: hidden; }
+    .factory-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 100% 50%, rgba(157,150,240,0.05) 0%, transparent 60%); pointer-events: none; }
+    .factory-card:hover { border-color: rgba(157,150,240,0.45); transform: translateY(-2px); }
+    .factory-info { flex: 1; }
+    .factory-desc { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 300; }
+    .badge { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; background: rgba(157,150,240,0.12); color: #9D96F0; border: 1px solid rgba(157,150,240,0.25); flex-shrink: 0; }
+    .last-updated { text-align: center; margin-top: 32px; font-family: var(--font-mono); font-size: 10px; color: var(--muted-2); }
+    @media (max-width: 520px) { .staff-grid { grid-template-columns: 1fr 1fr; } .factory-card { flex-direction: column; align-items: flex-start; } .connector-h { margin: 0 20px; } }
+    @media (max-width: 360px) { .staff-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="org-header">
+    <div class="org-eyebrow">McCray Ventures, LLC</div>
+    <h1 class="org-headline">The Automation Team</h1>
+    <p class="org-sub">6 scripts. Zero payroll. Always on.</p>
+  </div>
+  <div id="org-root">
+    <div class="state-msg"><span class="dot"></span>Loading team data...</div>
+  </div>
+  <div class="last-updated" id="last-updated"></div>
+  <script>
+    const colorMap = { gold:'avatar-gold', teal:'avatar-teal', coral:'avatar-coral', blue:'avatar-blue', amber:'avatar-amber', purple:'avatar-purple', gray:'avatar-gray' };
+    const statusMap = { active:{cls:'dot-active'}, standby:{cls:'dot-standby'}, pending:{cls:'dot-pending'} };
+    async function fetchTeam() {
+      const url = `${SUPABASE_URL}/rest/v1/automation_team?select=*&order=sort_order.asc`;
+      const res = await fetch(url, { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' } });
+      if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
+      return res.json();
+    }
+    function staffCard(m) {
+      const avatarCls = colorMap[m.color] || 'avatar-gray';
+      const dotCls = (statusMap[m.status] || statusMap['standby']).cls;
+      const pendingCls = m.status === 'pending' ? ' pending' : '';
+      return `<div class="staff-card${pendingCls}"><div class="avatar ${avatarCls}">${m.initials}</div><div class="card-name">${m.name}</div><div class="card-role">${m.title}</div><div class="script-pill">${m.script_label}</div><div class="schedule-line"><span class="status-dot ${dotCls}"></span>${m.schedule}</div></div>`;
+    }
+    function factoryCard(m) {
+      const avatarCls = colorMap[m.color] || 'avatar-purple';
+      return `<div class="factory-card"><div class="avatar ${avatarCls}" style="width:44px;height:44px;font-size:14px;">${m.initials}</div><div class="factory-info"><div class="card-name">${m.name}</div><div class="card-role">${m.title}</div><div class="script-pill">${m.script_label}</div><div class="factory-desc">${m.schedule}</div></div><div class="badge">Multiplier</div></div>`;
+    }
+    function render(members) {
+      const ceo = members.find(m => m.tier === 'ceo');
+      const staff = members.filter(m => m.tier === 'staff');
+      const factory = members.find(m => m.tier === 'factory');
+      const row1 = staff.slice(0, 3);
+      const row2 = staff.slice(3);
+      document.getElementById('org-root').innerHTML = `
+        <div class="ceo-row"><div class="ceo-card"><div class="avatar avatar-gold">${ceo.initials}</div><div class="card-name">${ceo.name}</div><div class="card-role">${ceo.title}</div></div></div>
+        <div class="connector-v" style="height:24px;"></div>
+        <div class="connector-h"></div>
+        <div class="branch-row">${row1.map(() => `<div class="branch-drop"></div>`).join('')}</div>
+        <div class="staff-grid" style="margin-bottom:12px;">${row1.map(staffCard).join('')}</div>
+        <div class="branch-row">${row2.map(() => `<div class="branch-drop"></div>`).join('')}</div>
+        <div class="staff-grid" style="margin-bottom:20px;">${row2.map(staffCard).join('')}</div>
+        <div class="connector-v" style="height:20px;"></div>
+        <div class="connector-h" style="margin:0;"></div>
+        <div class="connector-v" style="height:16px;"></div>
+        ${factory ? factoryCard(factory) : ''}`;
+      const latest = members.reduce((a, b) => new Date(a.updated_at) > new Date(b.updated_at) ? a : b);
+      document.getElementById('last-updated').textContent = `Last updated · ${new Date(latest.updated_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })}`;
+    }
+    fetchTeam().then(render).catch(err => {
+      console.error(err);
+      document.getElementById('org-root').innerHTML = `<div class="state-msg">⚠ Could not load team data.</div>`;
+    });
+  </script>
+</body>
+</html>
