@@ -10,13 +10,13 @@ import { createClient } from "@supabase/supabase-js";
 
 // ─── Supabase clients ────────────────────────────────────────────────────────
 const monarkClient = createClient(
-  import.meta.env.VITE_MONARK_SUPABASE_URL,
-  import.meta.env.VITE_MONARK_SUPABASE_ANON_KEY
+  "https://yjidsifrdmaxubkmqung.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlqaWRzaWZyZG1heHVia21xdW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA2ODk0MzMsImV4cCI6MjA2NjI2NTQzM30.tehK7_DavEkBmfQPxB29wVOiu8HlXLZnz97ZLkVRRfA"
 );
 
 const mccrayClient = createClient(
-  import.meta.env.VITE_MCCRAY_SUPABASE_URL,
-  import.meta.env.VITE_MCCRAY_SUPABASE_ANON_KEY
+  "https://xobvgklybseiaimorwuu.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhvs9Ya2x5YnNlaWFpbW9yd3V1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NjI0NjUsImV4cCI6MjA4OTEzODQ2NX0.MZiJaEmi9wMUHTM_yABvHMDLhSKKTyHRfKagN4DW-KI"
 );
 
 // ─── Static data ─────────────────────────────────────────────────────────────
