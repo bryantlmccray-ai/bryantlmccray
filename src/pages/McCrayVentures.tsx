@@ -4,9 +4,22 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
-import { ArrowLeft, Zap, Database, Brain, Mail, Clock, FileText, BarChart3, Shield } from "lucide-react";
+import { ArrowLeft, Zap, Database, Brain, Mail, Clock, FileText, BarChart3, Shield, Wifi, WifiOff, RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
+import { createClient } from "@supabase/supabase-js";
 
+// ─── Supabase clients ────────────────────────────────────────────────────────
+const monarkClient = createClient(
+  import.meta.env.VITE_MONARK_SUPABASE_URL,
+  import.meta.env.VITE_MONARK_SUPABASE_ANON_KEY
+);
+
+const mccrayClient = createClient(
+  import.meta.env.VITE_MCCRAY_SUPABASE_URL,
+  import.meta.env.VITE_MCCRAY_SUPABASE_ANON_KEY
+);
+
+// ─── Static data ─────────────────────────────────────────────────────────────
 const pipelineSteps = [
   {
     phase: "Ingest",
@@ -68,11 +81,249 @@ const infraItems = [
   { label: "Dependencies", value: "playwright · httpx · supabase · python-dotenv" },
 ];
 
+// ─── Live data types ──────────────────────────────────────────────────────────
+interface LiveMetrics {
+  // MonArk
+  waitlistCount: number | null;
+  sessionCount: number | null;
+  // McCray Ventures job engine
+  appsSent: number | null;
+  avgMatchScore: number | null;
+  jobsInPipeline: number | null;
+  // Automation
+  venueRepliesLogged: number | null;
+  investorEmailsLogged: number | null;
+}
+
+// ─── useLiveMetrics hook ──────────────────────────────────────────────────────
+function useLiveMetrics(refreshInterval = 60_000) {
+  const [metrics, setMetrics] = useState<LiveMetrics>({
+    waitlistCount: null,
+    sessionCount: null,
+    appsSent: null,
+    avgMatchScore: null,
+    jobsInPipeline: null,
+    venueRepliesLogged: null,
+    investorEmailsLogged: null,
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+  const fetchAll = async () => {
+    try {
+      const [
+        waitlist,
+        sessions,
+        apps,
+        avgMatch,
+        jobs,
+        venueReplies,
+        investorEmails,
+      ] = await Promise.allSettled([
+        monarkClient.from("waitlist_submissions").select("*", { count: "exact", head: true }),
+        monarkClient.from("user_sessions").select("*", { count: "exact", head: true }),
+        mccrayClient.from("applications").select("*", { count: "exact", head: true }),
+        mccrayClient.from("applications").select("match_score"),
+        mccrayClient.from("job_postings").select("*", { count: "exact", head: true }),
+        monarkClient.from("venue_reply_log").select("*", { count: "exact", head: true }),
+        monarkClient.from("investor_email_log").select("*", { count: "exact", head: true }),
+      ]);
+
+      // Calculate avg match score
+      let avgScore: number | null = null;
+      if (avgMatch.status === "fulfilled" && avgMatch.value.data) {
+        const scores = avgMatch.value.data
+          .map((r: { match_score: number }) => r.match_score)
+          .filter((s: number) => typeof s === "number");
+        if (scores.length > 0) {
+          avgScore = Math.round(scores.reduce((a: number, b: number) => a + b, 0) / scores.length);
+        }
+      }
+
+      setMetrics({
+        waitlistCount: waitlist.status === "fulfilled" ? (waitlist.value.count ?? null) : null,
+        sessionCount: sessions.status === "fulfilled" ? (sessions.value.count ?? null) : null,
+        appsSent: apps.status === "fulfilled" ? (apps.value.count ?? null) : null,
+        avgMatchScore: avgScore,
+        jobsInPipeline: jobs.status === "fulfilled" ? (jobs.value.count ?? null) : null,
+        venueRepliesLogged: venueReplies.status === "fulfilled" ? (venueReplies.value.count ?? null) : null,
+        investorEmailsLogged: investorEmails.status === "fulfilled" ? (investorEmails.value.count ?? null) : null,
+      });
+      setError(false);
+      setLastUpdated(new Date());
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAll();
+    const interval = setInterval(fetchAll, refreshInterval);
+    return () => clearInterval(interval);
+  }, []);
+
+  return { metrics, loading, error, lastUpdated, refresh: fetchAll };
+}
+
+// ─── AnimatedNumber ───────────────────────────────────────────────────────────
+function AnimatedNumber({ value, suffix = "" }: { value: number | null; suffix?: string }) {
+  const [display, setDisplay] = useState(0);
+  const prevValue = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (value === null) return;
+    const start = prevValue.current ?? 0;
+    prevValue.current = value;
+    const diff = value - start;
+    if (diff === 0) return;
+    const steps = 30;
+    const duration = 900;
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      setDisplay(Math.round(start + (diff * step) / steps));
+      if (step >= steps) {
+        setDisplay(value);
+        clearInterval(timer);
+      }
+    }, duration / steps);
+    return () => clearInterval(timer);
+  }, [value]);
+
+  if (value === null) return <span className="text-muted-foreground/40">—</span>;
+  return <>{display}{suffix}</>;
+}
+
+// ─── LiveBadge ────────────────────────────────────────────────────────────────
+function LiveBadge({ loading, error, lastUpdated, onRefresh }: {
+  loading: boolean;
+  error: boolean;
+  lastUpdated: Date | null;
+  onRefresh: () => void;
+}) {
+  const timeStr = lastUpdated
+    ? lastUpdated.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    : null;
+
+  return (
+    <div className="flex items-center gap-3">
+      {error ? (
+        <span className="flex items-center gap-1.5 text-xs text-red-400">
+          <WifiOff className="h-3 w-3" /> Connection error
+        </span>
+      ) : loading ? (
+        <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+          <RefreshCw className="h-3 w-3 animate-spin" /> Fetching…
+        </span>
+      ) : (
+        <span className="flex items-center gap-1.5 text-xs text-accent">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+          </span>
+          Live{timeStr ? ` · ${timeStr}` : ""}
+        </span>
+      )}
+      <button
+        onClick={onRefresh}
+        className="text-xs text-muted-foreground hover:text-accent transition-colors flex items-center gap-1"
+      >
+        <RefreshCw className="h-3 w-3" /> Refresh
+      </button>
+    </div>
+  );
+}
+
+// ─── LiveMetricsGrid ──────────────────────────────────────────────────────────
+function LiveMetricsGrid() {
+  const { metrics, loading, error, lastUpdated, refresh } = useLiveMetrics(60_000);
+
+  const panels = [
+    {
+      label: "MonArk",
+      tag: "Relationship Platform",
+      color: "border-accent/40 bg-accent/5",
+      items: [
+        { key: "Waitlist", value: metrics.waitlistCount },
+        { key: "Sessions", value: metrics.sessionCount },
+      ],
+    },
+    {
+      label: "Job Engine",
+      tag: "McCray Ventures",
+      color: "border-border bg-secondary/30",
+      items: [
+        { key: "Apps Sent", value: metrics.appsSent },
+        { key: "Avg Match", value: metrics.avgMatchScore, suffix: "%" },
+        { key: "In Pipeline", value: metrics.jobsInPipeline },
+      ],
+    },
+    {
+      label: "Automation",
+      tag: "Reply Stack",
+      color: "border-border bg-secondary/30",
+      items: [
+        { key: "Venue Replies", value: metrics.venueRepliesLogged },
+        { key: "Investor Emails", value: metrics.investorEmailsLogged },
+      ],
+    },
+  ];
+
+  return (
+    <section className="py-20 border-y border-border">
+      <div className="editorial-container">
+        <FadeIn>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-accent tracking-widest uppercase bg-accent/10 border border-accent/20 rounded px-2 py-0.5">Live</span>
+              <h2 className="font-serif text-headline text-foreground">Operations Dashboard</h2>
+            </div>
+            <LiveBadge loading={loading} error={error} lastUpdated={lastUpdated} onRefresh={refresh} />
+          </div>
+        </FadeIn>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {panels.map((panel, pi) => (
+            <FadeIn key={pi} delay={pi * 0.12}>
+              <div className={`border rounded-lg p-6 ${panel.color}`}>
+                <div className="mb-5 pb-4 border-b border-border">
+                  <p className="text-xs text-muted-foreground tracking-widest uppercase mb-1">{panel.tag}</p>
+                  <p className="font-serif text-lg text-foreground">{panel.label}</p>
+                </div>
+                <div className="space-y-4">
+                  {panel.items.map((item, ii) => (
+                    <div key={ii} className="flex items-end justify-between">
+                      <p className="text-xs text-muted-foreground tracking-widest uppercase">{item.key}</p>
+                      <p className="font-serif text-3xl text-foreground tabular-nums">
+                        <AnimatedNumber value={item.value ?? null} suffix={(item as { suffix?: string }).suffix ?? ""} />
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+
+        <FadeIn delay={0.4}>
+          <p className="text-xs text-muted-foreground mt-6 text-right">
+            Auto-refreshes every 60s · Powered by Supabase
+          </p>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+// ─── Static ticker (job engine summary) ──────────────────────────────────────
 const tickerStats = [
-  { label: "Apps Sent", end: 147 },
-  { label: "Avg Match", end: 82, suffix: "%" },
   { label: "Templates", end: 6 },
   { label: "Daily Waves", end: 3 },
+  { label: "Scripts", end: 5 },
+  { label: "Cron Jobs", end: 9 },
 ];
 
 const TickerStats = () => {
@@ -117,7 +368,7 @@ const TickerStats = () => {
             >
               <p className="text-xs text-muted-foreground tracking-widest uppercase mb-3">{stat.label}</p>
               <p className="font-serif text-5xl md:text-6xl text-foreground tabular-nums mb-2">
-                {counts[i]}{stat.suffix || ""}
+                {counts[i]}
               </p>
             </motion.div>
           ))}
@@ -127,6 +378,7 @@ const TickerStats = () => {
   );
 };
 
+// ─── Page ─────────────────────────────────────────────────────────────────────
 const McCrayVentures = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -165,7 +417,10 @@ const McCrayVentures = () => {
           </div>
         </section>
 
-        {/* Animated Ticker Stats */}
+        {/* ── LIVE OPERATIONS DASHBOARD ── */}
+        <LiveMetricsGrid />
+
+        {/* Static engine stats */}
         <TickerStats />
 
         {/* Execution Pipeline */}
@@ -205,7 +460,6 @@ const McCrayVentures = () => {
               ))}
             </div>
 
-            {/* Flow arrows between columns - visual only */}
             <FadeIn delay={0.5}>
               <div className="flex justify-center items-center gap-2 my-6">
                 {["Ingest", "→", "Process", "→", "Output"].map((label, i) => (
@@ -305,7 +559,6 @@ const McCrayVentures = () => {
               ))}
             </StaggerContainer>
 
-            {/* Security note */}
             <FadeIn delay={0.3}>
               <div className="mt-6 border border-accent/30 rounded-lg p-5 bg-accent/5 flex items-start gap-3">
                 <Shield className="h-4 w-4 text-accent flex-shrink-0 mt-0.5" />
