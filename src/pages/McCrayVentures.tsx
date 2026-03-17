@@ -74,63 +74,128 @@ const resumeTemplates = [
   "General",
 ];
 
-// ─── Automation team data ─────────────────────────────────────────────────────
-const automationTeam = [
-  { tier: "ceo",     initials: "BM", name: "Bryant McCray",  role: "Founder & CEO — Command & Vision",          script: "",                        schedule: "Always on",                           status: "active",  color: "accent" },
-  { tier: "staff",   initials: "OT", name: "Odessa Taylor",  role: "Operations Manager",                         script: "Drive Auto-Organizer",    schedule: "One-time deploy · All verticals",     status: "standby", color: "teal"   },
-  { tier: "staff",   initials: "MJ", name: "Marcus James",   role: "Venue Relations Coordinator",                script: "Venue Follow-Up Drafter", schedule: "Monday 8AM · Auto-drafts stale outreach", status: "active", color: "coral" },
-  { tier: "staff",   initials: "NR", name: "Nia Rhodes",     role: "Inbox Intelligence Analyst",                 script: "Venue Reply Tracker",     schedule: "Every 2hrs · Auto-updates tracker",   status: "active",  color: "blue"   },
-  { tier: "staff",   initials: "DW", name: "Dominic Walsh",  role: "Investor Relations Associate",               script: "Investor Outreach Suite", schedule: "19 drafts staged · Mar 21 trigger",   status: "active",  color: "amber"  },
-  { tier: "staff",   initials: "KP", name: "Keisha Park",    role: "Executive Inbox Manager",                    script: "Gmail Auto-Archive",      schedule: "Daily 3AM · Clears 30d+ read email",  status: "active",  color: "teal"   },
-  { tier: "staff",   initials: "—",  name: "Unfilled Role",  role: "Chief of Staff · Morning Brief",             script: "morning_brief.py",        schedule: "Designed · Not yet deployed",          status: "pending", color: "muted"  },
-  { tier: "factory", initials: "ZA", name: "Zara Adesanya",  role: "Head of R&D · Script Factory",               script: "Meta-Script Generator",   schedule: "Claude API-powered · On demand",       status: "active",  color: "purple" },
-];
+// ─── Google Sheets CSV config ─────────────────────────────────────────────────
+const SHEET_ID = "1TAhiJxWLyxIFTO7Dc2h-JEW5W4m2KyabTWZnFRL_Ycw";
+const SHEET_TAB = "Automation Team Registry";
+const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(SHEET_TAB)}`;
 
-const colorStyles: Record<string, string> = {
-  accent: "text-accent border-accent/40 bg-accent/10",
-  teal:   "text-emerald-400 border-emerald-400/30 bg-emerald-400/10",
-  coral:  "text-orange-400 border-orange-400/30 bg-orange-400/10",
-  blue:   "text-sky-400 border-sky-400/30 bg-sky-400/10",
-  amber:  "text-yellow-400 border-yellow-400/30 bg-yellow-400/10",
-  purple: "text-purple-400 border-purple-400/30 bg-purple-400/10",
-  muted:  "text-muted-foreground border-border bg-secondary/30",
+const DOT_COLORS: Record<string, string> = {
+  green: "bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.5)]",
+  gold:  "bg-yellow-500",
+  rose:  "bg-rose-400",
+  grey:  "bg-muted-foreground/40",
 };
 
-const dotStyles: Record<string, string> = {
-  active:  "bg-accent shadow-[0_0_6px_theme(colors.accent/50%)]",
-  standby: "bg-muted-foreground/40",
-  pending: "bg-yellow-500",
-};
+function parseCSVRow(row: string): string[] {
+  const result: string[] = [];
+  let current = "";
+  let inQuotes = false;
+  for (let i = 0; i < row.length; i++) {
+    const ch = row[i];
+    if (ch === '"') { inQuotes = !inQuotes; }
+    else if (ch === "," && !inQuotes) { result.push(current.trim()); current = ""; }
+    else { current += ch; }
+  }
+  result.push(current.trim());
+  return result;
+}
+
+interface TeamMember {
+  initials: string;
+  name: string;
+  role: string;
+  script: string;
+  status: string;
+  dotColor: string;
+  avatarColor: string;
+  isNew: boolean;
+}
 
 // ─── AutomationTeamSection ────────────────────────────────────────────────────
 function AutomationTeamSection() {
-  const ceo     = automationTeam.find(m => m.tier === "ceo")!;
-  const staff   = automationTeam.filter(m => m.tier === "staff");
-  const factory = automationTeam.find(m => m.tier === "factory")!;
-  const row1    = staff.slice(0, 3);
-  const row2    = staff.slice(3);
+  const [team, setTeam] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [lastUpdated, setLastUpdated] = useState("");
 
-  const MemberCard = ({ m, small = false }: { m: typeof automationTeam[0]; small?: boolean }) => (
-    <motion.div
-      whileHover={{ y: -3 }}
-      className={`border rounded-lg p-4 transition-colors duration-300 hover:border-accent/40 bg-background ${m.status === "pending" ? "opacity-50" : ""}`}
-    >
-      <div className={`inline-flex items-center justify-center rounded-full border font-mono font-medium mb-3 ${small ? "w-8 h-8 text-xs" : "w-9 h-9 text-xs"} ${colorStyles[m.color]}`}>
-        {m.initials}
+  useEffect(() => {
+    async function fetchRegistry() {
+      try {
+        const res = await fetch(CSV_URL);
+        const text = await res.text();
+        const rows = text.trim().split("\n");
+        const members = rows.slice(1).map((row) => {
+          const cols = parseCSVRow(row);
+          return {
+            initials: cols[0] || "—",
+            name: cols[1] || "Unknown",
+            role: cols[2] || "",
+            script: cols[3] || "",
+            status: cols[4] || "",
+            dotColor: cols[5] || "grey",
+            avatarColor: cols[6] || "#A38A66",
+            isNew: cols[7] === "TRUE" || cols[7] === "true",
+          };
+        }).filter(m => m.name && m.name !== "Unknown");
+        setTeam(members);
+        setLastUpdated(new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }));
+        setLoading(false);
+      } catch {
+        setError("Could not load team registry.");
+        setLoading(false);
+      }
+    }
+    fetchRegistry();
+    const interval = setInterval(fetchRegistry, 300000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const activeCount = team.filter(m => m.name !== "Unfilled Role").length;
+
+  const MemberCard = ({ m, idx }: { m: TeamMember; idx: number }) => {
+    const isUnfilled = m.name === "Unfilled Role";
+    const dotCls = DOT_COLORS[m.dotColor] || DOT_COLORS.grey;
+
+    return (
+      <div className="flex flex-col items-center">
+        <div className="w-px h-10 bg-border" />
+        <motion.div
+          whileHover={{ y: -3 }}
+          onMouseEnter={() => setHovered(idx)}
+          onMouseLeave={() => setHovered(null)}
+          className={`w-[220px] border rounded-xl p-5 transition-colors duration-300 cursor-default relative
+            ${isUnfilled ? "opacity-50 border-dashed border-border bg-background" : ""}
+            ${m.isNew ? "border-accent bg-accent/5" : "border-border bg-background"}
+            ${hovered === idx ? "shadow-soft border-accent/40" : ""}
+          `}
+        >
+          {m.isNew && (
+            <span className="absolute -top-2.5 right-3 text-[9px] font-semibold tracking-widest uppercase bg-accent text-accent-foreground px-2 py-0.5 rounded-full">
+              NEW
+            </span>
+          )}
+          <div
+            className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-semibold text-white mb-3"
+            style={{ background: m.avatarColor }}
+          >
+            {m.initials}
+          </div>
+          <p className="text-sm font-semibold text-foreground mb-0.5 leading-tight">{m.name}</p>
+          <p className="text-[11.5px] text-muted-foreground mb-3 leading-snug">{m.role}</p>
+          {m.script && (
+            <code className="text-[10.5px] text-muted-foreground bg-secondary border border-border rounded px-2 py-1 block mb-2.5 truncate">
+              {m.script}
+            </code>
+          )}
+          <div className="flex items-center gap-1.5 text-[10.5px] text-muted-foreground">
+            <span className={`inline-block w-[7px] h-[7px] rounded-full flex-shrink-0 ${dotCls}`} />
+            {m.status}
+          </div>
+        </motion.div>
       </div>
-      <p className="text-sm font-medium text-foreground mb-0.5">{m.name}</p>
-      <p className="text-xs text-muted-foreground mb-2 leading-snug">{m.role}</p>
-      {m.script && (
-        <code className="text-[10px] text-muted-foreground/70 bg-secondary border border-border rounded px-1.5 py-0.5 block mb-2 truncate">
-          {m.script}
-        </code>
-      )}
-      <div className="flex items-center gap-1.5">
-        <span className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${dotStyles[m.status]}`} />
-        <span className="text-[10px] text-muted-foreground">{m.schedule}</span>
-      </div>
-    </motion.div>
-  );
+    );
+  };
 
   return (
     <section className="py-20">
@@ -140,86 +205,73 @@ function AutomationTeamSection() {
             <span className="text-xs text-accent tracking-widest uppercase bg-accent/10 border border-accent/20 rounded px-2 py-0.5">06</span>
             <h2 className="font-serif text-headline text-foreground">Automation Team</h2>
           </div>
-          <p className="text-sm text-muted-foreground mb-10 max-w-lg">6 scripts. Zero payroll. Always on.</p>
+          <p className="text-sm text-muted-foreground mb-10 max-w-lg">
+            {activeCount > 0 ? `${activeCount} scripts` : "—"}. Zero payroll. Always on.
+          </p>
         </FadeIn>
 
-        {/* CEO */}
-        <FadeIn delay={0.1}>
-          <div className="flex justify-center mb-0">
-            <div className="border border-accent rounded-lg px-8 py-5 text-center bg-accent/5 relative min-w-[200px]">
-              <div className={`inline-flex items-center justify-center rounded-full border font-mono font-medium w-10 h-10 text-sm mb-3 ${colorStyles["accent"]}`}>
-                {ceo.initials}
+        {loading && (
+          <p className="text-center text-sm text-muted-foreground py-16">Loading Automation Team…</p>
+        )}
+        {error && (
+          <p className="text-center text-sm text-destructive py-10">{error}</p>
+        )}
+
+        {!loading && !error && (
+          <>
+            {/* CEO */}
+            <FadeIn delay={0.1}>
+              <div className="flex justify-center mb-0">
+                <div className="border border-accent rounded-xl px-8 py-5 text-center bg-accent/5 relative min-w-[260px]">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center text-sm font-semibold mx-auto mb-3"
+                    style={{ background: "#4F4235", color: "#DFC19D" }}>
+                    BM
+                  </div>
+                  <p className="text-[17px] font-semibold text-foreground">Bryant McCray</p>
+                  <p className="text-[11.5px] text-muted-foreground mt-0.5 mb-3">Founder & CEO — Command & Vision</p>
+                  <code className="text-[10.5px] text-muted-foreground bg-secondary border border-border rounded px-2 py-1 inline-block mb-2">
+                    All Systems
+                  </code>
+                  <div className="flex items-center justify-center gap-1.5 text-[10.5px] text-muted-foreground">
+                    <span className={`inline-block w-[7px] h-[7px] rounded-full ${DOT_COLORS.green}`} />
+                    Active across all verticals
+                  </div>
+                </div>
               </div>
-              <p className="text-sm font-medium text-foreground">{ceo.name}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">{ceo.role}</p>
+            </FadeIn>
+
+            {/* Trunk */}
+            <div className="flex justify-center"><div className="w-px h-10 bg-border" /></div>
+
+            {/* Team grid */}
+            <div className="flex gap-4 flex-wrap justify-center">
+              {team.map((member, idx) => (
+                <FadeIn key={idx} delay={0.05 * idx}>
+                  <MemberCard m={member} idx={idx} />
+                </FadeIn>
+              ))}
             </div>
-          </div>
-        </FadeIn>
 
-        {/* Vertical connector */}
-        <div className="flex justify-center"><div className="w-px h-6 bg-border" /></div>
-        {/* Horizontal bar */}
-        <div className="h-px bg-border mx-10" />
-
-        {/* Branch drops row 1 */}
-        <StaggerContainer className="grid grid-cols-3 gap-4 mb-0">
-          {row1.map((_, i) => (
-            <div key={i} className="flex justify-center">
-              <div className="w-px h-5 bg-border" />
+            {/* Legend */}
+            <div className="flex gap-6 flex-wrap mt-12 pt-6 border-t border-border">
+              {[
+                { color: "green", label: "Live & running" },
+                { color: "gold", label: "New addition" },
+                { color: "rose", label: "Scheduled / trigger-based" },
+                { color: "grey", label: "Designed, not yet deployed" },
+              ].map(({ color, label }) => (
+                <div key={color} className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span className={`inline-block w-[7px] h-[7px] rounded-full ${DOT_COLORS[color]}`} />
+                  {label}
+                </div>
+              ))}
             </div>
-          ))}
-        </StaggerContainer>
 
-        {/* Staff row 1 */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-0">
-          {row1.map((m, i) => (
-            <StaggerItem key={i}><MemberCard m={m} small /></StaggerItem>
-          ))}
-        </StaggerContainer>
-
-        {/* Branch drops row 2 */}
-        <StaggerContainer className="grid grid-cols-3 gap-4 mb-0">
-          {row2.map((_, i) => (
-            <div key={i} className="flex justify-center">
-              <div className="w-px h-5 bg-border" />
-            </div>
-          ))}
-        </StaggerContainer>
-
-        {/* Staff row 2 */}
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {row2.map((m, i) => (
-            <StaggerItem key={i}><MemberCard m={m} small /></StaggerItem>
-          ))}
-        </StaggerContainer>
-
-        {/* Connector to factory */}
-        <div className="flex justify-center"><div className="w-px h-5 bg-border" /></div>
-        <div className="h-px bg-border" />
-        <div className="flex justify-center"><div className="w-px h-4 bg-border" /></div>
-
-        {/* Factory card — full width */}
-        <FadeIn delay={0.4}>
-          <motion.div
-            whileHover={{ y: -3 }}
-            className="border border-purple-400/25 rounded-lg p-5 flex items-center gap-4 bg-purple-400/5 hover:border-purple-400/50 transition-colors duration-300"
-          >
-            <div className={`inline-flex items-center justify-center rounded-full border font-mono font-medium w-10 h-10 text-sm flex-shrink-0 ${colorStyles["purple"]}`}>
-              {factory.initials}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-foreground">{factory.name}</p>
-              <p className="text-xs text-muted-foreground mb-1">{factory.role}</p>
-              <code className="text-[10px] text-muted-foreground/70 bg-secondary border border-border rounded px-1.5 py-0.5 inline-block">
-                {factory.script}
-              </code>
-              <p className="text-[10px] text-muted-foreground mt-1">{factory.schedule}</p>
-            </div>
-            <span className="text-[10px] tracking-widest uppercase px-3 py-1 rounded-full border border-purple-400/25 bg-purple-400/10 text-purple-400 flex-shrink-0">
-              Multiplier
-            </span>
-          </motion.div>
-        </FadeIn>
+            <p className="text-xs text-muted-foreground/50 mt-4 tracking-wider">
+              Last updated: {lastUpdated} · McCray Ventures LLC
+            </p>
+          </>
+        )}
       </div>
     </section>
   );
