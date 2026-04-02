@@ -11,6 +11,7 @@ const Navigation = () => {
     { href: "/about", label: "About" },
     { href: "/work", label: "Work" },
     { href: "/experience", label: "Experience" },
+    { href: "/career", label: "Career" },
   ];
 
   const isActive = (href: string) => {
