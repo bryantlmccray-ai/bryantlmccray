@@ -10,6 +10,7 @@ import About from "./pages/About";
 import Work from "./pages/Work";
 import Experience from "./pages/Experience";
 import McCrayVentures from "./pages/McCrayVentures";
+import CareerPage from "./pages/CareerPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
