@@ -1,14 +1,64 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Volume2, VolumeX } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import splashHighlight from "@/assets/splash-highlight.mp4.asset.json";
 
 const Splash = () => {
   const navigate = useNavigate();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
+
+  const tryUnmute = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = false;
+    v.volume = 1;
+    const p = v.play();
+    if (p && typeof p.then === "function") {
+      p.then(() => setMuted(false)).catch(() => {
+        v.muted = true;
+        setMuted(true);
+      });
+    } else {
+      setMuted(false);
+    }
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.muted) {
+      tryUnmute();
+    } else {
+      v.muted = true;
+      setMuted(true);
+    }
+  };
+
+  useEffect(() => {
+    const onFirstInteract = () => tryUnmute();
+    const events: (keyof WindowEventMap)[] = [
+      "pointerdown",
+      "pointermove",
+      "keydown",
+      "touchstart",
+      "scroll",
+      "wheel",
+    ];
+    events.forEach((ev) =>
+      window.addEventListener(ev, onFirstInteract, { once: true, passive: true })
+    );
+    return () => {
+      events.forEach((ev) => window.removeEventListener(ev, onFirstInteract));
+    };
+  }, []);
 
   const handleEnter = () => {
     navigate("/home");
   };
+
 
   return (
     <motion.div
@@ -94,6 +144,7 @@ const Splash = () => {
           />
           <div className="relative overflow-hidden border border-accent/40 rounded-sm shadow-2xl bg-black">
             <video
+              ref={videoRef}
               src={splashHighlight.url}
               autoPlay
               loop
@@ -102,6 +153,15 @@ const Splash = () => {
               className="w-full h-auto block transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
             />
             <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
+            <button
+              type="button"
+              onClick={toggleMute}
+              aria-label={muted ? "Unmute video" : "Mute video"}
+              className="absolute bottom-3 right-3 z-10 inline-flex items-center gap-2 rounded-full bg-black/60 hover:bg-black/80 text-white px-3 py-2 text-xs uppercase tracking-[0.2em] backdrop-blur transition-colors"
+            >
+              {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+              <span>{muted ? "Tap for sound" : "Sound on"}</span>
+            </button>
           </div>
         </motion.div>
 
