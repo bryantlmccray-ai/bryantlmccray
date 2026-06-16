@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import splashHighlight from "@/assets/splash-highlight.mp4.asset.json";
 
 const Splash = () => {
   const navigate = useNavigate();
@@ -77,11 +78,38 @@ const Splash = () => {
           </motion.h1>
         </div>
 
+        {/* Featured highlight video */}
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.2, delay: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-12 md:mt-16 mx-auto w-full max-w-3xl relative group"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <motion.div
+            aria-hidden
+            className="absolute -inset-px rounded-sm bg-accent/30 blur-xl opacity-60"
+            animate={{ opacity: [0.4, 0.7, 0.4] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <div className="relative overflow-hidden border border-accent/40 rounded-sm shadow-2xl bg-black">
+            <video
+              src={splashHighlight.url}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-auto block transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
+            />
+            <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/5" />
+          </div>
+        </motion.div>
+
         {/* Clever caption */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
+          transition={{ duration: 0.8, delay: 1.4 }}
           className="mt-8 md:mt-12 text-muted-foreground text-lg md:text-xl tracking-wide font-sans"
         >
           The stories that shape us. The moments that matter.
