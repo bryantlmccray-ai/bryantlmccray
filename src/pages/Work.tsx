@@ -29,7 +29,6 @@ const getYouTubeId = (url: string): string | null => {
 const categories = [
   "All",
   "Breaking News",
-  "Live Reporting",
   "Investigation",
   "Enterprise Reporting",
   "Culture & Community",
@@ -238,6 +237,7 @@ const Work = () => {
         </section>
 
         {/* Work Grid */}
+        {/* NOTE: If a category with no items is added back, render the empty state outside the AnimatePresence wrapper and only mount the animated list when filteredWork.length > 0. */}
         <section className="py-16">
           <div className="editorial-container">
             <div className="space-y-0">
@@ -249,11 +249,6 @@ const Work = () => {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {filteredWork.length === 0 && (
-                    <p className="text-muted-foreground py-16">
-                      No stories filed under this category yet. More coming soon.
-                    </p>
-                  )}
                   {filteredWork.map((item, index) => (
 
                     <motion.div
