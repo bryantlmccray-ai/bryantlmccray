@@ -249,7 +249,13 @@ const Work = () => {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
+                  {filteredWork.length === 0 && (
+                    <p className="text-muted-foreground py-16">
+                      No stories filed under this category yet. More coming soon.
+                    </p>
+                  )}
                   {filteredWork.map((item, index) => (
+
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, y: 20 }}
