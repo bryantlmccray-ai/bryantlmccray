@@ -34,6 +34,9 @@ const featuredWork = [
     description: "A pastor and his wife, both activists, share not just a birthday but a lifelong mission for change.",
     link: "https://www.youtube.com/watch?v=Y0PQ2o0cTZw&t=46s",
     thumbnail: "https://img.youtube.com/vi/Y0PQ2o0cTZw/mqdefault.jpg",
+    station: "WKYC-TV",
+    market: "Cleveland",
+    year: "2024",
   },
   {
     title: "Healing in the Stacks",
@@ -41,6 +44,9 @@ const featuredWork = [
     description: "After a shooting at a Shaker Heights library, a community finds its way back together.",
     link: "https://www.youtube.com/watch?v=ervpUsDZP1k&t=43s",
     thumbnail: "https://img.youtube.com/vi/ervpUsDZP1k/mqdefault.jpg",
+    station: "WKYC-TV",
+    market: "Cleveland",
+    year: "2024",
   },
   {
     title: "12 Years to Justice",
@@ -48,6 +54,9 @@ const featuredWork = [
     description: "A nurse murdered in broad daylight—and 12 years later, her own divorce attorney is charged with the crime.",
     link: "https://www.youtube.com/watch?v=oXRPe8KKv8c",
     thumbnail: justiceThumb,
+    station: "WKYC-TV",
+    market: "Cleveland",
+    year: "2024",
   },
 ];
 
@@ -120,78 +129,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Featured Work Preview */}
-        <section className="py-20 border-t border-border">
-          <div className="editorial-container">
-            <FadeIn>
-              <div className="flex items-center justify-between mb-12">
-                <h2 className="font-serif text-headline text-foreground">
-                  Selected Work
-                </h2>
-                <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
-                  <Button variant="accent" size="sm" asChild>
-                    <Link to="/work" className="flex items-center gap-2">
-                      View All <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </motion.div>
-              </div>
-            </FadeIn>
-
-            <StaggerContainer className="space-y-8">
-              {featuredWork.map((item, index) => {
-                const content = (
-                  <motion.div 
-                    className="flex flex-col md:flex-row md:items-start gap-6"
-                    whileHover={{ x: 10 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="w-full md:w-40 lg:w-48 flex-shrink-0 overflow-hidden">
-                      <motion.img 
-                        src={item.thumbnail} 
-                        alt={item.title}
-                        className="w-full aspect-video object-cover"
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.4 }}
-                      />
-                    </div>
-                    <div className="flex-1 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                      <div className="flex-1">
-                        <p className="text-xs text-accent tracking-widest uppercase mb-2">
-                          {item.category}
-                        </p>
-                        <h3 className="font-serif text-2xl text-foreground group-hover:text-accent transition-colors duration-300 mb-2">
-                          {item.title}
-                        </h3>
-                        <p className="text-muted-foreground max-w-lg">
-                          {item.description}
-                        </p>
-                      </div>
-                      <motion.div 
-                        className="flex items-center text-muted-foreground group-hover:text-accent transition-colors duration-300"
-                        whileHover={{ scale: 1.2, rotate: 15 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <Play className="h-5 w-5" />
-                      </motion.div>
-                    </div>
-                  </motion.div>
-                );
-
-                return (
-                  <StaggerItem key={index}>
-                    <button
-                      onClick={() => setSelectedVideo({ title: item.title, link: item.link })}
-                      className="block group py-8 border-b border-border last:border-b-0 cursor-pointer w-full text-left"
-                    >
-                      {content}
-                    </button>
-                  </StaggerItem>
-                );
-              })}
-            </StaggerContainer>
-          </div>
-        </section>
         {/* Press Reel Highlight */}
         <section className="py-20 bg-secondary/50">
           <div className="editorial-container">
@@ -250,6 +187,81 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Featured Work Preview */}
+        <section className="py-20 border-t border-border">
+          <div className="editorial-container">
+            <FadeIn>
+              <div className="flex items-center justify-between mb-12">
+                <h2 className="font-serif text-headline text-foreground">
+                  Selected Work
+                </h2>
+                <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
+                  <Button variant="accent" size="sm" asChild>
+                    <Link to="/work" className="flex items-center gap-2">
+                      View All <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </motion.div>
+              </div>
+            </FadeIn>
+
+            <StaggerContainer className="space-y-8">
+              {featuredWork.map((item, index) => {
+                const content = (
+                  <motion.div 
+                    className="flex flex-col md:flex-row md:items-start gap-6"
+                    whileHover={{ x: 10 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="w-full md:w-40 lg:w-48 flex-shrink-0 overflow-hidden">
+                      <motion.img 
+                        src={item.thumbnail} 
+                        alt={item.title}
+                        className="w-full aspect-video object-cover"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.4 }}
+                      />
+                    </div>
+                    <div className="flex-1 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                      <div className="flex-1">
+                        <p className="text-xs text-accent tracking-widest uppercase mb-2">
+                          {item.category}
+                        </p>
+                        <p className="text-xs text-muted-foreground tracking-widest uppercase mb-2">
+                          {item.station} · {item.market} · {item.year}
+                        </p>
+                        <h3 className="font-serif text-2xl text-foreground group-hover:text-accent transition-colors duration-300 mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-muted-foreground max-w-lg">
+                          {item.description}
+                        </p>
+                      </div>
+                      <motion.div 
+                        className="flex items-center text-muted-foreground group-hover:text-accent transition-colors duration-300"
+                        whileHover={{ scale: 1.2, rotate: 15 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Play className="h-5 w-5" />
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                );
+
+                return (
+                  <StaggerItem key={index}>
+                    <button
+                      onClick={() => setSelectedVideo({ title: item.title, link: item.link })}
+                      className="block group py-8 border-b border-border last:border-b-0 cursor-pointer w-full text-left"
+                    >
+                      {content}
+                    </button>
+                  </StaggerItem>
+                );
+              })}
+            </StaggerContainer>
+          </div>
+        </section>
         {/* Quiet CTA */}
         <FadeIn className="py-24">
           <div className="editorial-container text-center">
