@@ -104,7 +104,7 @@ const Index = () => {
                   transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   className="text-lg text-foreground/80 leading-relaxed max-w-xl"
                 >
-                  Emmy-nominated reporter covering culture, community, and local change.
+                  Four-time Emmy-nominated reporter at WGN-TV in Chicago, covering breaking news and politics.
                 </motion.p>
               </div>
               

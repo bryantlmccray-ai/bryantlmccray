@@ -95,10 +95,7 @@ const About = () => {
                     </p>
 
                     <p>
-                      I've worked in local and regional newsrooms, covering everything from 
-                      community-level issues to broader shifts in how we live. I don't believe 
-                      good journalism needs hype or theatrics. I believe it needs attention, 
-                      honesty, and the discipline to listen before speaking.
+                      I've reported in Green Bay, Milwaukee, and Cleveland. I'm in Chicago now, at WGN. Four Emmy nominations along the way. I don't believe good journalism needs hype or theatrics. I believe it needs attention, honesty, and the discipline to listen before speaking.
                     </p>
                   </div>
                 </FadeIn>
