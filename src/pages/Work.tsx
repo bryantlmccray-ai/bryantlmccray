@@ -294,10 +294,11 @@ const Work = () => {
                                   <p className="text-xs text-accent tracking-widest uppercase">
                                     {item.category}
                                   </p>
-                                  <span className="text-xs text-muted-foreground">
-                                    {item.year}
-                                  </span>
                                 </div>
+                                <p className="text-xs text-muted-foreground tracking-widest uppercase mb-2">
+                                  {item.station} · {item.market} · {item.year}
+                                </p>
+
                                 <h2 className="font-serif text-2xl text-foreground group-hover:text-accent transition-colors duration-300 mb-3">
                                   {item.title}
                                 </h2>
