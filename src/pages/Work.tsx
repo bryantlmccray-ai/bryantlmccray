@@ -29,6 +29,7 @@ const getYouTubeId = (url: string): string | null => {
 const categories = [
   "All",
   "Breaking News",
+  "Live Reporting",
   "Investigation",
   "Enterprise Reporting",
   "Culture & Community",
@@ -41,6 +42,8 @@ const workItems = [
     category: "Investigation",
     description: "A nurse murdered in broad daylight—and 12 years later, her own divorce attorney is charged with the crime.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: justiceThumb,
     link: "https://www.youtube.com/watch?v=oXRPe8KKv8c",
   },
@@ -49,6 +52,8 @@ const workItems = [
     category: "Breaking News",
     description: "Breaking coverage of a fatal deputy-involved shooting in a Staples parking lot, with live reporting from the scene.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: "https://img.youtube.com/vi/YsZdpk5RJ3w/mqdefault.jpg",
     link: "https://youtu.be/YsZdpk5RJ3w",
   },
@@ -57,6 +62,8 @@ const workItems = [
     category: "Breaking News",
     description: "Breaking coverage of an officer-involved shooting that shook a quiet Ohio community.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: "https://img.youtube.com/vi/MHjfBwxI8OM/mqdefault.jpg",
     link: "https://youtu.be/MHjfBwxI8OM",
   },
@@ -65,6 +72,8 @@ const workItems = [
     category: "Breaking News",
     description: "Breaking coverage as a man and woman are shot at a local apartment complex, with police investigating the scene.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: "https://img.youtube.com/vi/3knlPCluuCI/mqdefault.jpg",
     link: "https://youtu.be/3knlPCluuCI",
   },
@@ -73,6 +82,8 @@ const workItems = [
     category: "Breaking News",
     description: "A fatal plane crash in Tuscarawas County leaves investigators searching for answers.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: "https://img.youtube.com/vi/o4EkSIXOqlI/mqdefault.jpg",
     link: "https://youtu.be/o4EkSIXOqlI",
   },
@@ -81,6 +92,8 @@ const workItems = [
     category: "Enterprise Reporting",
     description: "As a potential ban looms, exploring what's at stake for creators, businesses, and national security.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: "https://img.youtube.com/vi/kyz0-Brc8GI/mqdefault.jpg",
     link: "https://youtu.be/kyz0-Brc8GI",
   },
@@ -89,6 +102,8 @@ const workItems = [
     category: "Culture & Community",
     description: "A pastor and his wife, both activists, share not just a birthday but a lifelong mission for change.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: "https://img.youtube.com/vi/Y0PQ2o0cTZw/mqdefault.jpg",
     link: "https://www.youtube.com/watch?v=Y0PQ2o0cTZw",
   },
@@ -97,6 +112,8 @@ const workItems = [
     category: "Culture & Community",
     description: "After a shooting at a Shaker Heights library, a community finds its way back together.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: "https://img.youtube.com/vi/ervpUsDZP1k/mqdefault.jpg",
     link: "https://www.youtube.com/watch?v=ervpUsDZP1k",
   },
@@ -105,6 +122,8 @@ const workItems = [
     category: "Culture & Community",
     description: "A heartwarming look at what it means to come home—and the people who make it possible.",
     year: "2023",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: "https://img.youtube.com/vi/ADHN2dIr-ZA/mqdefault.jpg",
     link: "https://youtu.be/ADHN2dIr-ZA",
   },
@@ -113,6 +132,8 @@ const workItems = [
     category: "Culture & Community",
     description: "How one community rallied together to help Hurricane Helene victims rebuild their lives.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: "https://img.youtube.com/vi/ss6WG4hkhUw/mqdefault.jpg",
     link: "https://youtu.be/ss6WG4hkhUw",
   },
@@ -121,6 +142,8 @@ const workItems = [
     category: "Culture & Community",
     description: "Live coverage as a winter storm blankets the region, bringing hazardous roads and community resilience.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: hazardousRoadsThumb,
     link: "https://youtu.be/W_MycGns4b4",
   },
@@ -129,6 +152,8 @@ const workItems = [
     category: "Culture & Community",
     description: "A look at a bustling Friday night in downtown Cleveland as residents and visitors fill the streets.",
     year: "2023",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: "https://img.youtube.com/vi/Q5GPykcqaAE/mqdefault.jpg",
     link: "https://youtu.be/Q5GPykcqaAE",
   },
@@ -137,6 +162,8 @@ const workItems = [
     category: "On-Air Segments",
     description: "A collection of on-air segments showcasing breaking news coverage, enterprise reporting, and community-driven storytelling.",
     year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
     thumbnail: pressReelThumbnail,
     link: "https://www.youtube.com/watch?v=popbs1y_L9A",
   },
@@ -222,7 +249,13 @@ const Work = () => {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
+                  {filteredWork.length === 0 && (
+                    <p className="text-muted-foreground py-16">
+                      No stories filed under this category yet. More coming soon.
+                    </p>
+                  )}
                   {filteredWork.map((item, index) => (
+
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, y: 20 }}
@@ -267,10 +300,11 @@ const Work = () => {
                                   <p className="text-xs text-accent tracking-widest uppercase">
                                     {item.category}
                                   </p>
-                                  <span className="text-xs text-muted-foreground">
-                                    {item.year}
-                                  </span>
                                 </div>
+                                <p className="text-xs text-muted-foreground tracking-widest uppercase mb-2">
+                                  {item.station} · {item.market} · {item.year}
+                                </p>
+
                                 <h2 className="font-serif text-2xl text-foreground group-hover:text-accent transition-colors duration-300 mb-3">
                                   {item.title}
                                 </h2>
