@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
+import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import hazardousRoadsThumb from "@/assets/hazardous-roads-thumbnail.jpg";
 
 // Extract YouTube video ID from various URL formats
@@ -164,6 +165,16 @@ const workItems = [
     market: "Chicago",
     thumbnail: "https://img.youtube.com/vi/F9po9pUJWio/maxresdefault.jpg",
     link: "https://www.youtube.com/watch?v=F9po9pUJWio",
+  },
+  {
+    title: "On-Air Highlights",
+    category: "On-Air Segments",
+    description: "A collection of on-air segments showcasing breaking news coverage, enterprise reporting, and community-driven storytelling.",
+    year: "2024",
+    station: "WKYC-TV",
+    market: "Cleveland",
+    thumbnail: pressReelThumbnail,
+    link: "https://www.youtube.com/watch?v=popbs1y_L9A",
   },
 ];
 
