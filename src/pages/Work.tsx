@@ -12,7 +12,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
-import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import hazardousRoadsThumb from "@/assets/hazardous-roads-thumbnail.jpg";
 
 // Extract YouTube video ID from various URL formats

@@ -13,7 +13,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import heroAnimation from "@/assets/hero-animation.mp4";
-import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 
 // Extract YouTube video ID from various URL formats
