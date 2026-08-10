@@ -138,17 +138,19 @@ const Index = () => {
                     Press Reel
                   </p>
                   <h2 className="font-serif text-headline text-foreground mb-6">
-                    On-Air Highlights
+                    Reporter Reel 2026
                   </h2>
-                  <p className="text-muted-foreground leading-relaxed mb-8">
-                    A collection of on-air segments showcasing breaking news coverage, 
-                    enterprise reporting, and community-driven storytelling.
+                  <p className="text-muted-foreground leading-relaxed mb-2">
+                    Seven live standups and three full stories from WGN-TV Chicago. Breaking news, severe weather, and state and national politics.
+                  </p>
+                  <p className="text-xs text-muted-foreground tracking-widest uppercase mb-8">
+                    WGN-TV · Chicago · 2026
                   </p>
                   <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
                     <Button 
                       variant="editorial" 
                       size="sm" 
-                      onClick={() => setSelectedVideo({ title: "On-Air Highlights", link: "https://www.youtube.com/watch?v=popbs1y_L9A" })}
+                      onClick={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://www.youtube.com/watch?v=F9po9pUJWio" })}
                       className="flex items-center gap-2"
                     >
                       Watch Reel <ArrowRight className="h-4 w-4" />
@@ -160,12 +162,12 @@ const Index = () => {
               <FadeIn direction="right" delay={0.2}>
                 <HoverLift>
                   <button 
-                    onClick={() => setSelectedVideo({ title: "On-Air Highlights", link: "https://www.youtube.com/watch?v=popbs1y_L9A" })}
+                    onClick={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://www.youtube.com/watch?v=F9po9pUJWio" })}
                     className="aspect-video relative group cursor-pointer overflow-hidden border border-border block w-full"
                   >
                     <motion.img 
-                      src={pressReelThumbnail} 
-                      alt="Press Reel Thumbnail"
+                      src="https://img.youtube.com/vi/F9po9pUJWio/maxresdefault.jpg" 
+                      alt="Reporter Reel 2026 Thumbnail"
                       className="w-full h-full object-cover"
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.4 }}

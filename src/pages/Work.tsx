@@ -156,14 +156,14 @@ const workItems = [
     link: "https://youtu.be/Q5GPykcqaAE",
   },
   {
-    title: "On-Air Highlights",
+    title: "Reporter Reel 2026",
     category: "On-Air Segments",
-    description: "A collection of on-air segments showcasing breaking news coverage, enterprise reporting, and community-driven storytelling.",
-    year: "2024",
-    station: "WKYC-TV",
-    market: "Cleveland",
-    thumbnail: pressReelThumbnail,
-    link: "https://www.youtube.com/watch?v=popbs1y_L9A",
+    description: "Seven live standups and three full stories from WGN-TV Chicago. Breaking news, severe weather, and state and national politics.",
+    year: "2026",
+    station: "WGN-TV",
+    market: "Chicago",
+    thumbnail: "https://img.youtube.com/vi/F9po9pUJWio/maxresdefault.jpg",
+    link: "https://www.youtube.com/watch?v=F9po9pUJWio",
   },
 ];
 
