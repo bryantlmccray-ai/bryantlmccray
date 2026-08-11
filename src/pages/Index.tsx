@@ -166,7 +166,7 @@ const Index = () => {
                     className="aspect-video relative group cursor-pointer overflow-hidden border border-border block w-full"
                   >
                     <motion.img 
-                      src="https://img.youtube.com/vi/F9po9pUJWio/maxresdefault.jpg" 
+                      src="https://img.youtube.com/vi/F9po9pUJWio/hqdefault.jpg" 
                       alt="Reporter Reel 2026 Thumbnail"
                       className="w-full h-full object-cover"
                       whileHover={{ scale: 1.05 }}

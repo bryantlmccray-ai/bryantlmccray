@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import splashHighlight from "@/assets/splash-highlight.mp4.asset.json";
+import splashHighlight from "@/assets/splash-reel-2026.mp4.asset.json";
 
 const Splash = () => {
   const navigate = useNavigate();
