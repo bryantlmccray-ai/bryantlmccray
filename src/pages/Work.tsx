@@ -43,7 +43,7 @@ const workItems = [
     year: "2026",
     station: "WGN-TV",
     market: "Chicago",
-    thumbnail: "https://img.youtube.com/vi/F9po9pUJWio/maxresdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/F9po9pUJWio/hqdefault.jpg",
     link: "https://www.youtube.com/watch?v=F9po9pUJWio",
   },
   {
