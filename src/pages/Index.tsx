@@ -162,27 +162,53 @@ const Index = () => {
   const [wordmarkSize, setWordmarkSize] = useState(100);
 
   useLayoutEffect(() => {
-    const measure = () => {
+    let cancelled = false;
+
+    const fit = () => {
       const el = wordmarkRef.current;
       const container = wordmarkContainerRef.current;
       if (!el || !container) return;
+      // clientWidth includes padding; the text must fit inside the padding box.
+      const styles = window.getComputedStyle(container);
+      const containerWidth =
+        container.clientWidth -
+        parseFloat(styles.paddingLeft || "0") -
+        parseFloat(styles.paddingRight || "0");
+      if (containerWidth <= 0) return;
+
+      // Pass 1: base 100px measurement and computed fit.
       el.style.fontSize = "100px";
-      const textWidth = el.scrollWidth;
-      const containerWidth = container.clientWidth;
-      if (textWidth > 0 && containerWidth > 0) {
-        setWordmarkSize(Math.min(100 * (containerWidth / textWidth), 352)); // cap ~22rem
+      const base = el.scrollWidth;
+      if (base <= 0) return;
+      let size = Math.min(100 * (containerWidth / base), 352); // cap ~22rem
+      el.style.fontSize = `${size}px`;
+
+      // Passes 2-3: self-correct if the text still overflows the container.
+      for (let pass = 0; pass < 2; pass++) {
+        const textWidth = el.scrollWidth;
+        if (textWidth <= containerWidth) break;
+        size = Math.max(size * (containerWidth / textWidth), 1);
+        el.style.fontSize = `${size}px`;
       }
+      setWordmarkSize(size);
     };
-    measure();
-    let resizeTimer = 0;
-    const onResize = () => {
-      window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(measure, 100);
-    };
-    window.addEventListener("resize", onResize);
+
+    fit();
+    // Re-measure once real font metrics are available; the heavy weight differs
+    // from the fallback and can throw off the initial fit.
+    document.fonts?.ready.then(() => {
+      if (!cancelled) fit();
+    });
+
+    const container = wordmarkContainerRef.current;
+    const observer = new ResizeObserver(() => {
+      if (!cancelled) fit();
+    });
+    if (container) observer.observe(container);
+
     return () => {
-      window.removeEventListener("resize", onResize);
-      window.clearTimeout(resizeTimer);
+      cancelled = true;
+      observer.disconnect();
     };
   }, [record.code]);
 
@@ -241,14 +267,14 @@ const Index = () => {
 
   return (
     <PageTransition>
-      <main className="min-h-screen bg-background">
+      <main className="min-h-screen bg-background overflow-x-clip">
         <Navigation />
 
         {/* Record Hero */}
         <section
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          className="relative min-h-[84vh] w-full overflow-hidden pt-28 md:pt-32"
+          className="relative min-h-[84vh] w-full overflow-hidden overflow-x-hidden pt-28 md:pt-32"
         >
           {/* Full-hero click target, below the content so the metadata and markers stay clickable */}
           <button
