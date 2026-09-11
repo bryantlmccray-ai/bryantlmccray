@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play, X } from "lucide-react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
@@ -154,6 +154,37 @@ const Index = () => {
   const swapTimer = useRef<number>();
   const transitioning = useRef(false);
   const record = records[displayed];
+
+  // Measured wordmark sizing: scale font size so the code spans the container
+  // width, keeping real glyph proportions (no transforms that stretch type).
+  const wordmarkRef = useRef<HTMLDivElement>(null);
+  const wordmarkContainerRef = useRef<HTMLDivElement>(null);
+  const [wordmarkSize, setWordmarkSize] = useState(100);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = wordmarkRef.current;
+      const container = wordmarkContainerRef.current;
+      if (!el || !container) return;
+      el.style.fontSize = "100px";
+      const textWidth = el.scrollWidth;
+      const containerWidth = container.clientWidth;
+      if (textWidth > 0 && containerWidth > 0) {
+        setWordmarkSize(Math.min(100 * (containerWidth / textWidth), 352)); // cap ~22rem
+      }
+    };
+    measure();
+    let resizeTimer = 0;
+    const onResize = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(measure, 100);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.clearTimeout(resizeTimer);
+    };
+  }, [record.code]);
 
   const goTo = useCallback(
     (next: number) => {
