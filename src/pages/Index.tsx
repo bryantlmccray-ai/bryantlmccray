@@ -248,7 +248,10 @@ const Index = () => {
             <div className="flex-1" />
 
             {/* Index markers */}
-            <div className="flex items-center gap-2 pb-6">
+            <div
+              className="flex items-center gap-2 pb-6"
+              style={{ marginBottom: "clamp(4.5rem, 21vw, 18rem)" }}
+            >
               {records.map((item, i) => (
                 <button
                   key={item.code}
