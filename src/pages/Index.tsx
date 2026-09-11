@@ -240,7 +240,10 @@ const Index = () => {
           <div className="editorial-container relative z-10 flex min-h-[calc(88vh-7rem)] flex-col">
             <div className="h-px w-full bg-border" />
 
-            <div className="grid gap-x-16 md:grid-cols-2">
+            <div
+              className="grid cursor-pointer gap-x-16 md:grid-cols-2"
+              onClick={() => setSelectedVideo({ title: record.name, link: record.link })}
+            >
               <div>
                 <MetaRow label="Name" value={record.name} scramble={scramble} delay={450} cycle={displayed} />
                 <MetaRow label="Reporter" value={record.reporter} scramble={scramble} delay={490} cycle={displayed} />
@@ -258,7 +261,7 @@ const Index = () => {
             {/* Index markers */}
             <div
               className="flex items-center gap-2 pb-6"
-              style={{ marginBottom: "clamp(4.5rem, 21vw, 18rem)" }}
+              style={{ marginBottom: "clamp(3.5rem, 17vw, 14rem)" }}
             >
               {records.map((item, i) => (
                 <button
@@ -281,39 +284,34 @@ const Index = () => {
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 overflow-hidden">
             <div className="editorial-container">
               <div className="relative" style={{ marginBottom: "-0.08em" }}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={record.code}
-                    initial={
-                      shouldReduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, x: 60, skewX: "8deg" }
-                    }
-                    animate={
-                      shouldReduceMotion
-                        ? { opacity: 1 }
-                        : { opacity: 1, x: 0, skewX: "0deg" }
-                    }
-                    exit={
-                      shouldReduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, x: -60, skewX: "-8deg" }
-                    }
-                    transition={{
-                      duration: shouldReduceMotion ? 0.2 : 0.45,
-                      ease: [0.76, 0, 0.24, 1],
-                    }}
-                    className="text-center font-sans text-foreground"
-                    style={{
-                      fontSize: "clamp(4.5rem, 21vw, 18rem)",
-                      fontWeight: 900,
-                      letterSpacing: "-0.045em",
-                      lineHeight: 1,
-                    }}
-                  >
-                    {record.code}
-                  </motion.div>
-                </AnimatePresence>
+                {/* Remount via key so the enter animation replays on each record change;
+                    the swap is hidden under the wipe panel, so no exit animation is needed. */}
+                <motion.div
+                  key={record.code}
+                  initial={
+                    shouldReduceMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, x: 60, skewX: "8deg" }
+                  }
+                  animate={
+                    shouldReduceMotion
+                      ? { opacity: 1 }
+                      : { opacity: 1, x: 0, skewX: "0deg" }
+                  }
+                  transition={{
+                    duration: shouldReduceMotion ? 0.2 : 0.5,
+                    ease: [0.76, 0, 0.24, 1],
+                  }}
+                  className="text-center font-sans text-foreground"
+                  style={{
+                    fontSize: "clamp(3.5rem, 17vw, 14rem)",
+                    fontWeight: 900,
+                    letterSpacing: "-0.045em",
+                    lineHeight: 1,
+                  }}
+                >
+                  {record.code}
+                </motion.div>
               </div>
             </div>
           </div>
