@@ -128,7 +128,7 @@ const Index = () => {
         <section className="pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
           <div className="editorial-container">
             <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-0">
-              <div className="flex-1 max-w-2xl z-10">
+              <div className="w-full md:w-[44%] lg:w-[48%] md:flex-none max-w-2xl z-10">
                 <h1 className="font-serif text-display text-foreground mb-6">
                   <span className="block overflow-hidden">
                     <motion.span
