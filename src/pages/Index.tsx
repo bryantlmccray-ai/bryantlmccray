@@ -237,11 +237,11 @@ const Index = () => {
             />
           )}
 
-          <div className="editorial-container relative z-10 flex min-h-[calc(88vh-7rem)] flex-col">
+          <div className="editorial-container pointer-events-none relative z-10 flex min-h-[calc(88vh-7rem)] flex-col">
             <div className="h-px w-full bg-border" />
 
             <div
-              className="grid cursor-pointer gap-x-16 md:grid-cols-2"
+              className="pointer-events-auto grid cursor-pointer gap-x-16 md:grid-cols-2"
               onClick={() => setSelectedVideo({ title: record.name, link: record.link })}
             >
               <div>
@@ -260,7 +260,7 @@ const Index = () => {
 
             {/* Index markers */}
             <div
-              className="flex items-center gap-2 pb-6"
+              className="pointer-events-auto flex items-center gap-2 pb-6"
               style={{ marginBottom: "clamp(3.5rem, 17vw, 14rem)" }}
             >
               {records.map((item, i) => (
