@@ -248,7 +248,7 @@ const Index = () => {
         <section
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          className="relative min-h-[88vh] w-full overflow-hidden pt-28 md:pt-32"
+          className="relative min-h-[84vh] w-full overflow-hidden pt-28 md:pt-32"
         >
           {/* Full-hero click target, below the content so the metadata and markers stay clickable */}
           <button
@@ -268,7 +268,7 @@ const Index = () => {
             />
           )}
 
-          <div className="editorial-container pointer-events-none relative z-10 flex min-h-[calc(88vh-7rem)] flex-col">
+          <div className="editorial-container pointer-events-none relative z-10 flex min-h-[calc(84vh-7rem)] flex-col">
             <div className="h-px w-full bg-border" />
 
             <div
@@ -292,7 +292,7 @@ const Index = () => {
             {/* Index markers */}
             <div
               className="pointer-events-auto flex items-center gap-2 pb-6"
-              style={{ marginBottom: "clamp(3.5rem, 17vw, 14rem)" }}
+              style={{ marginBottom: `calc(${(wordmarkSize * 0.9).toFixed(1)}px + 1.5rem)` }}
             >
               {records.map((item, i) => (
                 <button
@@ -313,11 +313,12 @@ const Index = () => {
 
           {/* Wordmark */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 overflow-hidden">
-            <div className="editorial-container">
-              <div className="relative" style={{ marginBottom: "-0.08em" }}>
+            <div className="editorial-container" ref={wordmarkContainerRef}>
+              <div className="relative text-center" style={{ marginBottom: "-0.1em" }}>
                 {/* Remount via key so the enter animation replays on each record change;
                     the swap is hidden under the wipe panel, so no exit animation is needed. */}
                 <motion.div
+                  ref={wordmarkRef}
                   key={record.code}
                   initial={
                     shouldReduceMotion
@@ -333,9 +334,9 @@ const Index = () => {
                     duration: shouldReduceMotion ? 0.2 : 0.5,
                     ease: [0.76, 0, 0.24, 1],
                   }}
-                  className="text-center font-sans text-foreground"
+                  className="inline-block whitespace-nowrap font-sans text-foreground"
                   style={{
-                    fontSize: "clamp(3.5rem, 17vw, 14rem)",
+                    fontSize: `${wordmarkSize}px`,
                     fontWeight: 900,
                     letterSpacing: "-0.045em",
                     lineHeight: 1,
