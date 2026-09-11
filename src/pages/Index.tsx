@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Play, Volume2, VolumeX, X } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, Play, X } from "lucide-react";
+import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -12,7 +12,6 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
-import splashHighlight from "@/assets/splash-reel-2026.mp4.asset.json";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 
 // Extract YouTube video ID from various URL formats
@@ -26,6 +25,86 @@ const getYouTubeId = (url: string): string | null => {
   }
   return null;
 };
+
+const records = [
+  { code: "SP.24", name: "A Shared Purpose", reporter: "Bryant McCray", date: "2024", station: "WKYC-TV", market: "Cleveland", category: "Community", link: "https://www.youtube.com/watch?v=Y0PQ2o0cTZw&t=46s" },
+  { code: "HS.24", name: "Healing in the Stacks", reporter: "Bryant McCray", date: "2024", station: "WKYC-TV", market: "Cleveland", category: "Community", link: "https://www.youtube.com/watch?v=ervpUsDZP1k&t=43s" },
+  { code: "TY.24", name: "12 Years to Justice", reporter: "Bryant McCray", date: "2024", station: "WKYC-TV", market: "Cleveland", category: "Investigation", link: "https://www.youtube.com/watch?v=oXRPe8KKv8c" },
+  { code: "RR.26", name: "Reporter Reel 2026", reporter: "Bryant McCray", date: "2026", station: "WGN-TV", market: "Chicago", category: "Broadcast Reel", link: "https://www.youtube.com/watch?v=F9po9pUJWio" },
+];
+
+const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+// Small local scramble hook: resolves a string character by character.
+const useScramble = (target: string, enabled: boolean, delay = 0, duration = 500) => {
+  const [display, setDisplay] = useState(target);
+
+  useEffect(() => {
+    if (!enabled) {
+      setDisplay(target);
+      return;
+    }
+    let frame = 0;
+    let raf = 0;
+    let start = 0;
+    let timeout = 0;
+
+    const step = (time: number) => {
+      if (!start) start = time;
+      const progress = Math.min((time - start) / duration, 1);
+      const resolved = Math.floor(progress * target.length);
+      const next = target
+        .split("")
+        .map((char, i) => {
+          if (i < resolved || char === " ") return char;
+          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+        })
+        .join("");
+      setDisplay(next);
+      frame += 1;
+      if (progress < 1) {
+        raf = requestAnimationFrame(step);
+      } else {
+        setDisplay(target);
+      }
+    };
+
+    timeout = window.setTimeout(() => {
+      raf = requestAnimationFrame(step);
+    }, delay);
+
+    return () => {
+      window.clearTimeout(timeout);
+      cancelAnimationFrame(raf);
+      void frame;
+    };
+  }, [target, enabled, delay, duration]);
+
+  return display;
+};
+
+const MetaRow = ({
+  label,
+  value,
+  scramble,
+  delay,
+}: {
+  label: string;
+  value: string;
+  scramble: boolean;
+  delay: number;
+}) => {
+  const display = useScramble(value.toUpperCase(), scramble, delay);
+  return (
+    <div className="flex items-baseline justify-between gap-6 border-b border-border py-3">
+      <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{label}</span>
+      <span className="text-[11px] uppercase tracking-[0.1em] text-foreground text-right tabular-nums">
+        {display}
+      </span>
+    </div>
+  );
+};
+
 const featuredWork = [
   {
     title: "A Shared Purpose",
@@ -61,56 +140,61 @@ const featuredWork = [
 
 const Index = () => {
   const [selectedVideo, setSelectedVideo] = useState<{ title: string; link: string } | null>(null);
-  const [muted, setMuted] = useState(true);
-  const heroVideoRef = useRef<HTMLVideoElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const videoId = selectedVideo ? getYouTubeId(selectedVideo.link) : null;
 
-  const tryUnmute = () => {
-    const video = heroVideoRef.current;
-    if (!video) return;
-    video.muted = false;
-    video.volume = 1;
-    const playAttempt = video.play();
-    if (playAttempt && typeof playAttempt.then === "function") {
-      playAttempt.then(() => setMuted(false)).catch(() => {
-        video.muted = true;
-        setMuted(true);
-      });
-    } else {
-      setMuted(false);
-    }
-  };
+  const [displayed, setDisplayed] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const panel = useAnimationControls();
+  const swapTimer = useRef<number>();
+  const transitioning = useRef(false);
+  const record = records[displayed];
 
-  const toggleMute = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    const video = heroVideoRef.current;
-    if (!video) return;
-    if (video.muted) {
-      tryUnmute();
-    } else {
-      video.muted = true;
-      setMuted(true);
-    }
-  };
+  const goTo = useCallback(
+    (next: number) => {
+      if (next === displayed || transitioning.current) return;
+      if (shouldReduceMotion) {
+        setDisplayed(next);
+        return;
+      }
+      transitioning.current = true;
+      panel.set({ x: "100%" });
+      panel.start({
+        x: ["100%", "0%", "-100%"],
+        transition: { duration: 0.9, times: [0, 0.5, 1], ease: [0.76, 0, 0.24, 1] },
+      });
+      swapTimer.current = window.setTimeout(() => setDisplayed(next), 450);
+      window.setTimeout(() => {
+        transitioning.current = false;
+      }, 900);
+    },
+    [displayed, panel, shouldReduceMotion]
+  );
 
   useEffect(() => {
-    const onFirstInteract = () => tryUnmute();
-    const events: (keyof WindowEventMap)[] = [
-      "pointerdown",
-      "pointermove",
-      "keydown",
-      "touchstart",
-      "scroll",
-      "wheel",
-    ];
-    events.forEach((event) =>
-      window.addEventListener(event, onFirstInteract, { once: true, passive: true })
-    );
-    return () => {
-      events.forEach((event) => window.removeEventListener(event, onFirstInteract));
-    };
-  }, []);
+    if (paused) return;
+    const id = window.setInterval(() => {
+      goTo((displayed + 1) % records.length);
+    }, 5000);
+    return () => window.clearInterval(id);
+  }, [displayed, paused, goTo]);
+
+  useEffect(() => () => window.clearTimeout(swapTimer.current), []);
+
+  const onKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      goTo((displayed + 1) % records.length);
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      goTo((displayed - 1 + records.length) % records.length);
+    } else if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setSelectedVideo({ title: record.name, link: record.link });
+    }
+  };
+
+  const scramble = !shouldReduceMotion;
 
   const revealInitial = shouldReduceMotion ? false : { opacity: 0, y: 30 };
   const revealTransition = (delay: number, duration = 0.6) => ({
@@ -123,105 +207,172 @@ const Index = () => {
     <PageTransition>
       <main className="min-h-screen bg-background">
         <Navigation />
-        
-        {/* Hero Section */}
-        <section className="pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
-          <div className="editorial-container">
-            <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-0">
-              <div className="w-full md:w-[44%] lg:w-[48%] md:flex-none max-w-2xl z-10">
-                <h1 className="font-serif text-display text-foreground mb-6">
-                  <span className="block overflow-hidden">
-                    <motion.span
-                      className="block"
-                      initial={shouldReduceMotion ? false : { opacity: 0, y: 100 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={revealTransition(0.15, 1)}
-                    >
-                      Bryant
-                    </motion.span>
-                  </span>
-                  <span className="block overflow-hidden">
-                    <motion.span
-                      className="block"
-                      initial={shouldReduceMotion ? false : { opacity: 0, y: 100 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={revealTransition(0.3, 1)}
-                    >
-                      McCray
-                    </motion.span>
-                  </span>
-                </h1>
-                
-                <motion.p 
-                  initial={revealInitial}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={revealTransition(0.5)}
-                  className="text-subhead text-muted-foreground mb-3"
-                >
-                  Journalist. Storyteller. Communication Strategist.
-                </motion.p>
 
-                <motion.p
-                  initial={revealInitial}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={revealTransition(0.6)}
-                  className="font-serif italic text-muted-foreground mb-8"
-                >
-                  The stories that shape us. The moments that matter.
-                </motion.p>
-                
-                <motion.div 
-                  initial={shouldReduceMotion ? false : { scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={revealTransition(0.65, 0.8)}
-                  className="accent-line mb-8 origin-left" 
-                />
-                
-                <motion.p 
-                  initial={revealInitial}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={revealTransition(0.8)}
-                  className="text-lg text-foreground/80 leading-relaxed max-w-xl"
-                >
-                  Four-time Emmy-nominated reporter at WGN-TV in Chicago, covering breaking news and politics.
-                </motion.p>
+        {/* Record Hero */}
+        <section
+          role="button"
+          tabIndex={0}
+          aria-label={`Record ${record.code}, ${record.name}. Press enter to watch.`}
+          onKeyDown={onKeyDown}
+          onClick={() => setSelectedVideo({ title: record.name, link: record.link })}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          className="relative min-h-screen w-full overflow-hidden pt-28 md:pt-32 cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        >
+          {/* Wipe panel */}
+          {!shouldReduceMotion && (
+            <motion.div
+              aria-hidden
+              initial={{ x: "100%" }}
+              animate={panel}
+              className="pointer-events-none absolute inset-0 z-30 bg-foreground"
+            />
+          )}
+
+          <div className="editorial-container relative z-10 flex min-h-[calc(100vh-7rem)] flex-col">
+            <div className="h-px w-full bg-border" />
+
+            <div className="grid gap-x-16 md:grid-cols-2">
+              <div>
+                <MetaRow label="Name" value={record.name} scramble={scramble} delay={450} />
+                <MetaRow label="Reporter" value={record.reporter} scramble={scramble} delay={490} />
+                <MetaRow label="Date" value={record.date} scramble={scramble} delay={530} />
               </div>
-              
-              <motion.div 
-                initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={revealTransition(0.4, 1.2)}
-                className="w-full md:w-[600px] lg:w-[750px] md:-mr-32 lg:-mr-48 relative group"
-              >
-                <motion.div
-                  aria-hidden
-                  className="absolute -inset-px rounded-sm bg-accent/30 blur-xl opacity-60"
-                  animate={shouldReduceMotion ? undefined : { opacity: [0.4, 0.7, 0.4] }}
-                  transition={shouldReduceMotion ? undefined : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                />
-                <div className="relative overflow-hidden border border-accent/40 rounded-sm shadow-2xl bg-foreground">
-                  <video
-                    ref={heroVideoRef}
-                    src={splashHighlight.url}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-[115%] max-w-none -ml-[7.5%] block transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03] motion-reduce:transform-none motion-reduce:transition-none"
-                  />
-                  <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-background/5" />
-                  <button
-                    type="button"
-                    onClick={toggleMute}
-                    aria-label={muted ? "Unmute video" : "Mute video"}
-                    className="absolute bottom-3 right-3 z-10 inline-flex items-center gap-2 rounded-full bg-foreground/60 hover:bg-foreground/80 text-background px-3 py-2 text-xs uppercase tracking-[0.2em] backdrop-blur transition-colors"
-                  >
-                    {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                    <span>{muted ? "Tap for sound" : "Sound on"}</span>
-                  </button>
-                </div>
-              </motion.div>
+              <div>
+                <MetaRow label="Station" value={record.station} scramble={scramble} delay={570} />
+                <MetaRow label="Market" value={record.market} scramble={scramble} delay={610} />
+                <MetaRow label="Category" value={record.category} scramble={scramble} delay={650} />
+              </div>
             </div>
+
+            <div className="flex-1" />
+
+            {/* Index markers */}
+            <div className="flex items-center gap-2 pb-6">
+              {records.map((item, i) => (
+                <button
+                  key={item.code}
+                  type="button"
+                  aria-label={`Show record ${item.code}`}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    goTo(i);
+                  }}
+                  className={`h-px transition-all duration-300 ${
+                    i === displayed ? "w-16 bg-accent" : "w-6 bg-muted-foreground/50"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Wordmark */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 overflow-hidden">
+            <div className="editorial-container">
+              <div className="relative" style={{ marginBottom: "-0.08em" }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={record.code}
+                    initial={
+                      shouldReduceMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, x: 60, skewX: "8deg" }
+                    }
+                    animate={
+                      shouldReduceMotion
+                        ? { opacity: 1 }
+                        : { opacity: 1, x: 0, skewX: "0deg" }
+                    }
+                    exit={
+                      shouldReduceMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, x: -60, skewX: "-8deg" }
+                    }
+                    transition={{
+                      duration: shouldReduceMotion ? 0.2 : 0.45,
+                      ease: [0.76, 0, 0.24, 1],
+                    }}
+                    className="text-center font-sans text-foreground"
+                    style={{
+                      fontSize: "clamp(4.5rem, 21vw, 18rem)",
+                      fontWeight: 900,
+                      letterSpacing: "-0.045em",
+                      lineHeight: 1,
+                    }}
+                  >
+                    {record.code}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Identity band */}
+        <section className="py-24 md:py-32 border-t border-border">
+          <div className="editorial-container">
+            <h1 className="font-serif text-display text-foreground mb-6">
+              <span className="block overflow-hidden">
+                <motion.span
+                  className="block"
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 100 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={revealTransition(0.15, 1)}
+                >
+                  Bryant
+                </motion.span>
+              </span>
+              <span className="block overflow-hidden">
+                <motion.span
+                  className="block"
+                  initial={shouldReduceMotion ? false : { opacity: 0, y: 100 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={revealTransition(0.3, 1)}
+                >
+                  McCray
+                </motion.span>
+              </span>
+            </h1>
+
+            <motion.p
+              initial={revealInitial}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={revealTransition(0.5)}
+              className="text-subhead text-muted-foreground mb-3"
+            >
+              Journalist. Storyteller. Communication Strategist.
+            </motion.p>
+
+            <motion.p
+              initial={revealInitial}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={revealTransition(0.6)}
+              className="font-serif italic text-muted-foreground mb-8"
+            >
+              The stories that shape us. The moments that matter.
+            </motion.p>
+
+            <motion.div
+              initial={shouldReduceMotion ? false : { scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={revealTransition(0.65, 0.8)}
+              className="accent-line mb-8 origin-left"
+            />
+
+            <motion.p
+              initial={revealInitial}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={revealTransition(0.8)}
+              className="text-lg text-foreground/80 leading-relaxed max-w-xl"
+            >
+              Four-time Emmy-nominated reporter at WGN-TV in Chicago, covering breaking news and politics.
+            </motion.p>
           </div>
         </section>
 
