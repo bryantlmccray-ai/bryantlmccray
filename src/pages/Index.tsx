@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Play, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowRight, Play, Volume2, VolumeX, X } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -12,7 +12,7 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
-import heroAnimation from "@/assets/hero-animation.mp4";
+import splashHighlight from "@/assets/splash-reel-2026.mp4.asset.json";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 
 // Extract YouTube video ID from various URL formats
@@ -61,7 +61,63 @@ const featuredWork = [
 
 const Index = () => {
   const [selectedVideo, setSelectedVideo] = useState<{ title: string; link: string } | null>(null);
+  const [muted, setMuted] = useState(true);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
+  const shouldReduceMotion = useReducedMotion();
   const videoId = selectedVideo ? getYouTubeId(selectedVideo.link) : null;
+
+  const tryUnmute = () => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+    video.muted = false;
+    video.volume = 1;
+    const playAttempt = video.play();
+    if (playAttempt && typeof playAttempt.then === "function") {
+      playAttempt.then(() => setMuted(false)).catch(() => {
+        video.muted = true;
+        setMuted(true);
+      });
+    } else {
+      setMuted(false);
+    }
+  };
+
+  const toggleMute = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    const video = heroVideoRef.current;
+    if (!video) return;
+    if (video.muted) {
+      tryUnmute();
+    } else {
+      video.muted = true;
+      setMuted(true);
+    }
+  };
+
+  useEffect(() => {
+    const onFirstInteract = () => tryUnmute();
+    const events: (keyof WindowEventMap)[] = [
+      "pointerdown",
+      "pointermove",
+      "keydown",
+      "touchstart",
+      "scroll",
+      "wheel",
+    ];
+    events.forEach((event) =>
+      window.addEventListener(event, onFirstInteract, { once: true, passive: true })
+    );
+    return () => {
+      events.forEach((event) => window.removeEventListener(event, onFirstInteract));
+    };
+  }, []);
+
+  const revealInitial = shouldReduceMotion ? false : { opacity: 0, y: 30 };
+  const revealTransition = (delay: number, duration = 0.6) => ({
+    duration: shouldReduceMotion ? 0 : duration,
+    delay: shouldReduceMotion ? 0 : delay,
+    ease: [0.22, 1, 0.36, 1] as const,
+  });
 
   return (
     <PageTransition>
@@ -72,36 +128,59 @@ const Index = () => {
         <section className="pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
           <div className="editorial-container">
             <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-0">
-              <div className="flex-1 max-w-2xl z-10">
-                <motion.h1 
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  className="font-serif text-display text-foreground mb-6"
-                >
-                  Bryant McCray
-                </motion.h1>
+              <div className="w-full md:w-[44%] lg:w-[48%] md:flex-none max-w-2xl z-10">
+                <h1 className="font-serif text-display text-foreground mb-6">
+                  <span className="block overflow-hidden">
+                    <motion.span
+                      className="block"
+                      initial={shouldReduceMotion ? false : { opacity: 0, y: 100 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={revealTransition(0.15, 1)}
+                    >
+                      Bryant
+                    </motion.span>
+                  </span>
+                  <span className="block overflow-hidden">
+                    <motion.span
+                      className="block"
+                      initial={shouldReduceMotion ? false : { opacity: 0, y: 100 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={revealTransition(0.3, 1)}
+                    >
+                      McCray
+                    </motion.span>
+                  </span>
+                </h1>
                 
                 <motion.p 
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={revealInitial}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className="text-subhead text-muted-foreground mb-8"
+                  transition={revealTransition(0.5)}
+                  className="text-subhead text-muted-foreground mb-3"
                 >
                   Journalist. Storyteller. Communication Strategist.
                 </motion.p>
+
+                <motion.p
+                  initial={revealInitial}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={revealTransition(0.6)}
+                  className="font-serif italic text-muted-foreground mb-8"
+                >
+                  The stories that shape us. The moments that matter.
+                </motion.p>
                 
                 <motion.div 
-                  initial={{ scaleX: 0 }}
+                  initial={shouldReduceMotion ? false : { scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  transition={revealTransition(0.65, 0.8)}
                   className="accent-line mb-8 origin-left" 
                 />
                 
                 <motion.p 
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={revealInitial}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  transition={revealTransition(0.8)}
                   className="text-lg text-foreground/80 leading-relaxed max-w-xl"
                 >
                   Four-time Emmy-nominated reporter at WGN-TV in Chicago, covering breaking news and politics.
@@ -109,20 +188,38 @@ const Index = () => {
               </div>
               
               <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                className="w-full md:w-[600px] lg:w-[750px] md:-mr-32 lg:-mr-48 overflow-hidden"
+                transition={revealTransition(0.4, 1.2)}
+                className="w-full md:w-[600px] lg:w-[750px] md:-mr-32 lg:-mr-48 relative group"
               >
-                <video 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-[115%] max-w-none -ml-[7.5%]"
-                >
-                  <source src={heroAnimation} type="video/mp4" />
-                </video>
+                <motion.div
+                  aria-hidden
+                  className="absolute -inset-px rounded-sm bg-accent/30 blur-xl opacity-60"
+                  animate={shouldReduceMotion ? undefined : { opacity: [0.4, 0.7, 0.4] }}
+                  transition={shouldReduceMotion ? undefined : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                />
+                <div className="relative overflow-hidden border border-accent/40 rounded-sm shadow-2xl bg-foreground">
+                  <video
+                    ref={heroVideoRef}
+                    src={splashHighlight.url}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-[115%] max-w-none -ml-[7.5%] block transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03] motion-reduce:transform-none motion-reduce:transition-none"
+                  />
+                  <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-background/5" />
+                  <button
+                    type="button"
+                    onClick={toggleMute}
+                    aria-label={muted ? "Unmute video" : "Mute video"}
+                    className="absolute bottom-3 right-3 z-10 inline-flex items-center gap-2 rounded-full bg-foreground/60 hover:bg-foreground/80 text-background px-3 py-2 text-xs uppercase tracking-[0.2em] backdrop-blur transition-colors"
+                  >
+                    {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                    <span>{muted ? "Tap for sound" : "Sound on"}</span>
+                  </button>
+                </div>
               </motion.div>
             </div>
           </div>
