@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play, X } from "lucide-react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
@@ -155,6 +155,37 @@ const Index = () => {
   const transitioning = useRef(false);
   const record = records[displayed];
 
+  // Measured wordmark sizing: scale font size so the code spans the container
+  // width, keeping real glyph proportions (no transforms that stretch type).
+  const wordmarkRef = useRef<HTMLDivElement>(null);
+  const wordmarkContainerRef = useRef<HTMLDivElement>(null);
+  const [wordmarkSize, setWordmarkSize] = useState(100);
+
+  useLayoutEffect(() => {
+    const measure = () => {
+      const el = wordmarkRef.current;
+      const container = wordmarkContainerRef.current;
+      if (!el || !container) return;
+      el.style.fontSize = "100px";
+      const textWidth = el.scrollWidth;
+      const containerWidth = container.clientWidth;
+      if (textWidth > 0 && containerWidth > 0) {
+        setWordmarkSize(Math.min(100 * (containerWidth / textWidth), 352)); // cap ~22rem
+      }
+    };
+    measure();
+    let resizeTimer = 0;
+    const onResize = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(measure, 100);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.clearTimeout(resizeTimer);
+    };
+  }, [record.code]);
+
   const goTo = useCallback(
     (next: number) => {
       if (next === displayed || transitioning.current) return;
@@ -217,7 +248,7 @@ const Index = () => {
         <section
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          className="relative min-h-[88vh] w-full overflow-hidden pt-28 md:pt-32"
+          className="relative min-h-[84vh] w-full overflow-hidden pt-28 md:pt-32"
         >
           {/* Full-hero click target, below the content so the metadata and markers stay clickable */}
           <button
@@ -237,7 +268,7 @@ const Index = () => {
             />
           )}
 
-          <div className="editorial-container pointer-events-none relative z-10 flex min-h-[calc(88vh-7rem)] flex-col">
+          <div className="editorial-container pointer-events-none relative z-10 flex min-h-[calc(84vh-7rem)] flex-col">
             <div className="h-px w-full bg-border" />
 
             <div
@@ -261,7 +292,7 @@ const Index = () => {
             {/* Index markers */}
             <div
               className="pointer-events-auto flex items-center gap-2 pb-6"
-              style={{ marginBottom: "clamp(3.5rem, 17vw, 14rem)" }}
+              style={{ marginBottom: `calc(${(wordmarkSize * 0.9).toFixed(1)}px + 1.5rem)` }}
             >
               {records.map((item, i) => (
                 <button
@@ -282,11 +313,12 @@ const Index = () => {
 
           {/* Wordmark */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 overflow-hidden">
-            <div className="editorial-container">
-              <div className="relative" style={{ marginBottom: "-0.08em" }}>
+            <div className="editorial-container" ref={wordmarkContainerRef}>
+              <div className="relative text-center" style={{ marginBottom: "-0.1em" }}>
                 {/* Remount via key so the enter animation replays on each record change;
                     the swap is hidden under the wipe panel, so no exit animation is needed. */}
                 <motion.div
+                  ref={wordmarkRef}
                   key={record.code}
                   initial={
                     shouldReduceMotion
@@ -302,9 +334,9 @@ const Index = () => {
                     duration: shouldReduceMotion ? 0.2 : 0.5,
                     ease: [0.76, 0, 0.24, 1],
                   }}
-                  className="text-center font-sans text-foreground"
+                  className="inline-block whitespace-nowrap font-sans text-foreground"
                   style={{
-                    fontSize: "clamp(3.5rem, 17vw, 14rem)",
+                    fontSize: `${wordmarkSize}px`,
                     fontWeight: 900,
                     letterSpacing: "-0.045em",
                     lineHeight: 1,
