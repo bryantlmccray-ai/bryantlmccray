@@ -168,7 +168,12 @@ const Index = () => {
       const el = wordmarkRef.current;
       const container = wordmarkContainerRef.current;
       if (!el || !container) return;
-      const containerWidth = container.clientWidth;
+      // clientWidth includes padding; the text must fit inside the padding box.
+      const styles = window.getComputedStyle(container);
+      const containerWidth =
+        container.clientWidth -
+        parseFloat(styles.paddingLeft || "0") -
+        parseFloat(styles.paddingRight || "0");
       if (containerWidth <= 0) return;
 
       // Pass 1: base 100px measurement and computed fit.
