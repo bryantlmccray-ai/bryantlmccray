@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play, X } from "lucide-react";
-import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from "framer-motion";
+import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -36,7 +36,7 @@ const records = [
 const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 // Small local scramble hook: resolves a string character by character.
-const useScramble = (target: string, enabled: boolean, delay = 0, duration = 500) => {
+const useScramble = (target: string, enabled: boolean, delay = 0, duration = 500, cycle = 0) => {
   const [display, setDisplay] = useState(target);
 
   useEffect(() => {
@@ -44,24 +44,27 @@ const useScramble = (target: string, enabled: boolean, delay = 0, duration = 500
       setDisplay(target);
       return;
     }
-    let frame = 0;
     let raf = 0;
     let start = 0;
     let timeout = 0;
+    let lastUpdate = 0;
 
     const step = (time: number) => {
       if (!start) start = time;
       const progress = Math.min((time - start) / duration, 1);
-      const resolved = Math.floor(progress * target.length);
-      const next = target
-        .split("")
-        .map((char, i) => {
-          if (i < resolved || char === " ") return char;
-          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-        })
-        .join("");
-      setDisplay(next);
-      frame += 1;
+      // Throttle state updates to roughly every 50ms instead of every frame.
+      if (time - lastUpdate >= 50) {
+        lastUpdate = time;
+        const resolved = Math.floor(progress * target.length);
+        const next = target
+          .split("")
+          .map((char, i) => {
+            if (i < resolved || char === " ") return char;
+            return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+          })
+          .join("");
+        setDisplay(next);
+      }
       if (progress < 1) {
         raf = requestAnimationFrame(step);
       } else {
@@ -76,9 +79,9 @@ const useScramble = (target: string, enabled: boolean, delay = 0, duration = 500
     return () => {
       window.clearTimeout(timeout);
       cancelAnimationFrame(raf);
-      void frame;
     };
-  }, [target, enabled, delay, duration]);
+    // cycle re-triggers the decode on every record change, even when the target string is unchanged.
+  }, [target, enabled, delay, duration, cycle]);
 
   return display;
 };
@@ -88,13 +91,15 @@ const MetaRow = ({
   value,
   scramble,
   delay,
+  cycle,
 }: {
   label: string;
   value: string;
   scramble: boolean;
   delay: number;
+  cycle: number;
 }) => {
-  const display = useScramble(value.toUpperCase(), scramble, delay);
+  const display = useScramble(value.toUpperCase(), scramble, delay, 500, cycle);
   return (
     <div className="flex items-baseline justify-between gap-6 border-b border-border py-3">
       <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{label}</span>
