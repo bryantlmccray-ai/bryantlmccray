@@ -269,7 +269,7 @@ const Index = () => {
         <section
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          className="relative min-h-[84vh] w-full overflow-hidden pt-28 md:pt-32"
+          className="relative min-h-[84vh] w-full overflow-hidden overflow-x-hidden pt-28 md:pt-32"
         >
           {/* Full-hero click target, below the content so the metadata and markers stay clickable */}
           <button
