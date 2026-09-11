@@ -215,15 +215,18 @@ const Index = () => {
 
         {/* Record Hero */}
         <section
-          role="button"
-          tabIndex={0}
-          aria-label={`Record ${record.code}, ${record.name}. Press enter to watch.`}
-          onKeyDown={onKeyDown}
-          onClick={() => setSelectedVideo({ title: record.name, link: record.link })}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          className="relative min-h-screen w-full overflow-hidden pt-28 md:pt-32 cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="relative min-h-[88vh] w-full overflow-hidden pt-28 md:pt-32"
         >
+          {/* Full-hero click target, below the content so the metadata and markers stay clickable */}
+          <button
+            type="button"
+            aria-label={`Record ${record.code}, ${record.name}. Press enter to watch.`}
+            onKeyDown={onKeyDown}
+            onClick={() => setSelectedVideo({ title: record.name, link: record.link })}
+            className="absolute inset-0 z-0 w-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          />
           {/* Wipe panel */}
           {!shouldReduceMotion && (
             <motion.div
@@ -234,19 +237,19 @@ const Index = () => {
             />
           )}
 
-          <div className="editorial-container relative z-10 flex min-h-[calc(100vh-7rem)] flex-col">
+          <div className="editorial-container relative z-10 flex min-h-[calc(88vh-7rem)] flex-col">
             <div className="h-px w-full bg-border" />
 
             <div className="grid gap-x-16 md:grid-cols-2">
               <div>
-                <MetaRow label="Name" value={record.name} scramble={scramble} delay={450} />
-                <MetaRow label="Reporter" value={record.reporter} scramble={scramble} delay={490} />
-                <MetaRow label="Date" value={record.date} scramble={scramble} delay={530} />
+                <MetaRow label="Name" value={record.name} scramble={scramble} delay={450} cycle={displayed} />
+                <MetaRow label="Reporter" value={record.reporter} scramble={scramble} delay={490} cycle={displayed} />
+                <MetaRow label="Date" value={record.date} scramble={scramble} delay={530} cycle={displayed} />
               </div>
               <div>
-                <MetaRow label="Station" value={record.station} scramble={scramble} delay={570} />
-                <MetaRow label="Market" value={record.market} scramble={scramble} delay={610} />
-                <MetaRow label="Category" value={record.category} scramble={scramble} delay={650} />
+                <MetaRow label="Station" value={record.station} scramble={scramble} delay={570} cycle={displayed} />
+                <MetaRow label="Market" value={record.market} scramble={scramble} delay={610} cycle={displayed} />
+                <MetaRow label="Category" value={record.category} scramble={scramble} delay={650} cycle={displayed} />
               </div>
             </div>
 
