@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play, X } from "lucide-react";
-import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from "framer-motion";
+import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -36,7 +36,7 @@ const records = [
 const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 // Small local scramble hook: resolves a string character by character.
-const useScramble = (target: string, enabled: boolean, delay = 0, duration = 500) => {
+const useScramble = (target: string, enabled: boolean, delay = 0, duration = 500, cycle = 0) => {
   const [display, setDisplay] = useState(target);
 
   useEffect(() => {
@@ -44,24 +44,27 @@ const useScramble = (target: string, enabled: boolean, delay = 0, duration = 500
       setDisplay(target);
       return;
     }
-    let frame = 0;
     let raf = 0;
     let start = 0;
     let timeout = 0;
+    let lastUpdate = 0;
 
     const step = (time: number) => {
       if (!start) start = time;
       const progress = Math.min((time - start) / duration, 1);
-      const resolved = Math.floor(progress * target.length);
-      const next = target
-        .split("")
-        .map((char, i) => {
-          if (i < resolved || char === " ") return char;
-          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-        })
-        .join("");
-      setDisplay(next);
-      frame += 1;
+      // Throttle state updates to roughly every 50ms instead of every frame.
+      if (time - lastUpdate >= 50) {
+        lastUpdate = time;
+        const resolved = Math.floor(progress * target.length);
+        const next = target
+          .split("")
+          .map((char, i) => {
+            if (i < resolved || char === " ") return char;
+            return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+          })
+          .join("");
+        setDisplay(next);
+      }
       if (progress < 1) {
         raf = requestAnimationFrame(step);
       } else {
@@ -76,9 +79,9 @@ const useScramble = (target: string, enabled: boolean, delay = 0, duration = 500
     return () => {
       window.clearTimeout(timeout);
       cancelAnimationFrame(raf);
-      void frame;
     };
-  }, [target, enabled, delay, duration]);
+    // cycle re-triggers the decode on every record change, even when the target string is unchanged.
+  }, [target, enabled, delay, duration, cycle]);
 
   return display;
 };
@@ -88,13 +91,15 @@ const MetaRow = ({
   value,
   scramble,
   delay,
+  cycle,
 }: {
   label: string;
   value: string;
   scramble: boolean;
   delay: number;
+  cycle: number;
 }) => {
-  const display = useScramble(value.toUpperCase(), scramble, delay);
+  const display = useScramble(value.toUpperCase(), scramble, delay, 500, cycle);
   return (
     <div className="flex items-baseline justify-between gap-6 border-b border-border py-3">
       <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{label}</span>
@@ -210,15 +215,18 @@ const Index = () => {
 
         {/* Record Hero */}
         <section
-          role="button"
-          tabIndex={0}
-          aria-label={`Record ${record.code}, ${record.name}. Press enter to watch.`}
-          onKeyDown={onKeyDown}
-          onClick={() => setSelectedVideo({ title: record.name, link: record.link })}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          className="relative min-h-screen w-full overflow-hidden pt-28 md:pt-32 cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="relative min-h-[88vh] w-full overflow-hidden pt-28 md:pt-32"
         >
+          {/* Full-hero click target, below the content so the metadata and markers stay clickable */}
+          <button
+            type="button"
+            aria-label={`Record ${record.code}, ${record.name}. Press enter to watch.`}
+            onKeyDown={onKeyDown}
+            onClick={() => setSelectedVideo({ title: record.name, link: record.link })}
+            className="absolute inset-0 z-0 w-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          />
           {/* Wipe panel */}
           {!shouldReduceMotion && (
             <motion.div
@@ -229,19 +237,22 @@ const Index = () => {
             />
           )}
 
-          <div className="editorial-container relative z-10 flex min-h-[calc(100vh-7rem)] flex-col">
+          <div className="editorial-container pointer-events-none relative z-10 flex min-h-[calc(88vh-7rem)] flex-col">
             <div className="h-px w-full bg-border" />
 
-            <div className="grid gap-x-16 md:grid-cols-2">
+            <div
+              className="pointer-events-auto grid cursor-pointer gap-x-16 md:grid-cols-2"
+              onClick={() => setSelectedVideo({ title: record.name, link: record.link })}
+            >
               <div>
-                <MetaRow label="Name" value={record.name} scramble={scramble} delay={450} />
-                <MetaRow label="Reporter" value={record.reporter} scramble={scramble} delay={490} />
-                <MetaRow label="Date" value={record.date} scramble={scramble} delay={530} />
+                <MetaRow label="Name" value={record.name} scramble={scramble} delay={450} cycle={displayed} />
+                <MetaRow label="Reporter" value={record.reporter} scramble={scramble} delay={490} cycle={displayed} />
+                <MetaRow label="Date" value={record.date} scramble={scramble} delay={530} cycle={displayed} />
               </div>
               <div>
-                <MetaRow label="Station" value={record.station} scramble={scramble} delay={570} />
-                <MetaRow label="Market" value={record.market} scramble={scramble} delay={610} />
-                <MetaRow label="Category" value={record.category} scramble={scramble} delay={650} />
+                <MetaRow label="Station" value={record.station} scramble={scramble} delay={570} cycle={displayed} />
+                <MetaRow label="Market" value={record.market} scramble={scramble} delay={610} cycle={displayed} />
+                <MetaRow label="Category" value={record.category} scramble={scramble} delay={650} cycle={displayed} />
               </div>
             </div>
 
@@ -249,8 +260,8 @@ const Index = () => {
 
             {/* Index markers */}
             <div
-              className="flex items-center gap-2 pb-6"
-              style={{ marginBottom: "clamp(4.5rem, 21vw, 18rem)" }}
+              className="pointer-events-auto flex items-center gap-2 pb-6"
+              style={{ marginBottom: "clamp(3.5rem, 17vw, 14rem)" }}
             >
               {records.map((item, i) => (
                 <button
@@ -273,39 +284,34 @@ const Index = () => {
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 overflow-hidden">
             <div className="editorial-container">
               <div className="relative" style={{ marginBottom: "-0.08em" }}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={record.code}
-                    initial={
-                      shouldReduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, x: 60, skewX: "8deg" }
-                    }
-                    animate={
-                      shouldReduceMotion
-                        ? { opacity: 1 }
-                        : { opacity: 1, x: 0, skewX: "0deg" }
-                    }
-                    exit={
-                      shouldReduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, x: -60, skewX: "-8deg" }
-                    }
-                    transition={{
-                      duration: shouldReduceMotion ? 0.2 : 0.45,
-                      ease: [0.76, 0, 0.24, 1],
-                    }}
-                    className="text-center font-sans text-foreground"
-                    style={{
-                      fontSize: "clamp(4.5rem, 21vw, 18rem)",
-                      fontWeight: 900,
-                      letterSpacing: "-0.045em",
-                      lineHeight: 1,
-                    }}
-                  >
-                    {record.code}
-                  </motion.div>
-                </AnimatePresence>
+                {/* Remount via key so the enter animation replays on each record change;
+                    the swap is hidden under the wipe panel, so no exit animation is needed. */}
+                <motion.div
+                  key={record.code}
+                  initial={
+                    shouldReduceMotion
+                      ? { opacity: 0 }
+                      : { opacity: 0, x: 60, skewX: "8deg" }
+                  }
+                  animate={
+                    shouldReduceMotion
+                      ? { opacity: 1 }
+                      : { opacity: 1, x: 0, skewX: "0deg" }
+                  }
+                  transition={{
+                    duration: shouldReduceMotion ? 0.2 : 0.5,
+                    ease: [0.76, 0, 0.24, 1],
+                  }}
+                  className="text-center font-sans text-foreground"
+                  style={{
+                    fontSize: "clamp(3.5rem, 17vw, 14rem)",
+                    fontWeight: 900,
+                    letterSpacing: "-0.045em",
+                    lineHeight: 1,
+                  }}
+                >
+                  {record.code}
+                </motion.div>
               </div>
             </div>
           </div>
