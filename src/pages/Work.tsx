@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { Play, X } from "lucide-react";
@@ -10,6 +10,8 @@ import { FadeIn } from "@/components/ScrollAnimations";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import hazardousRoadsThumb from "@/assets/hazardous-roads-thumbnail.jpg";
+
+const StoryWall = lazy(() => import("@/components/StoryWall"));
 
 // Extract YouTube video ID from various URL formats
 const getYouTubeId = (url: string): string | null => {
@@ -431,6 +433,23 @@ const Work = () => {
                 storytelling, and community-driven journalism.
               </p>
             </FadeIn>
+          </div>
+        </section>
+
+        <section className="story-wall-section">
+          <style>{`
+            @media (max-width: 767px) {
+              .story-wall-section { display: none; }
+            }
+          `}</style>
+          <div className="editorial-container">
+            <Suspense fallback={null}>
+              <StoryWall
+                stories={filteredWork}
+                onSelect={(story) => setSelectedVideo({ title: story.title, link: story.link })}
+                fallback={null}
+              />
+            </Suspense>
           </div>
         </section>
 
