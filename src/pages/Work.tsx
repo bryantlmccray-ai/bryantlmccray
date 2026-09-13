@@ -242,6 +242,7 @@ type StoryThumbnailProps = {
 
 const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) => {
   const [hovered, setHovered] = useState(false);
+  const cueRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const x = useSpring(0, { stiffness: 260, damping: 24, mass: 0.45 });
   const y = useSpring(0, { stiffness: 260, damping: 24, mass: 0.45 });
@@ -255,14 +256,26 @@ const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) =>
 
   const moveCue = (event: React.PointerEvent<HTMLDivElement>) => {
     const bounds = event.currentTarget.getBoundingClientRect();
-    x.set(event.clientX - bounds.left + 12);
-    y.set(event.clientY - bounds.top + 12);
+    const cueBounds = cueRef.current?.getBoundingClientRect();
+    const cueWidth = cueBounds?.width ?? 0;
+    const cueHeight = cueBounds?.height ?? 0;
+    const pointerX = event.clientX - bounds.left;
+    const pointerY = event.clientY - bounds.top;
+    const offset = 8;
+    const nextX = pointerX + offset + cueWidth <= bounds.width
+      ? pointerX + offset
+      : pointerX - offset - cueWidth;
+    const nextY = pointerY + offset + cueHeight <= bounds.height
+      ? pointerY + offset
+      : pointerY - offset - cueHeight;
+
+    x.set(Math.max(0, Math.min(nextX, bounds.width - cueWidth)));
+    y.set(Math.max(0, Math.min(nextY, bounds.height - cueHeight)));
   };
 
   return (
-    <motion.div
+    <div
       className="aspect-video border border-border overflow-hidden relative"
-      whileHover={{ scale: 1.02 }}
       onPointerEnter={(event) => {
         setHovered(true);
         moveCue(event);
@@ -278,13 +291,16 @@ const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) =>
         opacity.set(0);
       }}
     >
-      <img
-        src={thumbnail}
-        alt={title}
-        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-      />
-      <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300" />
+      <motion.div className="absolute inset-0" whileHover={{ scale: 1.02 }}>
+        <img
+          src={thumbnail}
+          alt={title}
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300" />
+      </motion.div>
       <motion.div
+        ref={cueRef}
         aria-hidden="true"
         className="pointer-events-none absolute left-0 top-0 z-10 flex items-center gap-1.5 text-sm font-medium text-primary-foreground mix-blend-exclusion"
         style={{ x, y, opacity: reduceMotion ? undefined : opacity }}
@@ -294,7 +310,7 @@ const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) =>
         <Play className="h-4 w-4 fill-current" />
         <span>Play</span>
       </motion.div>
-    </motion.div>
+    </div>
   );
 };
 
@@ -351,6 +367,7 @@ const Work = () => {
             transition={reduceMotion
               ? { duration: 0.2, ease: "easeOut" }
               : { type: "spring", stiffness: 280, damping: 28, mass: 0.8 }}
+            onAnimationComplete={() => closeButtonRef.current?.focus({ preventScroll: true })}
             onClick={(event) => event.stopPropagation()}
           >
             <button
