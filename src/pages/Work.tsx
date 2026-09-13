@@ -279,7 +279,9 @@ const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) =>
       <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute left-0 top-0 z-10 flex items-center gap-1.5 text-sm font-medium text-primary-foreground mix-blend-exclusion"
-        style={{ x, y, opacity }}
+        style={{ x, y, opacity: reduceMotion ? undefined : opacity }}
+        animate={reduceMotion ? { opacity: videoOpen ? 0 : undefined } : undefined}
+        transition={reduceMotion ? { duration: 0.2, ease: "easeOut" } : undefined}
       >
         <Play className="h-4 w-4 fill-current" />
         <span>Play</span>
