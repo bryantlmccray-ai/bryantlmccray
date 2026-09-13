@@ -242,53 +242,62 @@ type StoryThumbnailProps = {
 
 const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) => {
   const [hovered, setHovered] = useState(false);
+  const surfaceRef = useRef<HTMLDivElement>(null);
   const cueRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef({ x: 0, y: 0 });
   const reduceMotion = useReducedMotion();
   const x = useSpring(0, { stiffness: 260, damping: 24, mass: 0.45 });
   const y = useSpring(0, { stiffness: 260, damping: 24, mass: 0.45 });
-  const opacity = useSpring(0, reduceMotion
-    ? { stiffness: 1000, damping: 100, mass: 0.01 }
-    : { stiffness: 220, damping: 26, mass: 0.35 });
 
   useEffect(() => {
-    if (videoOpen) opacity.set(0);
-  }, [opacity, videoOpen]);
+    if (!hovered) return;
+
+    let frame = 0;
+    const positionCue = () => {
+      const surface = surfaceRef.current;
+      const cue = cueRef.current;
+      if (surface && cue) {
+        const bounds = surface.getBoundingClientRect();
+        const cueWidth = cue.offsetWidth;
+        const cueHeight = cue.offsetHeight;
+        const pointerX = pointerRef.current.x - bounds.left;
+        const pointerY = pointerRef.current.y - bounds.top;
+        const offset = 8;
+        const nextX = pointerX + offset + cueWidth <= bounds.width
+          ? pointerX + offset
+          : pointerX - offset - cueWidth;
+        const nextY = pointerY + offset + cueHeight <= bounds.height
+          ? pointerY + offset
+          : pointerY - offset - cueHeight;
+
+        x.set(Math.max(0, Math.min(nextX, bounds.width - cueWidth)));
+        y.set(Math.max(0, Math.min(nextY, bounds.height - cueHeight)));
+      }
+      frame = window.requestAnimationFrame(positionCue);
+    };
+
+    frame = window.requestAnimationFrame(positionCue);
+    return () => window.cancelAnimationFrame(frame);
+  }, [hovered, x, y]);
 
   const moveCue = (event: React.PointerEvent<HTMLDivElement>) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const cueBounds = cueRef.current?.getBoundingClientRect();
-    const cueWidth = cueBounds?.width ?? 0;
-    const cueHeight = cueBounds?.height ?? 0;
-    const pointerX = event.clientX - bounds.left;
-    const pointerY = event.clientY - bounds.top;
-    const offset = 8;
-    const nextX = pointerX + offset + cueWidth <= bounds.width
-      ? pointerX + offset
-      : pointerX - offset - cueWidth;
-    const nextY = pointerY + offset + cueHeight <= bounds.height
-      ? pointerY + offset
-      : pointerY - offset - cueHeight;
-
-    x.set(Math.max(0, Math.min(nextX, bounds.width - cueWidth)));
-    y.set(Math.max(0, Math.min(nextY, bounds.height - cueHeight)));
+    pointerRef.current = { x: event.clientX, y: event.clientY };
   };
 
   return (
     <div
+      ref={surfaceRef}
       className="aspect-video border border-border overflow-hidden relative"
       onPointerEnter={(event) => {
         setHovered(true);
         moveCue(event);
-        opacity.set(1);
       }}
       onPointerMove={moveCue}
       onPointerLeave={() => {
         setHovered(false);
-        opacity.set(0);
       }}
       onPointerDown={() => {
         setHovered(false);
-        opacity.set(0);
       }}
     >
       <motion.div className="absolute inset-0" whileHover={{ scale: 1.02 }}>
@@ -302,10 +311,10 @@ const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) =>
       <motion.div
         ref={cueRef}
         aria-hidden="true"
-        className="pointer-events-none absolute left-0 top-0 z-10 flex items-center gap-1.5 text-sm font-medium text-primary-foreground mix-blend-exclusion"
-        style={{ x, y, opacity: reduceMotion ? undefined : opacity }}
-        animate={reduceMotion ? { opacity: hovered && !videoOpen ? 1 : 0 } : undefined}
-        transition={reduceMotion ? { duration: 0.2, ease: "easeOut" } : undefined}
+        className="pointer-events-none absolute left-0 top-0 z-10 inline-flex w-max max-w-full items-center gap-1.5 whitespace-nowrap text-sm font-medium text-primary-foreground mix-blend-exclusion"
+        style={{ x, y }}
+        animate={{ opacity: hovered && !videoOpen ? 1 : 0 }}
+        transition={{ duration: reduceMotion ? 0.2 : 0.15, ease: "easeOut" }}
       >
         <Play className="h-4 w-4 fill-current" />
         <span>Play</span>
