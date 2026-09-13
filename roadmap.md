@@ -5,4 +5,4 @@
 - [x] Rebuild the homepage introduction with the masked reveal, 2026 reel, sound controls, and reduced-motion behavior.
 - [x] Verify routes, live desktop/mobile presentation, sound control, reduced motion, and build health.
 - [x] Build the approved Home-only shader contact closer with both invisible driver linkages intact.
-- [ ] Verify the supplied component, reveal motion, CTA underline, mobile width, Home content, and build health.
+- [x] Verify the supplied component, reveal motion, CTA underline, mobile width, Home content, and build health.
