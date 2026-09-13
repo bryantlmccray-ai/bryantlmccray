@@ -1,16 +1,12 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { Play, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useSpring } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn } from "@/components/ScrollAnimations";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import hazardousRoadsThumb from "@/assets/hazardous-roads-thumbnail.jpg";
@@ -238,19 +234,155 @@ const workItems = [
   },
 ];
 
+type StoryThumbnailProps = {
+  thumbnail: string;
+  title: string;
+  videoOpen: boolean;
+};
+
+const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) => {
+  const [hovered, setHovered] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const x = useSpring(0, { stiffness: 260, damping: 24, mass: 0.45 });
+  const y = useSpring(0, { stiffness: 260, damping: 24, mass: 0.45 });
+  const opacity = useSpring(0, reduceMotion
+    ? { stiffness: 1000, damping: 100, mass: 0.01 }
+    : { stiffness: 220, damping: 26, mass: 0.35 });
+
+  useEffect(() => {
+    if (videoOpen) opacity.set(0);
+  }, [opacity, videoOpen]);
+
+  const moveCue = (event: React.PointerEvent<HTMLDivElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    x.set(event.clientX - bounds.left + 12);
+    y.set(event.clientY - bounds.top + 12);
+  };
+
+  return (
+    <motion.div
+      className="aspect-video border border-border overflow-hidden relative"
+      whileHover={{ scale: 1.02 }}
+      onPointerEnter={(event) => {
+        setHovered(true);
+        moveCue(event);
+        opacity.set(1);
+      }}
+      onPointerMove={moveCue}
+      onPointerLeave={() => {
+        setHovered(false);
+        opacity.set(0);
+      }}
+      onPointerDown={() => {
+        setHovered(false);
+        opacity.set(0);
+      }}
+    >
+      <img
+        src={thumbnail}
+        alt={title}
+        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300" />
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-0 top-0 z-10 flex items-center gap-1.5 text-sm font-medium text-primary-foreground mix-blend-exclusion"
+        style={{ x, y, opacity: reduceMotion ? undefined : opacity }}
+        animate={reduceMotion ? { opacity: hovered && !videoOpen ? 1 : 0 } : undefined}
+        transition={reduceMotion ? { duration: 0.2, ease: "easeOut" } : undefined}
+      >
+        <Play className="h-4 w-4 fill-current" />
+        <span>Play</span>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 
 const Work = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedVideo, setSelectedVideo] = useState<{ title: string; link: string } | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const reduceMotion = useReducedMotion();
 
   const filteredWork = activeCategory === "All" 
     ? workItems 
     : workItems.filter(item => item.category === activeCategory);
 
   const videoId = selectedVideo ? getYouTubeId(selectedVideo.link) : null;
+
+  useEffect(() => {
+    if (!selectedVideo) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusFrame = window.requestAnimationFrame(() => closeButtonRef.current?.focus());
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedVideo(null);
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      window.removeEventListener("keydown", closeOnEscape);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [selectedVideo]);
+
+  const videoOverlay = typeof document !== "undefined" && createPortal(
+    <AnimatePresence>
+      {selectedVideo && (
+        <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedVideo.title}
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-x-hidden bg-foreground/90 p-4 backdrop-blur-sm md:p-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: reduceMotion ? 0.2 : 0.3, ease: "easeOut" }}
+          onClick={() => setSelectedVideo(null)}
+        >
+          <motion.div
+            className="relative w-full max-w-4xl bg-background border border-border"
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.94 }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.94 }}
+            transition={reduceMotion
+              ? { duration: 0.2, ease: "easeOut" }
+              : { type: "spring", stiffness: 280, damping: 28, mass: 0.8 }}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              ref={closeButtonRef}
+              type="button"
+              aria-label="Close video"
+              onClick={() => setSelectedVideo(null)}
+              className="absolute -top-10 right-0 z-50 p-2 text-primary-foreground hover:text-accent transition-colors"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            {videoId && (
+              <div className="aspect-video w-full">
+                <iframe
+                  src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                  title={selectedVideo.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body,
+  );
+
   return (
     <PageTransition>
-      <main className="min-h-screen bg-background">
+      <main className="min-h-screen overflow-x-hidden bg-background">
         <Navigation />
         
         <section className="pt-32 pb-12 md:pt-40 md:pb-16">
@@ -337,24 +469,11 @@ const Work = () => {
                         >
                           {/* Thumbnail */}
                           <div className="md:col-span-4">
-                            <motion.div 
-                              className="aspect-video border border-border overflow-hidden relative"
-                              whileHover={{ scale: 1.02 }}
-                            >
-                              <img 
-                                src={item.thumbnail} 
-                                alt={item.title}
-                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                              />
-                              <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300 flex items-center justify-center">
-                                <motion.div 
-                                  className="w-12 h-12 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center"
-                                  whileHover={{ scale: 1.1 }}
-                                >
-                                  <Play className="h-5 w-5 ml-0.5 text-foreground" />
-                                </motion.div>
-                              </div>
-                            </motion.div>
+                            <StoryThumbnail
+                              thumbnail={item.thumbnail}
+                              title={item.title}
+                              videoOpen={selectedVideo !== null}
+                            />
                           </div>
 
                           {/* Content */}
@@ -397,32 +516,7 @@ const Work = () => {
         </div>
 
         <Footer />
-
-        {/* Video Modal */}
-        <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
-          <DialogContent className="max-w-4xl w-[90vw] p-0 bg-background border-border overflow-hidden">
-            <DialogTitle className="sr-only">{selectedVideo?.title}</DialogTitle>
-            <div className="relative">
-              <button
-                onClick={() => setSelectedVideo(null)}
-                className="absolute -top-10 right-0 z-50 p-2 text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <X className="h-6 w-6" />
-              </button>
-              {videoId && (
-                <div className="aspect-video w-full">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
-                    title={selectedVideo?.title}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-full"
-                  />
-                </div>
-              )}
-            </div>
-          </DialogContent>
-        </Dialog>
+        {videoOverlay}
       </main>
     </PageTransition>
   );
