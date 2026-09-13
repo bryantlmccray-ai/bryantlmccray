@@ -242,31 +242,51 @@ type StoryThumbnailProps = {
 
 const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) => {
   const [hovered, setHovered] = useState(false);
+  const surfaceRef = useRef<HTMLDivElement>(null);
   const cueRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef({ x: 0, y: 0 });
   const reduceMotion = useReducedMotion();
   const x = useSpring(0, { stiffness: 260, damping: 24, mass: 0.45 });
   const y = useSpring(0, { stiffness: 260, damping: 24, mass: 0.45 });
 
-  const moveCue = (event: React.PointerEvent<HTMLDivElement>) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const cueWidth = cueRef.current?.offsetWidth ?? 0;
-    const cueHeight = cueRef.current?.offsetHeight ?? 0;
-    const pointerX = event.clientX - bounds.left;
-    const pointerY = event.clientY - bounds.top;
-    const offset = 8;
-    const nextX = pointerX + offset + cueWidth <= bounds.width
-      ? pointerX + offset
-      : pointerX - offset - cueWidth;
-    const nextY = pointerY + offset + cueHeight <= bounds.height
-      ? pointerY + offset
-      : pointerY - offset - cueHeight;
+  useEffect(() => {
+    if (!hovered) return;
 
-    x.set(Math.max(0, Math.min(nextX, bounds.width - cueWidth)));
-    y.set(Math.max(0, Math.min(nextY, bounds.height - cueHeight)));
+    let frame = 0;
+    const positionCue = () => {
+      const surface = surfaceRef.current;
+      const cue = cueRef.current;
+      if (surface && cue) {
+        const bounds = surface.getBoundingClientRect();
+        const cueWidth = cue.offsetWidth;
+        const cueHeight = cue.offsetHeight;
+        const pointerX = pointerRef.current.x - bounds.left;
+        const pointerY = pointerRef.current.y - bounds.top;
+        const offset = 8;
+        const nextX = pointerX + offset + cueWidth <= bounds.width
+          ? pointerX + offset
+          : pointerX - offset - cueWidth;
+        const nextY = pointerY + offset + cueHeight <= bounds.height
+          ? pointerY + offset
+          : pointerY - offset - cueHeight;
+
+        x.set(Math.max(0, Math.min(nextX, bounds.width - cueWidth)));
+        y.set(Math.max(0, Math.min(nextY, bounds.height - cueHeight)));
+      }
+      frame = window.requestAnimationFrame(positionCue);
+    };
+
+    frame = window.requestAnimationFrame(positionCue);
+    return () => window.cancelAnimationFrame(frame);
+  }, [hovered, x, y]);
+
+  const moveCue = (event: React.PointerEvent<HTMLDivElement>) => {
+    pointerRef.current = { x: event.clientX, y: event.clientY };
   };
 
   return (
     <div
+      ref={surfaceRef}
       className="aspect-video border border-border overflow-hidden relative"
       onPointerEnter={(event) => {
         setHovered(true);
