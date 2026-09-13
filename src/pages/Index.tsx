@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play, X } from "lucide-react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn, StaggerContainer, StaggerItem, HoverLift } from "@/components/ScrollAnimations";
 import {
@@ -13,6 +12,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
+
+const ContactSection = React.lazy(() => import("@/components/ContactSection"));
 
 // Extract YouTube video ID from various URL formats
 const getYouTubeId = (url: string): string | null => {
@@ -598,7 +599,9 @@ const Index = () => {
           </div>
         </FadeIn>
 
-        <Footer />
+        <Suspense fallback={null}>
+          <ContactSection />
+        </Suspense>
 
         {/* Video Modal */}
         <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
