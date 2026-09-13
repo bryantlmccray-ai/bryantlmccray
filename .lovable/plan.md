@@ -1,22 +1,22 @@
-# Remove splash and rebuild homepage introduction
+# Add the Home contact closer
 
 ## Changes
-- Route `/` directly to the existing homepage, redirect `/home` back to `/`, remove the splash import, and delete the retired splash page.
-- Check the source folder for any remaining links or navigation calls targeting `/home` and point them to `/` without changing other routes.
-- Rework only the homepage introduction into a two-line masked name reveal, followed by the existing subhead, restored tagline, accent rule, and Emmy text in one staggered sequence.
-- Replace the introduction video with the 2026 splash reel, preserving the existing two-column layout and desktop right-edge bleed.
-- Carry over the reel's border, soft accent glow, autoplay/loop/inline playback, first-interaction sound attempt, and manual sound toggle.
-- Respect reduced-motion preferences by rendering introduction content in its final position and opacity without transform animations.
-- Leave the Press Reel, Selected Work, contact prompt, footer, modal, design tokens, type scale, and all other routes unchanged.
+- Install the `shaders` package and build a dedicated Home-only contact component using imports from `shaders/react`.
+- Render the requested six-layer shader tree in the exact order and preserve both invisible driver linkages.
+- Add the full-viewport contact copy, real email destination, footer links, current-year copyright, typography, underline interaction, and staggered reveal.
+- Replace only the existing Footer instance on the Home page with the new contact closer. Keep the shared Footer component and every other page unchanged.
+- Add the requested Satoshi and Geist Mono font connections and stylesheets to the document head.
+- Provide a safe plain-background fallback when WebGPU is unavailable, with all contact content and links still usable.
 
 ## Technical details
-- Use React Router's `Navigate` for the legacy `/home` redirect.
-- Keep a single semantic `h1`, with block spans providing the two clipped animation masks.
-- Use Framer Motion's reduced-motion hook to disable initial and animated transforms when requested.
-- Import the existing reel asset metadata and source the video from its `url` field.
+- Keep all shader props as static literals with no reactive bindings.
+- Scope the contact styling to the new component, including the reveal keyframes and reduced-motion override.
+- Use the React package subpath and do not exclude `shaders` from Vite dependency optimization.
+- Keep the section isolated, full viewport height, clipped horizontally, and accessible while the shader layer remains decorative.
 
 ## Verification
-- Confirm no `/home` links or navigation calls remain except the redirect route.
-- Confirm the retired splash page is deleted and no longer imported.
-- Check the live homepage at desktop and mobile sizes, including the sound control and reduced-motion rendering.
-- Confirm the project build remains healthy.
+- Confirm the canvas mount, WebGPU availability, invisible driver ids, and both driver references.
+- Confirm all three reveal nodes finish at full opacity with no transform after 1.5 seconds.
+- Confirm the CTA email destination and centered underline growth before and after hover.
+- Confirm no horizontal overflow at 390px.
+- Capture the 1470px-wide contact closer after moving the pointer across its center, and confirm the project build is clean.
