@@ -81,6 +81,7 @@ const ContactSection = () => {
           text-align: center;
         }
         .contact-closer__question {
+          font-family: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
           font-size: 1.5rem;
           font-weight: 500;
           color: rgba(255, 255, 255, 0.7);
