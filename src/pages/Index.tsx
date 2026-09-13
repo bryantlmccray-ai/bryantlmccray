@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play, X } from "lucide-react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 
-const ContactSection = lazy(() => import("@/components/ContactSection"));
+const ContactSection = React.lazy(() => import("@/components/ContactSection"));
 
 // Extract YouTube video ID from various URL formats
 const getYouTubeId = (url: string): string | null => {
