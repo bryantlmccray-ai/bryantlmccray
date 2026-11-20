@@ -7,6 +7,8 @@ import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Work from "./pages/Work";
+import Writing from "./pages/Writing";
+import WritingStory from "./pages/WritingStory";
 import Experience from "./pages/Experience";
 import McCrayVentures from "./pages/McCrayVentures";
 import CareerPage from "./pages/CareerPage";
@@ -24,6 +26,8 @@ const AnimatedRoutes = () => {
         <Route path="/home" element={<Navigate to="/" replace />} />
         <Route path="/about" element={<About />} />
         <Route path="/work" element={<Work />} />
+        <Route path="/writing" element={<Writing />} />
+        <Route path="/writing/:slug" element={<WritingStory />} />
         <Route path="/experience" element={<Experience />} />
         <Route path="/mccray-ventures" element={<McCrayVentures />} />
         <Route path="/career" element={<CareerPage />} />

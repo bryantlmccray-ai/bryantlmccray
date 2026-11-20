@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Add the exact print samples, Writing index and story pages, routes, and navigation item.
+- [x] Verify sample navigation, story titles, unchanged copy, mobile width, and build health.
+
 - [x] Route the root directly to the homepage and preserve `/home` as a redirect.
 - [x] Remove the retired splash page and clear remaining `/home` navigation references.
 - [x] Rebuild the homepage introduction with the masked reveal, 2026 reel, sound controls, and reduced-motion behavior.
