@@ -20,6 +20,12 @@ const galleryImages = [
 
 const experience = [
   {
+    role: "General Assignment Reporter",
+    organization: "WGN-TV",
+    period: "May 2026 – Present",
+    description: "Breaking news, severe weather, and state and national politics for Chicago's WGN-TV.",
+  },
+  {
     role: "Multimedia Journalist",
     organization: "WKYC",
     period: "2024 – 2025",
