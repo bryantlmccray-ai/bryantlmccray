@@ -40,12 +40,17 @@ const experience = [
   {
     role: "Producer and Broadcast Reporter",
     organization: "WFRV",
-    period: "2016 – 2018",
+    period: "2016 – 2017",
     description: "Story development, guest coordination, and segment production.",
   },
 ];
 
 const awards = [
+  {
+    title: "Three Emmy Nominations",
+    category: "WKYC-TV, Cleveland",
+    year: "2026",
+  },
   {
     title: "Emmy Nomination",
     category: "Eye on AI: Deepfake Technology",

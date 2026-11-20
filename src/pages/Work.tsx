@@ -107,7 +107,7 @@ const workItems = [
   {
     title: "12 Years to Justice",
     category: "Investigation",
-    description: "A nurse murdered in broad daylight—and 12 years later, her own divorce attorney is charged with the crime.",
+    description: "A nurse murdered in broad daylight, and 12 years later, her own divorce attorney is charged with the crime.",
     year: "2024",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -187,7 +187,7 @@ const workItems = [
   {
     title: "Home for the Holidays",
     category: "Culture & Community",
-    description: "A heartwarming look at what it means to come home—and the people who make it possible.",
+    description: "A heartwarming look at what it means to come home, and the people who make it possible.",
     year: "2023",
     station: "WKYC-TV",
     market: "Cleveland",

@@ -55,7 +55,7 @@ const scripts = [
   { file: "03_resume_tailor.py", desc: "Selects closest base template, rewrites bullets via Claude AI", tech: "Anthropic API · 6 base templates", status: "Ready" },
   { file: "04_auto_apply.py", desc: "Submits applications, logs match score + resume version", tech: "playwright · supabase insert", status: "Ready" },
   { file: "05_application_digest.py", desc: "Compiles overnight activity, sends 8am email via Resend", tech: "Resend API · supabase query", status: "Ready" },
-  { file: "07_dashboard.html", desc: "Live dark dashboard — apps, pipeline, match avg, source chart", tech: "Supabase anon key · JS frontend", status: "Active" },
+  { file: "07_dashboard.html", desc: "Live dark dashboard. Apps, pipeline, match avg, source chart", tech: "Supabase anon key · JS frontend", status: "Active" },
 ];
 
 const cronSlots = [
@@ -228,7 +228,7 @@ function AutomationTeamSection() {
                     BM
                   </div>
                   <p className="text-[17px] font-semibold text-foreground">Bryant McCray</p>
-                  <p className="text-[11.5px] text-muted-foreground mt-0.5 mb-3">Founder & CEO — Command & Vision</p>
+                  <p className="text-[11.5px] text-muted-foreground mt-0.5 mb-3">Founder & CEO, Command & Vision</p>
                   <code className="text-[10.5px] text-muted-foreground bg-secondary border border-border rounded px-2 py-1 inline-block mb-2">
                     All Systems
                   </code>
@@ -613,7 +613,7 @@ const McCrayVentures = () => {
                 className="accent-line mb-6 origin-left"
               />
               <p className="text-muted-foreground max-w-2xl leading-relaxed">
-                A fully automated job application engine — scrapes postings, scores against profile with AI,
+                A fully automated job application engine. Scrapes postings, scores against profile with AI,
                 tailors resumes, auto-submits, and delivers a morning digest. Built for speed and precision.
               </p>
             </FadeIn>

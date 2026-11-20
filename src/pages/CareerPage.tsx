@@ -7,7 +7,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimat
 const careerTimeline = [
   {
     role: "Multimedia Journalist",
-    org: "WKYC (NBC) — Cleveland, OH",
+    org: "WKYC (NBC), Cleveland, OH",
     period: "2024 – 2025",
     bullets: [
       "Video journalist covering community stories and regional events across Northeast Ohio.",
@@ -16,7 +16,7 @@ const careerTimeline = [
   },
   {
     role: "Broadcast Reporter",
-    org: "CBS 58 — Milwaukee, WI",
+    org: "CBS 58, Milwaukee, WI",
     period: "2022 – 2024",
     bullets: [
       "Enterprise reporting and live breaking news coverage for top-rated newscasts.",
@@ -26,7 +26,7 @@ const careerTimeline = [
   },
   {
     role: "Producer & Broadcast Reporter",
-    org: "WFRV (CBS) — Green Bay, WI",
+    org: "WFRV (CBS), Green Bay, WI",
     period: "2016 – 2018",
     bullets: [
       "Story development, guest coordination, and segment production.",
@@ -56,7 +56,7 @@ const education = [
 
 const awards = [
   {
-    title: "Emmy Nomination — Eye on AI: Deepfake Technology",
+    title: "Emmy Nomination, Eye on AI: Deepfake Technology",
     org: "Chicago/Midwest Chapter, NATAS",
     year: "2023",
   },
@@ -94,7 +94,7 @@ const CareerPage = () => {
             <FadeIn delay={0.2}>
               <p className="text-muted-foreground max-w-xl leading-relaxed">
                 Emmy-nominated journalist with a decade of experience across broadcast 
-                and digital platforms. Every role sharpened the same instinct — listen first, 
+                and digital platforms. Every role sharpened the same instinct. Listen first, 
                 then tell the truth cleanly.
               </p>
             </FadeIn>

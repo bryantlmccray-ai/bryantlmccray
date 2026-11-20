@@ -135,7 +135,7 @@ const featuredWork = [
   {
     title: "12 Years to Justice",
     category: "Investigation",
-    description: "A nurse murdered in broad daylight—and 12 years later, her own divorce attorney is charged with the crime.",
+    description: "A nurse murdered in broad daylight, and 12 years later, her own divorce attorney is charged with the crime.",
     link: "https://www.youtube.com/watch?v=oXRPe8KKv8c",
     thumbnail: justiceThumb,
     station: "WKYC-TV",
