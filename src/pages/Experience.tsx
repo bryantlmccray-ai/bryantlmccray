@@ -52,14 +52,14 @@ type Nomination = {
   credit: string;
 };
 
-type Award = {
+type AwardEntry = {
   title: string;
   category: string;
   year: string;
   nominations?: Nomination[];
 };
 
-const awards: Award[] = [
+const awards: AwardEntry[] = [
   {
     title: "Three Emmy Nominations",
     category: "57th Great Lakes Emmy Awards · WKYC-TV, Cleveland",
