@@ -1,12 +1,14 @@
 // Print writing samples, adapted from Bryant McCray's WGN-TV reports.
 // Text is final copy: do not edit, reword, or reformat any string in this file.
-export type WritingSample = { slug: string; date: string; head: string; dek: string; body: string[]; youtubeId?: string | null };
+export type WritingSample = { slug: string; date: string; head: string; dek: string; body: string[]; youtubeId?: string | null; pdf?: string; frame?: string | null };
 
 export const CREDIT = "Adapted from my WGN-TV report. Rewritten for print from my broadcast script and interviews.";
 
 export const writingSamples: WritingSample[] = [
   {
     "slug": "save-a-lot-closures",
+    "pdf": "/writing/pdf/Bryant_McCray_save-a-lot-closures.pdf",
+    "frame": null,
     "date": "July 25, 2026",
     "head": "Seven Save A Lot stores close on Chicago's South and West sides, less than two years into a taxpayer-backed rescue",
     "dek": "The city put $13.5 million in taxpayer financing behind the deal. The stores closed less than two years later.",
@@ -31,6 +33,8 @@ export const writingSamples: WritingSample[] = [
   },
   {
     "slug": "illinois-ai-safety-law",
+    "pdf": "/writing/pdf/Bryant_McCray_illinois-ai-safety-law.pdf",
+    "frame": "/writing/frames/SB315.jpg",
     "date": "July 6, 2026",
     "head": "Illinois signs one of the country's toughest AI safety laws. Here is what it does.",
     "dek": "Senate Bill 315 targets only the most powerful AI developers, with yearly outside audits, 72-hour incident reports and protection for whistleblowers.",
@@ -51,6 +55,8 @@ export const writingSamples: WritingSample[] = [
   },
   {
     "slug": "cps-two-weeks",
+    "pdf": "/writing/pdf/Bryant_McCray_cps-two-weeks.pdf",
+    "frame": null,
     "date": "June 25, 2026",
     "head": "Facing a $732.5 million deficit, CPS weighs cutting two weeks of school",
     "dek": "The teachers union says the district laid out two options: a shorter school year or 1,700 more layoffs.",
@@ -73,6 +79,8 @@ export const writingSamples: WritingSample[] = [
   },
   {
     "slug": "haitian-tps-chicago",
+    "pdf": "/writing/pdf/Bryant_McCray_haitian-tps-chicago.pdf",
+    "frame": "/writing/frames/TPS.jpg",
     "date": "July 10, 2026",
     "head": "A court ruling buys Chicago's Haitian community two more weeks to work",
     "dek": "Temporary Protected Status for Haitians was set to end. A federal court pushed the date to July 24.",
@@ -92,6 +100,8 @@ export const writingSamples: WritingSample[] = [
   },
   {
     "slug": "cta-union-safety",
+    "pdf": "/writing/pdf/Bryant_McCray_cta-union-safety.pdf",
+    "frame": "/writing/frames/CTA.jpg",
     "date": "October 10, 2026",
     "head": "After a second CTA worker is killed on duty, transit union says 'enough is enough'",
     "dek": "Union leaders want more police on trains and buses, and warn of action if safeguards don't come.",
@@ -111,6 +121,8 @@ export const writingSamples: WritingSample[] = [
   },
   {
     "slug": "ford-city-mall-closes",
+    "pdf": "/writing/pdf/Bryant_McCray_ford-city-mall-closes.pdf",
+    "frame": null,
     "date": "June 21, 2026",
     "head": "Ford City Mall and Chicago's last JCPenney close after 61 years",
     "dek": "A Cook County judge's order ends a Southwest Side landmark. What comes next is still being fought over.",
@@ -129,6 +141,8 @@ export const writingSamples: WritingSample[] = [
   },
   {
     "slug": "illinoiscom-medical-school",
+    "pdf": "/writing/pdf/Bryant_McCray_illinoiscom-medical-school.pdf",
+    "frame": null,
     "date": "July 20, 2026",
     "head": "Chicago opens its first new medical school in nearly a century",
     "dek": "The Illinois College of Osteopathic Medicine welcomes 91 students to a West Loop campus built around simulation.",
@@ -145,6 +159,8 @@ export const writingSamples: WritingSample[] = [
   },
   {
     "slug": "ryan-field-pat-ryan",
+    "pdf": "/writing/pdf/Bryant_McCray_ryan-field-pat-ryan.pdf",
+    "frame": "/writing/frames/RYAN.jpg",
     "date": "October 9, 2026",
     "head": "Inside Ryan Field with the man who built it",
     "dek": "In an exclusive interview, developer Pat Ryan Jr. explains the bet behind one of the most expensive college stadiums ever built.",
@@ -164,6 +180,8 @@ export const writingSamples: WritingSample[] = [
   },
   {
     "slug": "markham-storm-relief",
+    "pdf": "/writing/pdf/Bryant_McCray_markham-storm-relief.pdf",
+    "frame": "/writing/frames/MARKHAM.jpg",
     "date": "July 28, 2026",
     "head": "After the storms, Markham's relief comes from its own",
     "dek": "Roofs torn off along 167th Street, power still out, and neighbors handing out help.",
@@ -183,6 +201,8 @@ export const writingSamples: WritingSample[] = [
   },
   {
     "slug": "hamlin-park-dog-park",
+    "pdf": "/writing/pdf/Bryant_McCray_hamlin-park-dog-park.pdf",
+    "frame": "/writing/frames/HAMLIN.jpg",
     "date": "August 3, 2026",
     "head": "A new surface at Hamlin Park's dog area splits the neighbors",
     "dek": "Some dog owners worry the new asphalt is rough on paws. Others call it an upgrade. The Park District says it will meet with the committee that oversees the space.",
@@ -202,6 +222,8 @@ export const writingSamples: WritingSample[] = [
   },
   {
     "slug": "bud-billiken-97",
+    "pdf": "/writing/pdf/Bryant_McCray_bud-billiken-97.pdf",
+    "frame": "/writing/frames/BUD.jpg",
     "date": "August 8, 2026",
     "head": "Bud Billiken turns 97, and the South Side shows up",
     "dek": "The parade brings generations of South Side families back to King Drive.",

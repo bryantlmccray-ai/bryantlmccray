@@ -45,6 +45,7 @@
     /* Shadows */
     --shadow-subtle: 0 1px 2px hsl(220 15% 18% / 0.04);
     --shadow-soft: 0 4px 12px hsl(220 15% 18% / 0.06);
+    --writing-paper-shadow: hsl(var(--foreground) / 0.12);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;

@@ -1,5 +1,9 @@
 # Roadmap
 
+- [x] Extract writing PDFs, covers, and frames and add their data paths without changing existing strings.
+- [x] Add alternating interactive covers, story frames, and PDF links with mobile and reduced-motion fallbacks.
+- [x] Verify all 29 asset URLs and the desktop/mobile reading and PDF flows.
+
 - [x] Add the exact print samples, Writing index and story pages, routes, and navigation item.
 - [x] Verify sample navigation, story titles, unchanged copy, mobile width, and build health.
 
