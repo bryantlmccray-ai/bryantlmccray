@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Award } from "lucide-react";
 
 import galleryEmmy from "@/assets/gallery-emmy.jpeg";
 import galleryInterview1 from "@/assets/gallery-interview-1.jpeg";
@@ -45,11 +46,41 @@ const experience = [
   },
 ];
 
-const awards = [
+type Nomination = {
+  category: string;
+  title: string;
+  credit: string;
+};
+
+type Award = {
+  title: string;
+  category: string;
+  year: string;
+  nominations?: Nomination[];
+};
+
+const awards: Award[] = [
   {
     title: "Three Emmy Nominations",
-    category: "WKYC-TV, Cleveland",
+    category: "57th Great Lakes Emmy Awards · WKYC-TV, Cleveland",
     year: "2026",
+    nominations: [
+      {
+        category: "Crime/Justice – News",
+        title: "One Traffic Stop, An Unlikely Rescue",
+        credit: "Reporter",
+      },
+      {
+        category: "Crime/Justice – News",
+        title: "Break in a Cold Case: Arrest in the Murder of Aliza Sherman",
+        credit: "Reporter, with Kelly Salandro, Sia Nyorkor, Joshua Bailey, Bailey Lustic, Frank Macek and Matthew Lawrence",
+      },
+      {
+        category: "Daily News Report (Single Shift)",
+        title: "TikTok on the Clock as the Feed May Go Dark",
+        credit: "Reporter",
+      },
+    ],
   },
   {
     title: "Emmy Nomination",
@@ -197,7 +228,10 @@ const Experience = () => {
             
             <StaggerContainer className="grid md:grid-cols-3 gap-8">
               {awards.map((award, index) => (
-                <StaggerItem key={index}>
+                <StaggerItem
+                  key={index}
+                  className={award.nominations ? "md:col-span-3" : ""}
+                >
                   <motion.div 
                     className="py-6"
                     whileHover={{ y: -8, scale: 1.02 }}
@@ -212,6 +246,38 @@ const Experience = () => {
                     <p className="text-sm text-muted-foreground">
                       {award.category}
                     </p>
+
+                    {award.nominations && (
+                      <div className="mt-6">
+                        {award.nominations.map((nomination, nominationIndex) => (
+                          <div
+                            key={nominationIndex}
+                            className={
+                              nominationIndex > 0
+                                ? "flex items-start gap-3 border-t border-border pt-5 mt-5"
+                                : "flex items-start gap-3"
+                            }
+                          >
+                            <Award
+                              size={16}
+                              strokeWidth={1.5}
+                              className="text-accent shrink-0 mt-1"
+                            />
+                            <div>
+                              <p className="text-xs text-accent tracking-widest uppercase mb-1">
+                                {nomination.category}
+                              </p>
+                              <p className="font-serif text-foreground mb-1">
+                                “{nomination.title}”
+                              </p>
+                              <p className="text-sm text-muted-foreground">
+                                {nomination.credit}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </motion.div>
                 </StaggerItem>
               ))}
