@@ -28,7 +28,7 @@ import {
 const CONTACT_EMAIL = "Bryant.l.mccray@gmail.com";
 
 const SOCIALS: { label: string; href: string }[] = [
-  { label: "Reel", href: "https://www.youtube.com/watch?v=F9po9pUJWio" },
+  { label: "Reel", href: "https://youtu.be/sKE1ZCnN0e8" },
   { label: "LinkedIn", href: "#" },
   { label: "Instagram", href: "#" },
 ];

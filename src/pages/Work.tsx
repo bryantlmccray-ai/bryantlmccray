@@ -37,12 +37,12 @@ const workItems = [
   {
     title: "Reporter Reel 2026",
     category: "On-Air Segments",
-    description: "Seven live standups and three full stories from WGN-TV Chicago. Breaking news, severe weather, and state and national politics.",
+    description: "Live shots and stories from WGN-TV Chicago and WKYC Cleveland. Breaking news, severe weather, and politics.",
     year: "2026",
-    station: "WGN-TV",
-    market: "Chicago",
-    thumbnail: "https://img.youtube.com/vi/F9po9pUJWio/hqdefault.jpg",
-    link: "https://www.youtube.com/watch?v=F9po9pUJWio",
+    station: "WGN-TV · WKYC-TV",
+    market: "Chicago & Cleveland",
+    thumbnail: "https://img.youtube.com/vi/sKE1ZCnN0e8/hqdefault.jpg",
+    link: "https://youtu.be/sKE1ZCnN0e8",
   },
   {
     title: "SWAT Officer Shot in Albany Park",

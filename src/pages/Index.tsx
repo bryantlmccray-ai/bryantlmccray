@@ -31,7 +31,7 @@ const records = [
   { code: "SP.24", name: "A Shared Purpose", reporter: "Bryant McCray", date: "2024", station: "WKYC-TV", market: "Cleveland", category: "Community", link: "https://www.youtube.com/watch?v=Y0PQ2o0cTZw&t=46s" },
   { code: "HS.24", name: "Healing in the Stacks", reporter: "Bryant McCray", date: "2024", station: "WKYC-TV", market: "Cleveland", category: "Community", link: "https://www.youtube.com/watch?v=ervpUsDZP1k&t=43s" },
   { code: "TY.24", name: "12 Years to Justice", reporter: "Bryant McCray", date: "2024", station: "WKYC-TV", market: "Cleveland", category: "Investigation", link: "https://www.youtube.com/watch?v=oXRPe8KKv8c" },
-  { code: "RR.26", name: "Reporter Reel 2026", reporter: "Bryant McCray", date: "2026", station: "WGN-TV", market: "Chicago", category: "Broadcast Reel", link: "https://www.youtube.com/watch?v=F9po9pUJWio" },
+  { code: "RR.26", name: "Reporter Reel 2026", reporter: "Bryant McCray", date: "2026", station: "WGN-TV · WKYC-TV", market: "Chicago & Cleveland", category: "Broadcast Reel", link: "https://youtu.be/sKE1ZCnN0e8" },
 ];
 
 const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -457,16 +457,16 @@ const Index = () => {
                     Reporter Reel 2026
                   </h2>
                   <p className="text-muted-foreground leading-relaxed mb-2">
-                    Seven live standups and three full stories from WGN-TV Chicago. Breaking news, severe weather, and state and national politics.
+                    Live shots and stories from WGN-TV Chicago and WKYC Cleveland. Breaking news, severe weather, and politics.
                   </p>
                   <p className="text-xs text-muted-foreground tracking-widest uppercase mb-8">
-                    WGN-TV · Chicago · 2026
+                    WGN-TV · WKYC-TV · Chicago & Cleveland · 2026
                   </p>
                   <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
                     <Button 
                       variant="editorial" 
                       size="sm" 
-                      onClick={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://www.youtube.com/watch?v=F9po9pUJWio" })}
+                      onClick={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://youtu.be/sKE1ZCnN0e8" })}
                       className="flex items-center gap-2"
                     >
                       Watch Reel <ArrowRight className="h-4 w-4" />
@@ -478,11 +478,11 @@ const Index = () => {
               <FadeIn direction="right" delay={0.2}>
                 <HoverLift>
                   <button 
-                    onClick={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://www.youtube.com/watch?v=F9po9pUJWio" })}
+                    onClick={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://youtu.be/sKE1ZCnN0e8" })}
                     className="aspect-video relative group cursor-pointer overflow-hidden border border-border block w-full"
                   >
                     <motion.img 
-                      src="https://img.youtube.com/vi/F9po9pUJWio/hqdefault.jpg" 
+                      src="https://img.youtube.com/vi/sKE1ZCnN0e8/hqdefault.jpg" 
                       alt="Reporter Reel 2026 Thumbnail"
                       className="w-full h-full object-cover"
                       whileHover={{ scale: 1.05 }}
