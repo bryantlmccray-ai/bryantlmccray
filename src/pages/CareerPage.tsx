@@ -6,6 +6,14 @@ import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimat
 
 const careerTimeline = [
   {
+    role: "General Assignment Reporter",
+    org: "WGN-TV, Chicago, IL",
+    period: "May 2026 – Present",
+    bullets: [
+      "Breaking news, severe weather, and state and national politics for Chicago's WGN-TV.",
+    ],
+  },
+  {
     role: "Multimedia Journalist",
     org: "WKYC (NBC), Cleveland, OH",
     period: "2024 – 2025",
@@ -27,7 +35,7 @@ const careerTimeline = [
   {
     role: "Producer & Broadcast Reporter",
     org: "WFRV (CBS), Green Bay, WI",
-    period: "2016 – 2018",
+    period: "2016 – 2017",
     bullets: [
       "Story development, guest coordination, and segment production.",
       "Anchored weekend shows and produced daily content across platforms.",
@@ -55,6 +63,11 @@ const education = [
 ];
 
 const awards = [
+  {
+    title: "Three Emmy Nominations",
+    org: "WKYC-TV, Cleveland",
+    year: "2026",
+  },
   {
     title: "Emmy Nomination, Eye on AI: Deepfake Technology",
     org: "Chicago/Midwest Chapter, NATAS",
