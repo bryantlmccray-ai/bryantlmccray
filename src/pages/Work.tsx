@@ -1,4 +1,5 @@
 import NightBand from "@/components/NightBand";
+import onairPortrait from "@/assets/bryant-onair.jpeg";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
@@ -414,7 +415,7 @@ const Work = () => {
       <main className="min-h-screen overflow-x-hidden bg-background">
         <Navigation />
         
-        <NightBand className="pt-32 pb-12 md:pt-40 md:pb-16">
+        <NightBand className="pt-32 pb-12 md:pt-40 md:pb-16" portrait={{ src: onairPortrait, alt: "Bryant McCray on air for WGN-TV", position: "center 20%" }}>
           <div className="editorial-container">
             <FadeIn>
               <p className="text-xs text-accent tracking-widest uppercase mb-4">

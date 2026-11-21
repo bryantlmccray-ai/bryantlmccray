@@ -208,8 +208,40 @@
 .night-band .bg-border { background-color: var(--night-border); }
 .night-band .record-meta-label { color: var(--night-label); }
 .night-band .record-marker-inactive { background-color: var(--night-marker); }
+.night-band__portrait-anchor { display: none; }
+@media (min-width: 768px) {
+  .night-band--portrait {
+    --portrait-width: 112px;
+    --portrait-height: 150px;
+  }
+  .night-band--portrait > .editorial-container {
+    padding-right: calc(2rem + var(--portrait-width) + 32px);
+  }
+  .night-band__portrait-anchor {
+    display: block;
+    right: max(2rem, calc((100% - 56rem) / 2 + 2rem));
+    bottom: 0;
+    padding-bottom: inherit;
+  }
+  .night-band__portrait {
+    width: var(--portrait-width);
+    height: var(--portrait-height);
+    border: 1px solid var(--night-border);
+  }
+  .night-band__portrait-image {
+    filter: grayscale(1) contrast(1.05) brightness(0.92);
+    transition: filter 700ms ease-out;
+  }
+}
+@media (min-width: 1024px) {
+  .night-band--portrait { --portrait-width: 128px; --portrait-height: 172px; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .night-band__portrait-image:hover { filter: grayscale(0) contrast(1.05) brightness(1); }
+}
 @media (prefers-reduced-motion: reduce) {
   .night-band__trail > * { transition: none; }
+  .night-band__portrait-image { transition: none; }
 }
 
 html {

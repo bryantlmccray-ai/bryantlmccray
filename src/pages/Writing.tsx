@@ -1,4 +1,5 @@
 import NightBand from "@/components/NightBand";
+import onairPortrait from "@/assets/bryant-onair.jpeg";
 import { useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -21,7 +22,7 @@ const Writing = () => {
     <PageTransition>
       <main className="min-h-screen bg-background">
         <Navigation />
-        <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20">
+        <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20" portrait={{ src: onairPortrait, alt: "Bryant McCray on air for WGN-TV", position: "center 20%" }}>
           <div className="editorial-container">
             <h1 className="font-serif text-display text-foreground mb-6">Writing</h1>
             <p className="text-muted-foreground leading-relaxed">

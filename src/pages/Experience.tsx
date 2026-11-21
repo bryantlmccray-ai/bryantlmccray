@@ -1,4 +1,5 @@
 import NightBand from "@/components/NightBand";
+import headshotPortrait from "@/assets/bryant-headshot.jpeg";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
@@ -108,7 +109,7 @@ const Experience = () => {
       <main className="min-h-screen bg-background">
         <Navigation />
         
-        <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20">
+        <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20" portrait={{ src: headshotPortrait, alt: "Bryant McCray", position: "center top" }}>
           <div className="editorial-container">
             <FadeIn>
               <p className="text-xs text-accent tracking-widest uppercase mb-4">

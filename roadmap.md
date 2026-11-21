@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Add optional desktop NightBand portraits to Work, Writing, Experience, and Career without changing copy or band heights.
+- [x] Verify four viewport widths, portrait interaction and reduced motion, screenshots, and build health; commit without publishing.
+
 - [x] Extract writing PDFs, covers, and frames and add their data paths without changing existing strings.
 - [x] Add alternating interactive covers, story frames, and PDF links with mobile and reduced-motion fallbacks.
 - [x] Verify all 29 asset URLs and the desktop/mobile reading and PDF flows.
