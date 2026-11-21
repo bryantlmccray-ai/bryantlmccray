@@ -1,3 +1,4 @@
+import NightBand from "@/components/NightBand";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -12,7 +13,22 @@ const About = () => {
       <main className="min-h-screen bg-background">
         <Navigation />
         
-        <section className="pt-32 pb-24 md:pt-40 md:pb-32">
+        <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20">
+          <div className="editorial-container">
+            <FadeIn>
+              <p className="text-xs text-accent tracking-widest uppercase mb-4">
+                About
+              </p>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <h1 className="font-serif text-headline text-foreground mb-8">
+                I grew up on the West Side. Now I report on the whole city.
+              </h1>
+            </FadeIn>
+          </div>
+        </NightBand>
+
+        <section className="pt-16 pb-24 md:pt-20 md:pb-32">
           <div className="editorial-container">
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
               {/* Creative Photo Layout */}
@@ -62,18 +78,6 @@ const About = () => {
 
               {/* Content */}
               <div className="lg:col-span-7 order-1 lg:order-2">
-                <FadeIn>
-                  <p className="text-xs text-accent tracking-widest uppercase mb-4">
-                    About
-                  </p>
-                </FadeIn>
-                
-                <FadeIn delay={0.1}>
-                  <h1 className="font-serif text-headline text-foreground mb-8">
-                    I grew up on the West Side. Now I report on the whole city.
-                  </h1>
-                </FadeIn>
-
                 <FadeIn delay={0.2}>
                   <div className="accent-line mb-10" />
                 </FadeIn>

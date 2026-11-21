@@ -15,3 +15,6 @@
 - [x] Verify the supplied component, reveal motion, CTA underline, mobile width, Home content, and build health.
 - [x] Add the supplied 3D story wall to the Work page without changing the existing story list.
 - [x] Verify desktop canvas interactions, mobile hiding, page width, and build health.
+
+- [x] Extract the shared night shader and add dark opening bands while preserving copy and cream reading sections.
+- [x] Verify all requested desktop/mobile pages, reduced motion, unchanged contact presentation, and build health.

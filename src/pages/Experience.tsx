@@ -1,3 +1,4 @@
+import NightBand from "@/components/NightBand";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Navigation from "@/components/Navigation";
@@ -107,7 +108,7 @@ const Experience = () => {
       <main className="min-h-screen bg-background">
         <Navigation />
         
-        <section className="pt-32 pb-16 md:pt-40 md:pb-20">
+        <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20">
           <div className="editorial-container">
             <FadeIn>
               <p className="text-xs text-accent tracking-widest uppercase mb-4">
@@ -127,6 +128,12 @@ const Experience = () => {
               </p>
             </FadeIn>
 
+
+          </div>
+        </NightBand>
+
+        <section className="py-12">
+          <div className="editorial-container">
             {/* Mini Gallery */}
             <FadeIn delay={0.3}>
               <div className="flex gap-3 md:gap-4">

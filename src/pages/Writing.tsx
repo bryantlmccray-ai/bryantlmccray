@@ -1,3 +1,4 @@
+import NightBand from "@/components/NightBand";
 import { useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -20,12 +21,16 @@ const Writing = () => {
     <PageTransition>
       <main className="min-h-screen bg-background">
         <Navigation />
-        <section className="pt-32 pb-24 md:pt-40 md:pb-32">
+        <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20">
           <div className="editorial-container">
             <h1 className="font-serif text-display text-foreground mb-6">Writing</h1>
-            <p className="text-muted-foreground leading-relaxed mb-16">
+            <p className="text-muted-foreground leading-relaxed">
               My WGN stories, rewritten for the page.
             </p>
+          </div>
+        </NightBand>
+        <section className="pt-16 pb-24 md:pt-20 md:pb-32">
+          <div className="editorial-container">
             <ol className="divide-y divide-border">
               {writingSamples.map((sample, index) => (
                 <motion.li

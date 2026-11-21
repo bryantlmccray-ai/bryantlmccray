@@ -1,3 +1,4 @@
+import NightBand from "@/components/NightBand";
 import React, { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play, X } from "lucide-react";
@@ -103,7 +104,7 @@ const MetaRow = ({
   const display = useScramble(value.toUpperCase(), scramble, delay, 500, cycle);
   return (
     <div className="flex items-baseline justify-between gap-6 border-b border-border py-3">
-      <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{label}</span>
+      <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground record-meta-label">{label}</span>
       <span className="text-[11px] uppercase tracking-[0.1em] text-foreground text-right tabular-nums">
         {display}
       </span>
@@ -272,7 +273,7 @@ const Index = () => {
         <Navigation />
 
         {/* Record Hero */}
-        <section
+        <NightBand
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           className="relative min-h-[84vh] w-full overflow-hidden overflow-x-hidden pt-28 md:pt-32"
@@ -291,7 +292,7 @@ const Index = () => {
               aria-hidden
               initial={{ x: "100%" }}
               animate={panel}
-              className="pointer-events-none absolute inset-0 z-30 bg-foreground"
+              className="pointer-events-none absolute inset-0 z-30 bg-background"
             />
           )}
 
@@ -331,7 +332,7 @@ const Index = () => {
                     goTo(i);
                   }}
                   className={`h-px transition-all duration-300 ${
-                    i === displayed ? "w-16 bg-accent" : "w-6 bg-muted-foreground/50"
+                    i === displayed ? "w-16 bg-accent" : "w-6 record-marker-inactive"
                   }`}
                 />
               ))}
@@ -374,7 +375,7 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </section>
+        </NightBand>
 
         {/* Identity band */}
         <section className="py-24 md:py-32 border-t border-border">

@@ -1,3 +1,4 @@
+import NightBand from "@/components/NightBand";
 import { motion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -91,7 +92,7 @@ const CareerPage = () => {
         <Navigation />
 
         {/* Hero */}
-        <section className="pt-32 pb-16 md:pt-40 md:pb-20">
+        <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20">
           <div className="editorial-container">
             <FadeIn>
               <p className="text-xs text-accent tracking-widest uppercase mb-4">
@@ -109,7 +110,7 @@ const CareerPage = () => {
               </p>
             </FadeIn>
           </div>
-        </section>
+        </NightBand>
 
         {/* Timeline */}
         <section className="py-16 border-t border-border">

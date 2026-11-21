@@ -1,12 +1,4 @@
-import { useState } from "react";
-import {
-  Shader,
-  DotGrid,
-  ChromaFlow,
-  LinearGradient,
-  CursorRipples,
-  FilmGrain,
-} from "shaders/react";
+import NightTrail from "@/components/NightTrail";
 
 /**
  * The closer. A near black, full viewport contact section whose background is
@@ -33,14 +25,8 @@ const SOCIALS: { label: string; href: string }[] = [
 ];
 
 const ContactSection = () => {
-  // Shader.onUnavailable fires at most once when this browser or GPU cannot run
-  // the canvas. It writes nothing to the console, so the fallback is ours to
-  // draw. The section is already near black, so we only deepen the corner
-  // gradient in CSS and let the content layer carry the section on its own.
-  const [gpuUnavailable, setGpuUnavailable] = useState(false);
-
   return (
-    <main className="contact-closer" data-gpu-unavailable={gpuUnavailable ? "true" : "false"}>
+    <main className="contact-closer">
       <style>{`
         .contact-closer {
           position: relative;
@@ -155,43 +141,7 @@ const ContactSection = () => {
         }
       `}</style>
 
-      <div className="contact-closer__canvas" aria-hidden="true">
-        <Shader onUnavailable={() => setGpuUnavailable(true)}>
-          <DotGrid
-            id="trailDots"
-            density={40}
-            dotSize={{
-              type: "map",
-              source: "trailFlow",
-              channel: "alpha",
-              inputMax: 1,
-              inputMin: 0,
-              outputMax: 1,
-              outputMin: 0,
-            }}
-            twinkle={0.9}
-            visible={false}
-          />
-          <ChromaFlow id="trailFlow" intensity={1.4} radius={2.9} visible={false} />
-          <LinearGradient
-            colorA="#1e1e1f"
-            colorB="#070708"
-            colorSpace="hsl"
-            start={{ x: 0, y: 1 }}
-            end={{ x: 1, y: 0 }}
-          />
-          <LinearGradient
-            colorA="#000000"
-            colorB="#ffffff"
-            colorSpace="hsl"
-            start={{ x: 0, y: 1 }}
-            end={{ x: 1, y: 0 }}
-            maskSource="trailDots"
-          />
-          <CursorRipples />
-          <FilmGrain strength={0.1} />
-        </Shader>
-      </div>
+      <NightTrail className="contact-closer__canvas" />
 
       <section className="contact-closer__invite">
         <h2 className="contact-closer__question reveal" style={{ "--reveal-delay": "0.1s" } as React.CSSProperties}>

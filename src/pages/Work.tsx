@@ -1,3 +1,4 @@
+import NightBand from "@/components/NightBand";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
@@ -413,7 +414,7 @@ const Work = () => {
       <main className="min-h-screen overflow-x-hidden bg-background">
         <Navigation />
         
-        <section className="pt-32 pb-12 md:pt-40 md:pb-16">
+        <NightBand className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">
             <FadeIn>
               <p className="text-xs text-accent tracking-widest uppercase mb-4">
@@ -434,7 +435,7 @@ const Work = () => {
               </p>
             </FadeIn>
           </div>
-        </section>
+        </NightBand>
 
         <section className="story-wall-section">
           <style>{`
