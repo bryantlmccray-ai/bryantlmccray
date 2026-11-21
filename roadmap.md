@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Add the shared portrait to Home's measured record gap, preserving height, reel clicks, and wipe coverage.
+- [x] Verify Home at all four requested widths and constrained heights, save its screenshot, and commit without publishing.
+
 - [x] Add optional desktop NightBand portraits to Work, Writing, Experience, and Career without changing copy or band heights.
 - [x] Verify four viewport widths, portrait interaction and reduced motion, screenshots, and build health; commit without publishing.
 

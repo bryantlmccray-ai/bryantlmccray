@@ -1,4 +1,5 @@
 import NightBand from "@/components/NightBand";
+import headshotPortrait from "@/assets/bryant-headshot.jpeg";
 import React, { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play, X } from "lucide-react";
@@ -274,6 +275,9 @@ const Index = () => {
 
         {/* Record Hero */}
         <NightBand
+          portrait={{ src: headshotPortrait, alt: "Bryant McCray", position: "center top" }}
+          portraitPlacement="record-gap"
+          onClick={() => setSelectedVideo({ title: record.name, link: record.link })}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           className="relative min-h-[84vh] w-full overflow-hidden overflow-x-hidden pt-28 md:pt-32"
@@ -300,6 +304,7 @@ const Index = () => {
             <div className="h-px w-full bg-border" />
 
             <div
+              data-record-metadata
               className="pointer-events-auto grid cursor-pointer gap-x-16 md:grid-cols-2"
               onClick={() => setSelectedVideo({ title: record.name, link: record.link })}
             >
@@ -319,6 +324,7 @@ const Index = () => {
 
             {/* Index markers */}
             <div
+              data-record-markers
               className="pointer-events-auto flex items-center gap-2 pb-6"
               style={{ marginBottom: `calc(${(wordmarkSize * 0.9).toFixed(1)}px + 1.5rem)` }}
             >
@@ -340,7 +346,7 @@ const Index = () => {
           </div>
 
           {/* Wordmark */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 overflow-hidden">
+          <div data-record-wordmark className="pointer-events-none absolute inset-x-0 bottom-0 z-10 overflow-hidden">
             <div className="editorial-container" ref={wordmarkContainerRef}>
               <div className="relative text-center" style={{ marginBottom: "-0.1em" }}>
                 {/* Remount via key so the enter animation replays on each record change;

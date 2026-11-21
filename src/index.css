@@ -217,6 +217,11 @@
   .night-band--portrait > .editorial-container {
     padding-right: calc(2rem + var(--portrait-width) + 32px);
   }
+  .night-band--record-portrait > .editorial-container { padding-right: 2rem; }
+  .night-band--record-portrait .night-band__portrait-anchor {
+    bottom: auto;
+    padding-bottom: 0;
+  }
   .night-band__portrait-anchor {
     display: block;
     right: max(2rem, calc((100% - 56rem) / 2 + 2rem));
