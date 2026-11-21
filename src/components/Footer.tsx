@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="editorial-container">
         <div className="flex flex-col items-center text-center">
           <p className="text-muted-foreground text-sm mb-6 max-w-md">
-            For inquiries, collaborations, or editorial work.
+            Email is the fastest way to reach me.
           </p>
           <Button variant="editorial" size="sm" asChild>
             <a href="mailto:Bryant.l.mccray@gmail.com" className="flex items-center gap-2">

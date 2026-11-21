@@ -24,7 +24,7 @@ const Writing = () => {
           <div className="editorial-container">
             <h1 className="font-serif text-display text-foreground mb-6">Writing</h1>
             <p className="text-muted-foreground leading-relaxed mb-16">
-              Print adaptations of my WGN-TV reporting.
+              My WGN stories, rewritten for the page.
             </p>
             <ol className="divide-y divide-border">
               {writingSamples.map((sample, index) => (

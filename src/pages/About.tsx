@@ -1,7 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
+import { FadeIn } from "@/components/ScrollAnimations";
 import { motion } from "framer-motion";
 import bryantHeadshot from "@/assets/bryant-headshot.jpeg";
 import bryantOnair from "@/assets/bryant-onair.jpeg";
@@ -70,7 +70,7 @@ const About = () => {
                 
                 <FadeIn delay={0.1}>
                   <h1 className="font-serif text-headline text-foreground mb-8">
-                    I believe in clarity, not noise. In listening, not performing. In telling the truth as cleanly as possible.
+                    I grew up on the West Side. Now I report on the whole city.
                   </h1>
                 </FadeIn>
 
@@ -81,62 +81,24 @@ const About = () => {
                 <FadeIn delay={0.3}>
                   <div className="space-y-6 text-foreground/80 leading-relaxed">
                     <p>
-                      The truth is, I grew up in Chicago, and that shaped how I see the world 
-                      and how I report. It's a city that teaches you quickly what matters and 
-                      what doesn't. People don't want to be impressed. They want to be understood. 
-                      If you waste their time or talk around the point, they notice.
+                      I was raised on Chicago's West Side, with Mario's Italian Ice in one hand and Italian Fiesta pizza in the other. I went to Alain Locke Charter School, then Loyola Academy up in Wilmette.
                     </p>
 
                     <p>
-                      I grew up watching how stories play out on real blocks, not abstract ideas. 
-                      That's why I try to report the same way. When I'm covering breaking news or 
-                      spending time on a longer story, my job is to explain what's happening without 
-                      stripping away the people inside it.
+                      TV news started for me at St. Norbert College, on a student show called Knight Talk. From there it was Green Bay, then Milwaukee, then Cleveland. Now I'm home, at WGN.
                     </p>
 
                     <p>
-                      I've reported in Green Bay, Milwaukee, and Cleveland. I'm in Chicago now, at WGN. Four Emmy nominations along the way. I don't believe good journalism needs hype or theatrics. I believe it needs attention, honesty, and the discipline to listen before speaking.
+                      Chicago taught me early that people don't want to be impressed. They want to be understood. So that's how I report. I show up, I listen, and I let the people in the story carry it.
+                    </p>
+
+                    <p>
+                      Four Emmy nominations along the way. Three of them came this year.
                     </p>
                   </div>
                 </FadeIn>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Values Section */}
-        <section className="py-20 border-t border-border">
-          <div className="editorial-container">
-            <StaggerContainer className="grid md:grid-cols-3 gap-12">
-              {[
-                {
-                  title: "Clarity",
-                  description: "Making the complex accessible without sacrificing nuance or depth.",
-                },
-                {
-                  title: "Empathy",
-                  description: "Every story is about people. Treating subjects with dignity shapes better journalism.",
-                },
-                {
-                  title: "Patience",
-                  description: "The best stories reveal themselves to those willing to listen longer.",
-                },
-              ].map((value, index) => (
-                <StaggerItem key={index}>
-                  <motion.div 
-                    whileHover={{ y: -5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <h3 className="font-serif text-xl text-foreground mb-3">
-                      {value.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {value.description}
-                    </p>
-                  </motion.div>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
           </div>
         </section>
 

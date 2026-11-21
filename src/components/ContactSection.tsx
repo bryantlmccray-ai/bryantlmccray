@@ -29,8 +29,7 @@ const CONTACT_EMAIL = "Bryant.l.mccray@gmail.com";
 
 const SOCIALS: { label: string; href: string }[] = [
   { label: "Reel", href: "https://youtu.be/sKE1ZCnN0e8" },
-  { label: "LinkedIn", href: "#" },
-  { label: "Instagram", href: "#" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/bryant-mccray-018bba69" },
 ];
 
 const ContactSection = () => {
@@ -211,7 +210,7 @@ const ContactSection = () => {
       <footer className="contact-closer__footer reveal" style={{ "--reveal-delay": "0.45s" } as React.CSSProperties}>
         <div className="contact-closer__socials">
           {SOCIALS.map((social) => (
-            <a key={social.label} href={social.href}>
+            <a key={social.label} href={social.href} target={social.label === "LinkedIn" ? "_blank" : undefined} rel={social.label === "LinkedIn" ? "noopener noreferrer" : undefined}>
               {social.label}
             </a>
           ))}

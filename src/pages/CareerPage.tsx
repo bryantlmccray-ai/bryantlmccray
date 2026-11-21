@@ -14,12 +14,12 @@ const careerTimeline = [
     ],
   },
   {
-    role: "Multimedia Journalist",
+    role: "Reporter",
     org: "WKYC (NBC), Cleveland, OH",
     period: "2024 – 2025",
     bullets: [
-      "Video journalist covering community stories and regional events across Northeast Ohio.",
-      "Produced daily packages for broadcast and digital platforms on tight deadlines.",
+      "Breaking news, crime and courts, and community stories across Northeast Ohio.",
+      "Three of those stories were nominated for Great Lakes Emmys in 2026.",
     ],
   },
   {
@@ -27,9 +27,9 @@ const careerTimeline = [
     org: "CBS 58, Milwaukee, WI",
     period: "2022 – 2024",
     bullets: [
-      "Enterprise reporting and live breaking news coverage for top-rated newscasts.",
-      "Emmy-nominated for investigative segment on AI deepfake technology.",
-      "Developed long-form stories centering community voices and underserved neighborhoods.",
+      "Live breaking news and enterprise reporting in Milwaukee.",
+      "Emmy nomination for Eye on AI, a story on deepfake technology.",
+      "Long-form stories from neighborhoods that don't usually get the camera.",
     ],
   },
   {
@@ -37,8 +37,8 @@ const careerTimeline = [
     org: "WFRV (CBS), Green Bay, WI",
     period: "2016 – 2017",
     bullets: [
-      "Story development, guest coordination, and segment production.",
-      "Anchored weekend shows and produced daily content across platforms.",
+      "Story development, guest booking, and segment production.",
+      "Produced and reported daily for Northeast Wisconsin.",
     ],
   },
 ];
@@ -56,16 +56,15 @@ const skills = [
 
 const education = [
   {
-    degree: "Bachelor of Arts in Journalism",
-    school: "Columbia College Chicago",
-    year: "2016",
+    degree: "Bachelor of Science in Mass Communication",
+    school: "St. Norbert College",
   },
 ];
 
 const awards = [
   {
     title: "Three Emmy Nominations",
-    org: "WKYC-TV, Cleveland",
+    org: "57th Great Lakes Emmy Awards · WKYC-TV, Cleveland",
     year: "2026",
   },
   {
@@ -106,9 +105,7 @@ const CareerPage = () => {
             </FadeIn>
             <FadeIn delay={0.2}>
               <p className="text-muted-foreground max-w-xl leading-relaxed">
-                Emmy-nominated journalist with a decade of experience across broadcast 
-                and digital platforms. Every role sharpened the same instinct. Listen first, 
-                then tell the truth cleanly.
+                Ten years since my first newsroom. Green Bay, Milwaukee, Cleveland, Chicago. Every stop taught me the same thing. Listen first, then tell it straight.
               </p>
             </FadeIn>
           </div>
@@ -230,7 +227,7 @@ const CareerPage = () => {
                     {edu.degree}
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    {edu.school} · {edu.year}
+                    {edu.school}
                   </p>
                 </div>
               ))}

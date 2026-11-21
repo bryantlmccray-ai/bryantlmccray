@@ -411,7 +411,7 @@ const Index = () => {
               transition={revealTransition(0.5)}
               className="text-subhead text-muted-foreground mb-3"
             >
-              Journalist. Storyteller. Communication Strategist.
+              Reporter. WGN-TV, Chicago.
             </motion.p>
 
             <motion.p
@@ -421,7 +421,7 @@ const Index = () => {
               transition={revealTransition(0.6)}
               className="font-serif italic text-muted-foreground mb-8"
             >
-              The stories that shape us. The moments that matter.
+              Raised on the West Side. Reporting for the whole city now.
             </motion.p>
 
             <motion.div
@@ -439,7 +439,7 @@ const Index = () => {
               transition={revealTransition(0.8)}
               className="text-lg text-foreground/80 leading-relaxed max-w-xl"
             >
-              Four-time Emmy-nominated reporter at WGN-TV in Chicago, covering breaking news and politics.
+              I cover breaking news and politics for WGN-TV in Chicago. Four Emmy nominations, three of them this year.
             </motion.p>
           </div>
         </section>
@@ -583,7 +583,7 @@ const Index = () => {
         <FadeIn className="py-24">
           <div className="editorial-container text-center">
             <p className="text-muted-foreground mb-6">
-              Available for broadcast, editorial, and documentary work.
+              Got a story, or a role I should know about? Email me.
             </p>
             <motion.div 
               whileHover={{ scale: 1.05 }} 

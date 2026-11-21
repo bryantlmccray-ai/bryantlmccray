@@ -27,10 +27,10 @@ const experience = [
     description: "Breaking news, severe weather, and state and national politics for Chicago's WGN-TV.",
   },
   {
-    role: "Multimedia Journalist",
+    role: "Reporter",
     organization: "WKYC",
     period: "2024 – 2025",
-    description: "Video journalist covering community stories and regional events.",
+    description: "Breaking news, crime and courts, and community stories across Northeast Ohio.",
   },
   {
     role: "Broadcast Reporter",
@@ -123,8 +123,7 @@ const Experience = () => {
             
             <FadeIn delay={0.2}>
               <p className="text-muted-foreground max-w-xl leading-relaxed mb-10">
-                Emmy-nominated reporter with experience across broadcast and digital platforms. 
-                Skilled in on-air delivery, enterprise reporting, and audience-centered storytelling.
+                Green Bay, Milwaukee, Cleveland, now Chicago. Breaking news, live shots, and the people inside the story.
               </p>
             </FadeIn>
 
