@@ -135,8 +135,7 @@ export const writingSamples: WritingSample[] = [
       "“I feel like this should be a busier mall,” said Rebecca, a shopper who came by Sunday. “It doesn’t feel like it should be closing down.”",
       "Ford City opened in 1965 on the site of a World War II defense plant, anchored by Carson Pirie Scott and Sears. One by one, the big stores left. Vacancy hit 54%. JCPenney, there since day one, was the last one standing.",
       "For Carla Salvador, the mall was family time. “It was like every type of weekend type of thing,” she said. Her family came almost every weekend to spend time together there.",
-      "As for what is next, a Chicago-based developer wants to buy the land, demolish the mall and build warehouses that would bring up to 450 jobs. Some residents with the Southwest Action Network have launched a petition pushing for a park, a YMCA, even a World War II museum.",
-      "A June 29 court hearing could also affect the north mall and the AMC theater next door."
+      "As for what is next, a Chicago-based developer wants to buy the land, demolish the mall and build warehouses that would bring up to 450 jobs. Some residents with the Southwest Action Network have launched a petition pushing for a park, a YMCA, even a World War II museum."
     ]
   },
   {
