@@ -60,7 +60,7 @@ export const WritingCover = ({ sample }: { sample: WritingSample }) => {
         animate={{ y: interactive && hovered ? -6 : 0, scale: interactive && hovered ? 1.02 : 1, opacity: !interactive && hovered ? 0.85 : 1 }}
         transition={interactive ? { type: "spring", ...spring } : { duration: 0.15 }}
       >
-        <img src={`/writing/covers/${sample.slug}.jpg`} alt={`First page of ${sample.head}`} loading="lazy" className="block w-full h-full object-cover" />
+        <img src={`/writing/covers/${sample.slug}.jpg?v=2`} alt={`First page of ${sample.head}`} loading="lazy" className="block w-full h-full object-cover" />
       </motion.div>
       {interactive && (
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -100,7 +100,7 @@ export const WritingFrame = ({ sample }: { sample: WritingSample }) => {
       }}
       onPointerLeave={() => { x.set(0); y.set(0); }}
     >
-      <motion.img src={sample.frame} alt={sample.head} className="w-full h-full object-cover" style={{ x: interactive ? x : 0, y: interactive ? y : 0, scale: interactive ? 1.1 : 1 }} />
+      <motion.img src={`${sample.frame}?v=2`} alt={sample.head} className="w-full h-full object-cover" style={{ x: interactive ? x : 0, y: interactive ? y : 0, scale: interactive ? 1.1 : 1 }} />
     </div>
   );
 };

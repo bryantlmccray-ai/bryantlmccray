@@ -6,6 +6,49 @@ export const CREDIT = "Adapted from my WGN-TV report. Rewritten for print from m
 
 export const writingSamples: WritingSample[] = [
   {
+    "slug": "ryan-field-pat-ryan",
+    "pdf": "/writing/pdf/Bryant_McCray_ryan-field-pat-ryan.pdf",
+    "frame": "/writing/frames/RYAN.jpg",
+    "date": "October 9, 2026",
+    "head": "Inside Ryan Field with the man who built it",
+    "dek": "In an exclusive interview, developer Pat Ryan Jr. explains the bet behind one of the most expensive college stadiums ever built.",
+    "youtubeId": null,
+    "body": [
+      "EVANSTON, Ill. | Ryan Field cost more than $800 million, all of it privately funded, and it sits in Chicago's backyard.",
+      "A little under two years after the road to the stadium began, Pat Ryan Jr., CEO of Ryan Sports Development, sat in the stadium's new end zone and explained why he built it the way he did.",
+      "“This stadium is defying the traditional way of doing things by making some bold bets to do things very differently,” Ryan said. “And if we’re right, you may see echoes of this in other stadiums. And if we’re wrong, well, it’s the only one you’ll ever see.”",
+      "The north star, he said, was the fans. Most stadiums are built on best practices. His team started instead with the people who would live in the building: the players, then the students, then young alumni, families and the city.",
+      "People do not go to a football game by themselves, he said. They go with friends, family, colleagues and classmates, to share the experience. So his team built for the experience, not just the view of the field.",
+      "That is why the stadium seats 35,000, not 60,000. Ryan pointed to newer pro stadiums trending smaller, with more space and fewer seats. The canopy protects the neighbors from sound and channels it back down to the field.",
+      "It also makes room for a summer concert series. Asked who he wants on stage first, Ryan held that card close. “This stadium is the intimacy of an arena with the scale of a stadium,” he said, “and that’s never happened before.”",
+      "The build was not without a few fumbles. Ryan said that when you do something radically different, people see what can go wrong more easily than what could go right.",
+      "I know a little about that. More than 26 years ago, Ryan founded Alain Locke Charter School on Chicago's West Side. I was one of its students.",
+      "“My job was to provide a setting and coalesce a team around a vision and a belief,” he said of the school. “It’s the same thing with this.”"
+    ]
+  },
+  {
+    "slug": "illinois-ai-safety-law",
+    "pdf": "/writing/pdf/Bryant_McCray_illinois-ai-safety-law.pdf",
+    "frame": "/writing/frames/SB315.jpg",
+    "date": "July 6, 2026",
+    "head": "Illinois signs one of the country's toughest AI safety laws. Here is what it does.",
+    "dek": "Senate Bill 315 targets only the most powerful AI developers, with yearly outside audits, 72-hour incident reports and protection for whistleblowers.",
+    "youtubeId": null,
+    "body": [
+      "CHICAGO | Gov. JB Pritzker signed Senate Bill 315 into law Monday morning, joining other states in the fight to regulate artificial intelligence.",
+      "The Artificial Intelligence Safety Measures Act is not aimed at every AI company. It targets what the state calls frontier developers, the companies building the most powerful AI models, and only the biggest of them: companies making more than $500 million a year.",
+      "Those companies get the toughest rules in the country: audits, safety disclosures and whistleblower protections.",
+      "The law defines what it calls a catastrophic risk: an incident that could cause more than 50 deaths or serious injuries, or more than $1 billion in damage. Think of an AI helping someone build a weapon, or launching a cyberattack on its own.",
+      "Starting in 2028, the largest AI companies must hire outside auditors to check their safety work every year. It is the first law like it in the country.",
+      "If something goes wrong, companies must tell the Illinois Emergency Management Agency, Homeland Security and the attorney general within 72 hours.",
+      "And employees who speak up because they believe their company's AI is unsafe are now protected by law.",
+      "State Sen. Mary Edly-Allen sponsored the bill. She has compared the AI industry to the Wild West.",
+      "If a company breaks the rules, the attorney general can fine it up to $1 million for a first offense and up to $3 million for repeat violations. Regular people still cannot sue under the law.",
+      "The measure passed with bipartisan support. It also makes AI safety the state's call alone: Chicago and other Illinois cities cannot pass their own separate AI safety rules.",
+      "Supporters say it puts Illinois ahead of every other state on AI safety."
+    ]
+  },
+  {
     "slug": "save-a-lot-closures",
     "pdf": "/writing/pdf/Bryant_McCray_save-a-lot-closures.pdf",
     "frame": null,
@@ -29,28 +72,6 @@ export const writingSamples: WritingSample[] = [
       "WGN reached out to Yellow Banana for comment and did not hear back. The city says it is still talking with potential investors and suppliers to keep the buildings open. There is no deal, and no timeline.",
       "For Mwindaja, who runs a mobile fitness and martial arts training business on the West Side, the lesson is what happens next.",
       "“Hope is abstract,” he said. “Action is key.”"
-    ]
-  },
-  {
-    "slug": "illinois-ai-safety-law",
-    "pdf": "/writing/pdf/Bryant_McCray_illinois-ai-safety-law.pdf",
-    "frame": "/writing/frames/SB315.jpg",
-    "date": "July 6, 2026",
-    "head": "Illinois signs one of the country's toughest AI safety laws. Here is what it does.",
-    "dek": "Senate Bill 315 targets only the most powerful AI developers, with yearly outside audits, 72-hour incident reports and protection for whistleblowers.",
-    "youtubeId": null,
-    "body": [
-      "CHICAGO | Gov. JB Pritzker signed Senate Bill 315 into law Monday morning, joining other states in the fight to regulate artificial intelligence.",
-      "The Artificial Intelligence Safety Measures Act is not aimed at every AI company. It targets what the state calls frontier developers, the companies building the most powerful AI models, and only the biggest of them: companies making more than $500 million a year.",
-      "Those companies get the toughest rules in the country: audits, safety disclosures and whistleblower protections.",
-      "The law defines what it calls a catastrophic risk: an incident that could cause more than 50 deaths or serious injuries, or more than $1 billion in damage. Think of an AI helping someone build a weapon, or launching a cyberattack on its own.",
-      "Starting in 2028, the largest AI companies must hire outside auditors to check their safety work every year. It is the first law like it in the country.",
-      "If something goes wrong, companies must tell the Illinois Emergency Management Agency, Homeland Security and the attorney general within 72 hours.",
-      "And employees who speak up because they believe their company's AI is unsafe are now protected by law.",
-      "State Sen. Mary Edly-Allen sponsored the bill. She has compared the AI industry to the Wild West.",
-      "If a company breaks the rules, the attorney general can fine it up to $1 million for a first offense and up to $3 million for repeat violations. Regular people still cannot sue under the law.",
-      "The measure passed with bipartisan support. It also makes AI safety the state's call alone: Chicago and other Illinois cities cannot pass their own separate AI safety rules.",
-      "Supporters say it puts Illinois ahead of every other state on AI safety."
     ]
   },
   {
@@ -154,27 +175,6 @@ export const writingSamples: WritingSample[] = [
       "The school plans to grow to as many as 170 students a year. Leaders estimate it will put about $1 billion into Chicago's economy over the next decade.",
       "Dr. John Lucas, the founding dean, leads the college.",
       "Orientation week ends with a white coat ceremony on Saturday. If all goes as planned, this first class will graduate as physicians in 2030."
-    ]
-  },
-  {
-    "slug": "ryan-field-pat-ryan",
-    "pdf": "/writing/pdf/Bryant_McCray_ryan-field-pat-ryan.pdf",
-    "frame": "/writing/frames/RYAN.jpg",
-    "date": "October 9, 2026",
-    "head": "Inside Ryan Field with the man who built it",
-    "dek": "In an exclusive interview, developer Pat Ryan Jr. explains the bet behind one of the most expensive college stadiums ever built.",
-    "youtubeId": null,
-    "body": [
-      "EVANSTON, Ill. | Ryan Field cost more than $800 million, all of it privately funded, and it sits in Chicago's backyard.",
-      "A little under two years after the road to the stadium began, Pat Ryan Jr., CEO of Ryan Sports Development, sat in the stadium's new end zone and explained why he built it the way he did.",
-      "“This stadium is defying the traditional way of doing things by making some bold bets to do things very differently,” Ryan said. “And if we’re right, you may see echoes of this in other stadiums. And if we’re wrong, well, it’s the only one you’ll ever see.”",
-      "The north star, he said, was the fans. Most stadiums are built on best practices. His team started instead with the people who would live in the building: the players, then the students, then young alumni, families and the city.",
-      "People do not go to a football game by themselves, he said. They go with friends, family, colleagues and classmates, to share the experience. So his team built for the experience, not just the view of the field.",
-      "That is why the stadium seats 35,000, not 60,000. Ryan pointed to newer pro stadiums trending smaller, with more space and fewer seats. The canopy protects the neighbors from sound and channels it back down to the field.",
-      "It also makes room for a summer concert series. Asked who he wants on stage first, Ryan held that card close. “This stadium is the intimacy of an arena with the scale of a stadium,” he said, “and that’s never happened before.”",
-      "The build was not without a few fumbles. Ryan said that when you do something radically different, people see what can go wrong more easily than what could go right.",
-      "I know a little about that. More than 26 years ago, Ryan founded Alain Locke Charter School on Chicago's West Side. I was one of its students.",
-      "“My job was to provide a setting and coalesce a team around a vision and a belief,” he said of the school. “It’s the same thing with this.”"
     ]
   },
   {
