@@ -9,6 +9,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn } from "@/components/ScrollAnimations";
+import { stories } from "@/data/stories";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import hazardousRoadsThumb from "@/assets/hazardous-roads-thumbnail.jpg";
@@ -458,10 +459,17 @@ const Work = () => {
         {/* Filter */}
         <section className="py-12 md:py-16">
           <div className="editorial-container">
-            <Link to="/stories/nwi-storm-series" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="group block border-y border-border py-8">
-              <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-3">WGN NEWS · AUGUST 2026 · MUNSTER, INDIANA</p>
-              <h2 className="font-serif text-2xl md:text-3xl text-foreground group-hover:text-accent transition-colors duration-300">After the Storm: Northwest Indiana</h2>
-            </Link>
+            <p className="text-xs text-accent uppercase tracking-widest mb-4">Stories</p>
+            <ul className="border-t border-border">
+              {stories.map((story) => (
+                <li key={story.slug}>
+                  <Link to={`/stories/${story.slug}`} onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="group block border-b border-border py-8">
+                    <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-3">{story.kicker}</p>
+                    <h2 className="font-serif text-2xl md:text-3xl text-foreground group-hover:text-accent transition-colors duration-300">{story.headline}</h2>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 

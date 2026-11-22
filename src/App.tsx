@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { HelmetProvider } from "react-helmet-async";
-import NwiStormStory from "./pages/NwiStormStory";
+import StoryPage from "./pages/StoryPage";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Work from "./pages/Work";
@@ -28,7 +28,7 @@ const AnimatedRoutes = () => {
         <Route path="/home" element={<Navigate to="/" replace />} />
         <Route path="/about" element={<About />} />
         <Route path="/work" element={<Work />} />
-        <Route path="/stories/nwi-storm-series" element={<NwiStormStory />} />
+        <Route path="/stories/:slug" element={<StoryPage />} />
         <Route path="/writing" element={<Writing />} />
         <Route path="/writing/:slug" element={<WritingStory />} />
         <Route path="/experience" element={<Experience />} />
