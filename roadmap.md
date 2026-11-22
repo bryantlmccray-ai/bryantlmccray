@@ -27,3 +27,6 @@
 
 - [x] Extract the shared night shader and add dark opening bands while preserving copy and cream reading sections.
 - [x] Verify all requested desktop/mobile pages, reduced motion, unchanged contact presentation, and build health.
+
+- [x] Add youtubeId data and thumbnail layout to the Work page Stories list with maxres/hq fallback, lazy loading, and reused Play cue.
+- [x] Verify desktop/mobile rendering, fallback behavior, click navigation, overflow, and build health; commit without publishing.

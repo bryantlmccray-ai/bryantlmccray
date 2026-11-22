@@ -243,9 +243,11 @@ type StoryThumbnailProps = {
   thumbnail: string;
   title: string;
   videoOpen: boolean;
+  fallback?: string;
+  lazy?: boolean;
 };
 
-const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) => {
+const StoryThumbnail = ({ thumbnail, title, videoOpen, fallback, lazy }: StoryThumbnailProps) => {
   const [hovered, setHovered] = useState(false);
   const surfaceRef = useRef<HTMLDivElement>(null);
   const cueRef = useRef<HTMLDivElement>(null);
@@ -309,6 +311,14 @@ const StoryThumbnail = ({ thumbnail, title, videoOpen }: StoryThumbnailProps) =>
         <img
           src={thumbnail}
           alt={title}
+          loading={lazy ? "lazy" : undefined}
+          onError={(event) => {
+            const image = event.currentTarget;
+            if (fallback && !image.dataset.fallbackApplied) {
+              image.dataset.fallbackApplied = "1";
+              image.src = fallback;
+            }
+          }}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300" />
@@ -464,8 +474,21 @@ const Work = () => {
               {stories.map((story) => (
                 <li key={story.slug}>
                   <Link to={`/stories/${story.slug}`} onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="group block border-b border-border py-8">
-                    <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-3">{story.kicker}</p>
-                    <h2 className="font-serif text-2xl md:text-3xl text-foreground group-hover:text-accent transition-colors duration-300">{story.headline}</h2>
+                    <div className="grid gap-6 md:grid-cols-12 md:items-center">
+                      <div className="md:col-span-5">
+                        <StoryThumbnail
+                          thumbnail={`https://i.ytimg.com/vi/${story.youtubeId}/maxresdefault.jpg`}
+                          fallback={`https://i.ytimg.com/vi/${story.youtubeId}/hqdefault.jpg`}
+                          title={story.headline}
+                          videoOpen={selectedVideo !== null}
+                          lazy
+                        />
+                      </div>
+                      <div className="md:col-span-7">
+                        <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-3">{story.kicker}</p>
+                        <h2 className="font-serif text-2xl md:text-3xl text-foreground group-hover:text-accent transition-colors duration-300">{story.headline}</h2>
+                      </div>
+                    </div>
                   </Link>
                 </li>
               ))}

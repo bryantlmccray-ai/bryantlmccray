@@ -1,5 +1,6 @@
 export type Story = {
   slug: string;
+  youtubeId: string;
   kicker: string;
   headline: string;
   dek: string;
@@ -12,6 +13,7 @@ export type Story = {
 export const stories: Story[] = [
   {
     slug: "election-night-2026",
+    youtubeId: "wRbSppJ8Z7g",
     kicker: "WGN NEWS · NOVEMBER 2026 · CHICAGO",
     headline: "Election Night 2026",
     dek: "From the eve of the vote to a historic result. I covered Illinois' Election Day from the preview, through the governor's race results, to a live shot on the lakefront as J.B. Pritzker won a third term.",
@@ -25,6 +27,7 @@ export const stories: Story[] = [
   },
   {
     slug: "amtrak-rail-yard",
+    youtubeId: "gCQBi65OJZ0",
     kicker: "WGN NEWS · 2026 · PILSEN, CHINATOWN AND BRIDGEPORT",
     headline: "Amtrak and the South Side Rail Yard",
     dek: "Amtrak plans to move its maintenance facility from the South Loop to an unused rail yard that runs through Chinatown and Bridgeport. At a packed meeting in Pilsen, residents said nobody asked them first.",
@@ -34,6 +37,7 @@ export const stories: Story[] = [
   },
   {
     slug: "bears-stadium-fight",
+    youtubeId: "AeIe9BmfADo",
     kicker: "WGN NEWS · 2026 · ARLINGTON HEIGHTS AND CHICAGO",
     headline: "The Bears Stadium Fight",
     dek: "Where the Chicago Bears build next is a fight that touches taxpayers, suburbs and the city itself. I covered the reaction in Arlington Heights and the drama around the stadium plan.",
@@ -43,6 +47,7 @@ export const stories: Story[] = [
   },
   {
     slug: "nwi-storm-series",
+    youtubeId: "5hQTl-y7-YQ",
     kicker: "WGN NEWS · AUGUST 2026 · MUNSTER, INDIANA",
     headline: "After the Storm: Northwest Indiana",
     dek: "A storm knocked out power to more than 300,000 people across Northwest Indiana. Over ten days I followed it from the National Guard's first cleanup in Lake County, to families waiting in the dark, to a Munster town hall where residents asked who is responsible for the poles and trees that keep failing.",
