@@ -456,6 +456,15 @@ const Work = () => {
         </section>
 
         {/* Filter */}
+        <section className="py-12 md:py-16">
+          <div className="editorial-container">
+            <Link to="/stories/nwi-storm-series" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="group block border-y border-border py-8">
+              <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-3">WGN NEWS · AUGUST 2026 · MUNSTER, INDIANA</p>
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground group-hover:text-accent transition-colors duration-300">After the Storm: Northwest Indiana</h2>
+            </Link>
+          </div>
+        </section>
+
         <section className="py-8 border-y border-border sticky top-20 bg-background/95 backdrop-blur-sm z-40">
           <div className="editorial-container">
             <div className="flex flex-wrap gap-6">

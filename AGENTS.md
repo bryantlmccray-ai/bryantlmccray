@@ -5,3 +5,4 @@
 - NightTrail owns the shared shader tree and unavailable fallback; NightBand scopes dark header colors and readiness, leaving reading sections and the contact closer independent.
 - NightBand owns optional absolute desktop portraits; headers reserve text space and preserve original height, while record-gap placement measures metadata, markers, and wordmark to shrink or hide portraits without changing hero layout.
 - Keep the cream navigation bar across dark and light sections for stable contrast without scroll-driven theme changes.
+- Standalone broadcast stories own their NightBand header, inline privacy-enhanced video, chapters, and scroll reset; route metadata uses the app's HelmetProvider so title and description clean up on navigation.

@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Add the Northwest Indiana storm story route, exact copy, inline video, chapters, and page metadata.
+- [x] Add only its Work link and verify navigation, mobile reading, video availability, and build health.
+
 - [x] Add the shared portrait to Home's measured record gap, preserving height, reel clicks, and wipe coverage.
 - [x] Verify Home at all four requested widths and constrained heights, save its screenshot, and commit without publishing.
 
