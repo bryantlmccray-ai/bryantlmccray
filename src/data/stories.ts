@@ -13,11 +13,11 @@ export type Story = {
 export const stories: Story[] = [
   {
     slug: "election-night-2026",
-    youtubeId: "wRbSppJ8Z7g",
+    youtubeId: "vEyqRmLleUk",
     kicker: "WGN NEWS · NOVEMBER 2026 · CHICAGO",
     headline: "Election Night 2026",
     dek: "From the eve of the vote to a historic result. I covered Illinois' Election Day from the preview, through the governor's race results, to a live shot on the lakefront as J.B. Pritzker won a third term.",
-    videoSrc: "https://www.youtube-nocookie.com/embed/wRbSppJ8Z7g?rel=0",
+    videoSrc: "https://www.youtube-nocookie.com/embed/vEyqRmLleUk?rel=0",
     chapters: [
       "The preview: what was on the ballot",
       "Results: the governor's race",
