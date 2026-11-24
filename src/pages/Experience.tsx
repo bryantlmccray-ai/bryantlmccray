@@ -13,12 +13,16 @@ import { Play, X } from "lucide-react";
 import galleryEmmy from "@/assets/gallery-emmy.jpeg";
 import galleryInterview1 from "@/assets/gallery-interview-1.jpeg";
 import galleryInterview2 from "@/assets/gallery-interview-2.jpeg";
-import galleryHosting from "@/assets/gallery-hosting.jpeg";
+import galleryHosting from "@/assets/gallery-hosting.jpg";
 import galleryRambleLaugh from "@/assets/gallery-ramble-laugh.jpg";
 import galleryRambleWalk from "@/assets/gallery-ramble-walk.jpg";
 import galleryRambleInterview from "@/assets/gallery-ramble-interview.jpg";
+import galleryWgnEnglewood from "@/assets/gallery-wgn-englewood.jpg";
+import galleryWgnLakefront from "@/assets/gallery-wgn-lakefront.jpg";
 
 const galleryImages = [
+  { src: galleryWgnEnglewood, alt: "Live for WGN-TV on the West Englewood fire" },
+  { src: galleryWgnLakefront, alt: "Live from the lakefront for WGN-TV on the Illinois governor's race" },
   { src: galleryEmmy, alt: "At the Chicago/Midwest Emmy Awards" },
   { src: galleryInterview1, alt: "Studio interview session" },
   { src: galleryInterview2, alt: "On-stage interview at theater" },
