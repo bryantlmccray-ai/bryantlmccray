@@ -1,13 +1,14 @@
 import NightBand from "@/components/NightBand";
 import headshotPortrait from "@/assets/bryant-headshot.jpeg";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Award } from "lucide-react";
+import { Play, X } from "lucide-react";
 
 import galleryEmmy from "@/assets/gallery-emmy.jpeg";
 import galleryInterview1 from "@/assets/gallery-interview-1.jpeg";
@@ -52,6 +53,7 @@ type Nomination = {
   category: string;
   title: string;
   credit: string;
+  videoId: string;
 };
 
 type AwardEntry = {
@@ -71,16 +73,19 @@ const awards: AwardEntry[] = [
         category: "Crime/Justice – News",
         title: "One Traffic Stop, An Unlikely Rescue",
         credit: "Reporter",
+        videoId: "kdEjhUDVZiE",
       },
       {
         category: "Crime/Justice – News",
         title: "Break in a Cold Case: Arrest in the Murder of Aliza Sherman",
         credit: "Reporter, with Kelly Salandro, Sia Nyorkor, Joshua Bailey, Bailey Lustic, Frank Macek and Matthew Lawrence",
+        videoId: "oXRPe8KKv8c",
       },
       {
         category: "Daily News Report (Single Shift)",
         title: "TikTok on the Clock as the Feed May Go Dark",
         credit: "Reporter",
+        videoId: "kyz0-Brc8GI",
       },
     ],
   },
@@ -103,6 +108,78 @@ const affiliations = [
 
 const Experience = () => {
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<{ title: string; videoId: string } | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (!selectedVideo) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusFrame = window.requestAnimationFrame(() => closeButtonRef.current?.focus());
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSelectedVideo(null);
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      window.removeEventListener("keydown", closeOnEscape);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [selectedVideo]);
+
+  // Same video overlay as the Work page story modal.
+  const videoOverlay = typeof document !== "undefined" && createPortal(
+    <AnimatePresence>
+      {selectedVideo && (
+        <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedVideo.title}
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-x-hidden bg-foreground/90 p-4 backdrop-blur-sm md:p-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: reduceMotion ? 0.2 : 0.3, ease: "easeOut" }}
+          onClick={() => setSelectedVideo(null)}
+        >
+          <motion.div
+            className="relative w-full max-w-4xl bg-background border border-border"
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.94 }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.94 }}
+            transition={reduceMotion
+              ? { duration: 0.2, ease: "easeOut" }
+              : { type: "spring", stiffness: 280, damping: 28, mass: 0.8 }}
+            onAnimationComplete={() => closeButtonRef.current?.focus({ preventScroll: true })}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              ref={closeButtonRef}
+              type="button"
+              aria-label="Close video"
+              onClick={() => setSelectedVideo(null)}
+              className="absolute -top-10 right-0 z-50 p-2 text-primary-foreground hover:text-accent transition-colors"
+            >
+              <X className="h-6 w-6" />
+            </button>
+            <div className="aspect-video w-full">
+              <iframe
+                src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1&rel=0`}
+                title={selectedVideo.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
+    document.body,
+  );
 
   return (
     <PageTransition>
@@ -255,33 +332,40 @@ const Experience = () => {
                     </p>
 
                     {award.nominations && (
-                      <div className="mt-6">
-                        {award.nominations.map((nomination, nominationIndex) => (
-                          <div
-                            key={nominationIndex}
-                            className={
-                              nominationIndex > 0
-                                ? "flex items-start gap-3 border-t border-border pt-5 mt-5"
-                                : "flex items-start gap-3"
-                            }
+                      <div className="mt-6 grid gap-8 md:grid-cols-3">
+                        {award.nominations.map((nomination) => (
+                          <a
+                            key={nomination.videoId}
+                            href={`https://www.youtube.com/watch?v=${nomination.videoId}`}
+                            aria-label={`Watch: ${nomination.title}`}
+                            onClick={(event) => {
+                              event.preventDefault();
+                              setSelectedVideo({ title: nomination.title, videoId: nomination.videoId });
+                            }}
+                            className="group block"
                           >
-                            <Award
-                              size={16}
-                              strokeWidth={1.5}
-                              className="text-accent shrink-0 mt-1"
-                            />
-                            <div>
-                              <p className="text-xs text-accent tracking-widest uppercase mb-1">
-                                {nomination.category}
-                              </p>
-                              <p className="font-serif text-foreground mb-1">
-                                “{nomination.title}”
-                              </p>
-                              <p className="text-sm text-muted-foreground">
-                                {nomination.credit}
-                              </p>
+                            <div className="relative aspect-video overflow-hidden border border-border bg-secondary mb-4">
+                              <img
+                                src={`https://i.ytimg.com/vi/${nomination.videoId}/hqdefault.jpg`}
+                                alt=""
+                                loading="lazy"
+                                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                              />
                             </div>
-                          </div>
+                            <p className="text-xs text-accent tracking-widest uppercase mb-1">
+                              {nomination.category}
+                            </p>
+                            <p className="font-serif text-foreground mb-1 transition-colors group-hover:text-accent">
+                              “{nomination.title}”
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              {nomination.credit}
+                            </p>
+                            <span className="mt-3 inline-flex items-center gap-2 text-xs tracking-widest uppercase text-foreground">
+                              <Play size={12} strokeWidth={1.5} className="text-accent" />
+                              Watch
+                            </span>
+                          </a>
                         ))}
                       </div>
                     )}
@@ -319,6 +403,7 @@ const Experience = () => {
         </section>
 
         <Footer />
+        {videoOverlay}
       </main>
     </PageTransition>
   );
