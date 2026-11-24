@@ -14,12 +14,18 @@ import galleryEmmy from "@/assets/gallery-emmy.jpeg";
 import galleryInterview1 from "@/assets/gallery-interview-1.jpeg";
 import galleryInterview2 from "@/assets/gallery-interview-2.jpeg";
 import galleryHosting from "@/assets/gallery-hosting.jpeg";
+import galleryRambleLaugh from "@/assets/gallery-ramble-laugh.jpg";
+import galleryRambleWalk from "@/assets/gallery-ramble-walk.jpg";
+import galleryRambleInterview from "@/assets/gallery-ramble-interview.jpg";
 
 const galleryImages = [
   { src: galleryEmmy, alt: "At the Chicago/Midwest Emmy Awards" },
   { src: galleryInterview1, alt: "Studio interview session" },
   { src: galleryInterview2, alt: "On-stage interview at theater" },
   { src: galleryHosting, alt: "Hosting an event" },
+  { src: galleryRambleInterview, alt: "Interview for Loyola Academy's Ramble 2025 film" },
+  { src: galleryRambleWalk, alt: "With Brittany McCray at Loyola Academy, Ramble 2025 film" },
+  { src: galleryRambleLaugh, alt: "Behind the scenes, Loyola Academy's Ramble 2025 film" },
 ];
 
 const experience = [
@@ -214,7 +220,7 @@ const Experience = () => {
           <div className="editorial-container">
             {/* Mini Gallery */}
             <FadeIn delay={0.3}>
-              <div className="flex gap-3 md:gap-4">
+              <div className="flex flex-wrap gap-3 md:gap-4">
                 {galleryImages.map((image, index) => (
                   <motion.div
                     key={index}
