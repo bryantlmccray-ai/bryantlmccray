@@ -8,6 +8,7 @@ import { ArrowUpRight } from "lucide-react";
 import bryantHeadshot from "@/assets/bryant-headshot.jpeg";
 import bryantOnair from "@/assets/bryant-onair.jpeg";
 import aaccwiMark from "@/assets/aaccwi-mark.png";
+import loyolaAcademyLogo from "@/assets/loyola-academy-logo.png";
 
 const About = () => {
   const reduceMotion = useReducedMotion();
@@ -157,9 +158,12 @@ const About = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <div className="h-14 flex items-center mb-8">
-                    <span aria-label="Loyola Academy" className="font-serif text-lg lg:text-xl tracking-widest text-foreground">
-                      LOYOLA ACADEMY
-                    </span>
+                    <img
+                      src={loyolaAcademyLogo}
+                      alt="Loyola Academy"
+                      className="max-h-14 max-w-full object-contain"
+                      loading="lazy"
+                    />
                   </div>
                   <p className="text-xs text-accent tracking-widest uppercase mb-3">Featured</p>
                   <h3 className="font-serif text-2xl text-foreground mb-4">Portrait of a Rambler</h3>
