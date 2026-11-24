@@ -121,7 +121,7 @@ const About = () => {
                 Rooms I've hosted. Places that told my story.
               </h2>
             </FadeIn>
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <FadeIn className="h-full">
                 <motion.article
                   className="border border-border p-6 md:p-8 h-full flex flex-col"
@@ -143,6 +143,35 @@ const About = () => {
                   </p>
                   <a
                     href="https://www.aaccwi.org/boc2023"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </motion.article>
+              </FadeIn>
+              <FadeIn delay={0.1} className="h-full">
+                <motion.article
+                  className="border border-border p-6 md:p-8 h-full flex flex-col"
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="h-14 flex items-center mb-8">
+                    <img
+                      src={loyolaAcademyLogo}
+                      alt="Loyola Academy"
+                      className="max-h-14 max-w-full object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-xs text-accent tracking-widest uppercase mb-3">Speaker</p>
+                  <h3 className="font-serif text-2xl text-foreground mb-4">Ramble 2025</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    Loyola Academy's benefit for tuition assistance. Shared my story with Brittany McCray, Class of 2012. March 15, 2025.
+                  </p>
+                  <a
+                    href="https://goramblers.myschoolapp.com/page/news-detail?pk=1560959&siteId=1102&ssl=1"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
