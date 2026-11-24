@@ -3,11 +3,14 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn } from "@/components/ScrollAnimations";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import bryantHeadshot from "@/assets/bryant-headshot.jpeg";
 import bryantOnair from "@/assets/bryant-onair.jpeg";
+import aaccwiMark from "@/assets/aaccwi-mark.png";
 
 const About = () => {
+  const reduceMotion = useReducedMotion();
   return (
     <PageTransition>
       <main className="min-h-screen bg-background">
@@ -102,6 +105,77 @@ const About = () => {
                   </div>
                 </FadeIn>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="pb-24 md:pb-32">
+          <div className="editorial-container">
+            <FadeIn>
+              <div className="accent-line mb-10" />
+              <p className="text-xs text-accent tracking-widest uppercase mb-4">
+                On Stage &amp; In Print
+              </p>
+              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-12">
+                Rooms I've hosted. Places that told my story.
+              </h2>
+            </FadeIn>
+            <div className="grid md:grid-cols-2 gap-8">
+              <FadeIn className="h-full">
+                <motion.article
+                  className="border border-border p-6 md:p-8 h-full flex flex-col"
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="h-14 flex items-center mb-8">
+                    <img
+                      src={aaccwiMark}
+                      alt="African American Chamber of Commerce of Wisconsin"
+                      className="max-h-14 max-w-full object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="text-xs text-accent tracking-widest uppercase mb-3">Emcee</p>
+                  <h3 className="font-serif text-2xl text-foreground mb-4">2023 Breakfast of Champions</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    African American Chamber of Commerce of Wisconsin. Fiserv Forum, Milwaukee. September 27, 2023.
+                  </p>
+                  <a
+                    href="https://www.aaccwi.org/boc2023"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </motion.article>
+              </FadeIn>
+              <FadeIn delay={0.1} className="h-full">
+                <motion.article
+                  className="border border-border p-6 md:p-8 h-full flex flex-col"
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="h-14 flex items-center mb-8">
+                    <span aria-label="Loyola Academy" className="font-serif text-lg lg:text-xl tracking-widest text-foreground">
+                      LOYOLA ACADEMY
+                    </span>
+                  </div>
+                  <p className="text-xs text-accent tracking-widest uppercase mb-3">Featured</p>
+                  <h3 className="font-serif text-2xl text-foreground mb-4">Portrait of a Rambler</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    Loyola Academy alumni profile. Class of 2012.
+                  </p>
+                  <a
+                    href="https://www.goramblers.org/portrait-of-a-rambler-bryant-mccray"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </motion.article>
+              </FadeIn>
             </div>
           </div>
         </section>
