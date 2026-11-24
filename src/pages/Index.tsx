@@ -446,7 +446,7 @@ const Index = () => {
               transition={revealTransition(0.8)}
               className="text-lg text-foreground/80 leading-relaxed max-w-xl"
             >
-              I cover breaking news and politics for WGN-TV in Chicago. Four Emmy nominations, three of them this year.
+              I cover breaking news and politics for WGN-TV in Chicago. Four-time Regional Emmy® Award Nominee, with three of those nominations this year.
             </motion.p>
           </div>
         </section>

@@ -101,7 +101,7 @@ const About = () => {
                     </p>
 
                     <p>
-                      Four Emmy nominations along the way. Three of them came this year.
+                      Four-time Regional Emmy® Award Nominee. Three of those nominations came this year.
                     </p>
                   </div>
                 </FadeIn>
@@ -117,9 +117,12 @@ const About = () => {
               <p className="text-xs text-accent tracking-widest uppercase mb-4">
                 On Stage &amp; In Print
               </p>
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-12">
+              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-4">
                 Rooms I've hosted. Places that told my story.
               </h2>
+              <p className="text-xs text-muted-foreground tracking-widest uppercase mb-12">
+                Four-time Regional Emmy® Award Nominee
+              </p>
             </FadeIn>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               <FadeIn className="h-full">
