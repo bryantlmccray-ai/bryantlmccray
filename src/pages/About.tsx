@@ -5,6 +5,7 @@ import PageTransition from "@/components/PageTransition";
 import { FadeIn } from "@/components/ScrollAnimations";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import bryantHeadshot from "@/assets/bryant-headshot.jpeg";
 import bryantOnair from "@/assets/bryant-onair.jpeg";
 import aaccwiMark from "@/assets/aaccwi-mark.png";
@@ -103,9 +104,138 @@ const About = () => {
                     <p>
                       Four-time Regional Emmy® Award Nominee. Three of those nominations came this year.
                     </p>
+
+                    <p>
+                      My WGN reporting also runs on{" "}
+                      <Link
+                        to="/work"
+                        className="underline-offset-4 hover:underline"
+                      >
+                        NewsNation and Nexstar stations
+                      </Link>{" "}
+                      across the Midwest.
+                    </p>
                   </div>
                 </FadeIn>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="pb-24 md:pb-32">
+          <div className="editorial-container">
+            <FadeIn>
+              <div className="accent-line mb-10" />
+              <p className="text-xs text-accent tracking-widest uppercase mb-4">
+                Recognition
+              </p>
+              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-12">
+                Four Regional Emmy® nominations.
+              </h2>
+            </FadeIn>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <FadeIn className="h-full">
+                <motion.article
+                  className="border border-border p-6 md:p-8 h-full flex flex-col"
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="h-14 flex items-center mb-8">
+                    <span className="text-xs text-muted-foreground tracking-widest uppercase">
+                      NATAS Central Great Lakes
+                    </span>
+                  </div>
+                  <p className="text-xs text-accent tracking-widest uppercase mb-3">Nominee · 2026</p>
+                  <h3 className="font-serif text-2xl text-foreground mb-4">One Traffic Stop, An Unlikely Rescue</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    Crime/Justice News. WKYC, Cleveland.
+                  </p>
+                  <Link
+                    to="/stories/one-traffic-stop-an-unlikely-rescue"
+                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </motion.article>
+              </FadeIn>
+              <FadeIn delay={0.1} className="h-full">
+                <motion.article
+                  className="border border-border p-6 md:p-8 h-full flex flex-col"
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="h-14 flex items-center mb-8">
+                    <span className="text-xs text-muted-foreground tracking-widest uppercase">
+                      NATAS Central Great Lakes
+                    </span>
+                  </div>
+                  <p className="text-xs text-accent tracking-widest uppercase mb-3">Nominee · 2026</p>
+                  <h3 className="font-serif text-2xl text-foreground mb-4">Break in a Cold Case</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    Crime/Justice News, team coverage of the arrest in the murder of Aliza Sherman. WKYC, Cleveland.
+                  </p>
+                  <a
+                    href="https://wkycdirectorscut.blogspot.com/2026/04/wkyc-garners-27-regional-emmy.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </motion.article>
+              </FadeIn>
+              <FadeIn delay={0.2} className="h-full">
+                <motion.article
+                  className="border border-border p-6 md:p-8 h-full flex flex-col"
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="h-14 flex items-center mb-8">
+                    <span className="text-xs text-muted-foreground tracking-widest uppercase">
+                      NATAS Central Great Lakes
+                    </span>
+                  </div>
+                  <p className="text-xs text-accent tracking-widest uppercase mb-3">Nominee · 2026</p>
+                  <h3 className="font-serif text-2xl text-foreground mb-4">TikTok on the Clock as the Feed May Go Dark</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    Daily News Report, single shift. WKYC, Cleveland.
+                  </p>
+                  <a
+                    href="https://wkycdirectorscut.blogspot.com/2026/04/wkyc-garners-27-regional-emmy.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </motion.article>
+              </FadeIn>
+              <FadeIn delay={0.3} className="h-full">
+                <motion.article
+                  className="border border-border p-6 md:p-8 h-full flex flex-col"
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="h-14 flex items-center mb-8">
+                    <span className="text-xs text-muted-foreground tracking-widest uppercase">
+                      NATAS Chicago/Midwest
+                    </span>
+                  </div>
+                  <p className="text-xs text-accent tracking-widest uppercase mb-3">Nominee · 2023</p>
+                  <h3 className="font-serif text-2xl text-foreground mb-4">CBS 58 Eye on AI</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    Team nomination with the CBS 58 newsroom. WDJT, Milwaukee.
+                  </p>
+                  <a
+                    href="https://chicagoemmyonline.org/files/2023-10-2023-Chicago-Midwest-Nomination-List.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </motion.article>
+              </FadeIn>
             </div>
           </div>
         </section>
@@ -204,6 +334,32 @@ const About = () => {
                   </p>
                   <a
                     href="https://www.goramblers.org/portrait-of-a-rambler-bryant-mccray"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </motion.article>
+              </FadeIn>
+              <FadeIn delay={0.1} className="h-full">
+                <motion.article
+                  className="border border-border p-6 md:p-8 h-full flex flex-col"
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="h-14 flex items-center mb-8">
+                    <span className="text-xs text-muted-foreground tracking-widest uppercase">
+                      CBS 58
+                    </span>
+                  </div>
+                  <p className="text-xs text-accent tracking-widest uppercase mb-3">In the news</p>
+                  <h3 className="font-serif text-2xl text-foreground mb-4">Stepping with the Stars</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    Won the men's competition at Milwaukee's Stepping with the Stars, raising money for Aurora at Home. June 2023.
+                  </p>
+                  <a
+                    href="https://www.cbs58.com/news/cbs-58-reporter-bryant-mccray-wins-milwaukees-stepping-with-the-stars-mens-competition"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"

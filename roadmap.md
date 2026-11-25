@@ -36,3 +36,6 @@
 
 - [x] Add syndication data and the Work page "Carried nationally" text list with ItemList NewsArticle JSON-LD.
 - [x] Verify eight hrefs, desktop/mobile width, unchanged section order, and build health; commit without publishing.
+
+- [x] Add the Recognition Emmy nominations section, the CBS 58 press card, and the NewsNation bio line to About.
+- [x] Verify both sections at 1440 and 390, link targets and new-tab rel, internal story navigation, and build health.
