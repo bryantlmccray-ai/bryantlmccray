@@ -181,6 +181,53 @@ const MetaRow = ({
   );
 };
 
+const REEL_EMBED = "https://www.youtube-nocookie.com/embed/sKE1ZCnN0e8?autoplay=1&mute=1&loop=1&playlist=sKE1ZCnN0e8&controls=0&modestbranding=1&playsinline=1&rel=0";
+
+// Muted inline reel: the poster holds the box until the section is in view, then the iframe mounts.
+const ReelAutoplay = ({ onOpen }: { onOpen: () => void }) => {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el || inView) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInView(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: "200px 0px" });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [inView]);
+
+  return (
+    <div ref={boxRef} className="aspect-video relative overflow-hidden border border-border w-full">
+      <img
+        src="/stills/reporter-reel-2026.jpg"
+        alt="Bryant McCray reporting live for WGN-TV in West Englewood"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      {inView && (
+        <iframe
+          src={REEL_EMBED}
+          title="Bryant McCray Reporter Reel 2026"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          tabIndex={-1}
+          className="pointer-events-none absolute inset-0 w-full h-full border-0"
+        />
+      )}
+      <button
+        type="button"
+        onClick={onOpen}
+        className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-2 bg-background/90 backdrop-blur-sm px-3 py-2 text-xs uppercase tracking-widest text-foreground hover:text-accent transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" /> Watch with sound
+      </button>
+    </div>
+  );
+};
+
 const featuredWork = heroStories;
 
 const Index = () => {
@@ -496,6 +543,7 @@ const Index = () => {
               
               <FadeIn direction="right" delay={0.2}>
                 <HoverLift>
+                  {shouldReduceMotion ? (
                   <button 
                     onClick={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://youtu.be/sKE1ZCnN0e8" })}
                     className="aspect-video relative group cursor-pointer overflow-hidden border border-border block w-full"
@@ -517,6 +565,9 @@ const Index = () => {
                       </motion.div>
                     </div>
                   </button>
+                  ) : (
+                    <ReelAutoplay onOpen={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://youtu.be/sKE1ZCnN0e8" })} />
+                  )}
                 </HoverLift>
               </FadeIn>
             </div>
