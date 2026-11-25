@@ -39,3 +39,6 @@
 
 - [x] Add the Recognition Emmy nominations section, the CBS 58 press card, and the NewsNation bio line to About.
 - [x] Verify both sections at 1440 and 390, link targets and new-tab rel, internal story navigation, and build health.
+
+- [x] Add the St. Norbert Knight Talk press card to About and its Person subjectOf entry in index.html.
+- [x] Verify the exact snc.edu URL, JSON-LD parsing, card order and link targets, 390px overflow, and build health.

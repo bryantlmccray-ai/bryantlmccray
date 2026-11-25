@@ -350,6 +350,32 @@ const About = () => {
                 >
                   <div className="h-14 flex items-center mb-8">
                     <span className="text-xs text-muted-foreground tracking-widest uppercase">
+                      St. Norbert College
+                    </span>
+                  </div>
+                  <p className="text-xs text-accent tracking-widest uppercase mb-3">Featured</p>
+                  <h3 className="font-serif text-2xl text-foreground mb-4">Founder of Knight Talk</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    St. Norbert's video news service, now GreenKnightTV, started as the student show I built in 2014. Class of 2016.
+                  </p>
+                  <a
+                    href="https://snc.edu/news/magazine/student-run-video-news-service-builds-audience-campus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </motion.article>
+              </FadeIn>
+              <FadeIn delay={0.1} className="h-full">
+                <motion.article
+                  className="border border-border p-6 md:p-8 h-full flex flex-col"
+                  whileHover={reduceMotion ? undefined : { y: -4 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="h-14 flex items-center mb-8">
+                    <span className="text-xs text-muted-foreground tracking-widest uppercase">
                       CBS 58
                     </span>
                   </div>
