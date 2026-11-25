@@ -7,6 +7,7 @@ export type Story = {
   videoSrc: string;
   chapters: string[];
   metaDescription: string;
+  coverage?: { outlet: string; title: string; url: string }[];
 };
 
 // Newest first; the Work page Stories list uses this order.
@@ -58,5 +59,21 @@ export const stories: Story[] = [
       "The town hall: who answers for the poles (Aug. 21)",
     ],
     metaDescription: "Bryant McCray follows Northwest Indiana's storm recovery for WGN-TV, from National Guard cleanup to families without power and a Munster town hall.",
+  },
+  {
+    slug: "one-traffic-stop-an-unlikely-rescue",
+    youtubeId: "kdEjhUDVZiE",
+    kicker: "WKYC · MAY 2025 · SPRINGFIELD TOWNSHIP, OHIO",
+    headline: "One Traffic Stop, An Unlikely Rescue",
+    dek: "Springfield Township police pulled a car over and found a raccoon named Chewy in the driver's seat with a meth pipe in its mouth. The video went national. I covered the stop and what happened to Chewy. The story was nominated for a 2026 Central Great Lakes Emmy in Crime/Justice News.",
+    videoSrc: "https://www.youtube-nocookie.com/embed/kdEjhUDVZiE?rel=0",
+    chapters: [],
+    metaDescription: "Bryant McCray's Emmy-nominated WKYC report on the Springfield Township traffic stop where police found a raccoon with a meth pipe, a story that made national news.",
+    coverage: [
+      { outlet: "NBC News", title: "Ohio police find raccoon holding meth pipe during traffic stop", url: "https://www.nbcnews.com/news/us-news/ohio-police-find-raccoon-holding-meth-pipe-traffic-stop-rcna205508" },
+      { outlet: "Fox News", title: "Pet raccoon caught with meth pipe in its mouth when cops pulled over Ohio woman", url: "https://www.foxnews.com/us/pet-raccoon-caught-meth-pipe-its-mouth-when-cops-pulled-over-ohio-woman-expect-unexpected" },
+      { outlet: "WKYC", title: "Police share new details about raccoon found with meth pipe during Springfield Township traffic stop", url: "https://www.wkyc.com/article/news/crime/springfield-township-police-new-details-pet-raccoon-meth-pipe-traffic-stop-chewy/95-0358232f-a1a6-412c-bea7-24728328d949" },
+      { outlet: "NATAS Central Great Lakes", title: "2026 Regional Emmy nomination, Crime/Justice - News (via WKYC)", url: "https://wkycdirectorscut.blogspot.com/2026/04/wkyc-garners-27-regional-emmy.html" },
+    ],
   },
 ];
