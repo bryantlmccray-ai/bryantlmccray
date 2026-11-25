@@ -42,3 +42,5 @@
 
 - [x] Add the St. Norbert Knight Talk press card to About and its Person subjectOf entry in index.html.
 - [x] Verify the exact snc.edu URL, JSON-LD parsing, card order and link targets, 390px overflow, and build health.
+
+- [x] Correct the CBS 58 Eye on AI Recognition card link to the slashed Emmy PDF URL and confirm no dashed form remains.

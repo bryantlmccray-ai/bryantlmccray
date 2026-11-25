@@ -227,7 +227,7 @@ const About = () => {
                     Team nomination with the CBS 58 newsroom. WDJT, Milwaukee.
                   </p>
                   <a
-                    href="https://chicagoemmyonline.org/files/2023-10-2023-Chicago-Midwest-Nomination-List.pdf"
+                    href="https://chicagoemmyonline.org/files/2023/10/2023-Chicago-Midwest-Nomination-List.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
