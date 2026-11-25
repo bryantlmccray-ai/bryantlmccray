@@ -33,24 +33,24 @@ const About = () => {
 
         <section className="pt-4 pb-24 md:pt-8 md:pb-32">
           <div className="editorial-container">
-            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 max-md:overflow-x-clip">
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-12 max-md:overflow-x-clip">
               {/* Creative Photo Layout */}
-              <FadeIn direction="left" className="lg:col-span-5 order-2 lg:order-1">
-                <div className="relative pb-24 md:pb-28">
+              <FadeIn direction="left" className="lg:col-span-7 order-1">
+                <div className="relative">
                   <motion.div
                     className="overflow-hidden border border-border"
                     whileHover={reduceMotion ? undefined : { scale: 1.01 }}
                     transition={{ duration: 0.4 }}
                   >
                     <img
-                      src="/stills/bryant-field-nwi.jpg"
-                      alt="Bryant McCray reporting for WGN-TV in Northwest Indiana after the August 2026 storm"
-                      width={1920}
+                      src="/stills/bryant-field-action.jpg"
+                      alt="Bryant McCray reporting for WGN-TV beside a tree that fell on a car during a storm"
+                      width={1620}
                       height={1080}
-                      className="w-full aspect-[4/5] object-cover"
+                      className="w-full aspect-[3/2] object-cover object-left"
                     />
                   </motion.div>
-                  <div className="absolute bottom-0 right-0 w-3/5 overflow-hidden border-4 border-background">
+                  <div className="absolute bottom-0 right-0 w-1/3 overflow-hidden border-4 border-background">
                     <img
                       src="/stills/bryant-field-westside.jpg"
                       alt="Bryant McCray reporting live for WGN-TV on Chicago's West Side"
@@ -64,7 +64,7 @@ const About = () => {
               </FadeIn>
 
               {/* Content */}
-              <div className="lg:col-span-7 order-1 lg:order-2">
+              <div className="lg:col-span-5 order-2">
                 <FadeIn delay={0.2}>
                   <div className="accent-line mb-10" />
                 </FadeIn>
