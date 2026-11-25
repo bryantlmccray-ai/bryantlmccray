@@ -33,3 +33,6 @@
 
 - [x] Add youtubeId data and thumbnail layout to the Work page Stories list with maxres/hq fallback, lazy loading, and reused Play cue.
 - [x] Verify desktop/mobile rendering, fallback behavior, click navigation, overflow, and build health; commit without publishing.
+
+- [x] Add syndication data and the Work page "Carried nationally" text list with ItemList NewsArticle JSON-LD.
+- [x] Verify eight hrefs, desktop/mobile width, unchanged section order, and build health; commit without publishing.

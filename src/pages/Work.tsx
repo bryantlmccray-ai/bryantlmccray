@@ -9,7 +9,9 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn } from "@/components/ScrollAnimations";
+import { Helmet } from "react-helmet-async";
 import { stories } from "@/data/stories";
+import { syndication } from "@/data/syndication";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import hazardousRoadsThumb from "@/assets/hazardous-roads-thumbnail.jpg";
@@ -423,6 +425,29 @@ const Work = () => {
 
   return (
     <PageTransition>
+      <Helmet>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            itemListElement: syndication.map((piece, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              item: {
+                "@type": "NewsArticle",
+                headline: piece.headline,
+                url: piece.url,
+                publisher: { "@type": "Organization", name: piece.outlet },
+                author: {
+                  "@type": "Person",
+                  "@id": "https://bryantmccray.com/#bryant",
+                  name: "Bryant McCray",
+                },
+              },
+            })),
+          }).replace(/</g, "\\u003c")}
+        </script>
+      </Helmet>
       <main className="min-h-screen overflow-x-hidden bg-background">
         <Navigation />
         
@@ -490,6 +515,36 @@ const Work = () => {
                       </div>
                     </div>
                   </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* Syndication */}
+        <section className="py-12 md:py-16">
+          <div className="editorial-container">
+            <p className="text-xs text-accent uppercase tracking-widest mb-4">Carried nationally</p>
+            <p className="text-muted-foreground max-w-xl leading-relaxed mb-8">
+              My WGN reporting, as published by NewsNation and Nexstar stations across the Midwest.
+            </p>
+            <ul className="border-t border-border">
+              {syndication.map((piece) => (
+                <li key={piece.url}>
+                  <a
+                    href={piece.url}
+                    target="_blank"
+                    rel="noopener"
+                    className="group block border-b border-border py-6"
+                  >
+                    <p className="text-xs uppercase tracking-widest leading-relaxed mb-3">
+                      <span className="text-accent">{piece.outlet}</span>
+                      <span className="text-muted-foreground"> · {piece.scope}</span>
+                    </p>
+                    <h2 className="font-serif text-lg md:text-xl text-foreground leading-snug group-hover:text-accent transition-colors duration-300">
+                      {piece.headline}
+                    </h2>
+                  </a>
                 </li>
               ))}
             </ul>
