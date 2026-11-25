@@ -34,7 +34,7 @@ const About = () => {
 
         <section className="pt-16 pb-24 md:pt-20 md:pb-32">
           <div className="editorial-container">
-            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 max-md:overflow-x-clip">
               {/* Creative Photo Layout */}
               <FadeIn direction="left" className="lg:col-span-5 order-2 lg:order-1">
                 <div className="relative">
@@ -55,7 +55,7 @@ const About = () => {
                   
                   {/* On-air photo - smaller, overlapping bottom right */}
                   <motion.div 
-                    className="absolute -bottom-8 -right-4 md:-right-8 w-2/3 z-20"
+                    className="absolute -bottom-8 right-0 md:-right-8 w-2/3 z-20"
                     initial={{ opacity: 0, x: 30, y: 30 }}
                     animate={{ opacity: 1, x: 0, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.3 }}
@@ -74,7 +74,7 @@ const About = () => {
                   
                   {/* Decorative accent */}
                   <motion.div 
-                    className="absolute -top-4 -left-4 w-24 h-24 border border-accent/30"
+                    className="absolute -top-4 left-0 md:-left-4 w-24 h-24 border border-accent/30"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
