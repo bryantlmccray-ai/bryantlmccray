@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import FeaturedVideo from "@/components/FeaturedVideo";
 
 import NotFound from "@/pages/NotFound";
 import { stories } from "@/data/stories";
@@ -76,15 +77,13 @@ const StoryPage = () => {
           </div>
           <section className="py-12 md:py-16">
             <div className="editorial-container">
-              <div className="aspect-video w-full">
-                <iframe
-                  src={story.videoSrc}
-                  title={story.headline}
-                  className="w-full h-full border-0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              </div>
+              <FeaturedVideo
+                key={story.slug}
+                youtubeId={story.youtubeId}
+                poster={story.still ?? `https://i.ytimg.com/vi/${story.youtubeId}/maxresdefault.jpg`}
+                alt={`From Bryant McCray's WGN-TV report: ${story.headline}`}
+                title={story.headline}
+              />
               {story.chapters.length > 0 && (
                 <ol aria-label="Story chapters" className="mt-8 divide-y divide-border border-y border-border">
                 {story.chapters.map((chapter, index) => (
