@@ -21,6 +21,8 @@ const CONTACT_EMAIL = "Bryant.l.mccray@gmail.com";
 
 const SOCIALS: { label: string; href: string }[] = [
   { label: "Reel", href: "https://youtu.be/sKE1ZCnN0e8" },
+  { label: "WGN-TV", href: "https://wgntv.com/author/bryant-mccray/" },
+  { label: "YouTube", href: "https://www.youtube.com/@BryantMcNews" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/bryant-mccray-018bba69" },
 ];
 
@@ -159,11 +161,14 @@ const ContactSection = () => {
 
       <footer className="contact-closer__footer reveal" style={{ "--reveal-delay": "0.45s" } as React.CSSProperties}>
         <div className="contact-closer__socials">
-          {SOCIALS.map((social) => (
-            <a key={social.label} href={social.href} target={social.label === "LinkedIn" ? "_blank" : undefined} rel={social.label === "LinkedIn" ? "noopener noreferrer" : undefined}>
-              {social.label}
-            </a>
-          ))}
+          {SOCIALS.map((social) => {
+            const external = social.href.startsWith("https://");
+            return (
+              <a key={social.label} href={social.href} target={external ? "_blank" : undefined} rel={external ? "noopener me" : undefined}>
+                {social.label}
+              </a>
+            );
+          })}
         </div>
         <p className="contact-closer__rights">
           {new Date().getFullYear()} Bryant McCray
