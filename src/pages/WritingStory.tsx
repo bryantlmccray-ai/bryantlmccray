@@ -25,7 +25,7 @@ const WritingStory = () => {
 
   return (
     <PageTransition>
-      <main className="min-h-screen bg-background">
+      <main className="min-h-[100svh] bg-background">
         <Navigation />
         <section className="pt-32 pb-24 md:pt-40 md:pb-32 px-6 md:px-8">
           <article className="max-w-[680px] mx-auto">

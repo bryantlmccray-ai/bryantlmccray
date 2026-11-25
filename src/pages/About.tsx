@@ -1,3 +1,4 @@
+import Seo from "@/components/Seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -13,7 +14,8 @@ const About = () => {
   const reduceMotion = useReducedMotion();
   return (
     <PageTransition>
-      <main className="min-h-screen bg-background">
+      <Seo title="About Bryant McCray | TV Reporter, Chicago" description="Bryant McCray grew up on Chicago's West Side and now reports for WGN-TV. Four-time Regional Emmy® nominee." path="/about" />
+      <main className="min-h-[100svh] bg-background">
         <Navigation />
         
         <header className="pt-32 pb-12 md:pt-40 md:pb-16">
@@ -91,7 +93,7 @@ const About = () => {
                       My WGN reporting also runs on{" "}
                       <Link
                         to="/work"
-                        className="underline-offset-4 hover:underline"
+                        className="underline underline-offset-4"
                       >
                         NewsNation and Nexstar stations
                       </Link>{" "}
@@ -134,7 +136,7 @@ const About = () => {
                   </p>
                   <Link
                     to="/stories/one-traffic-stop-an-unlikely-rescue"
-                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </Link>
@@ -160,7 +162,7 @@ const About = () => {
                     href="https://wkycdirectorscut.blogspot.com/2026/04/wkyc-garners-27-regional-emmy.html"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>
@@ -186,7 +188,7 @@ const About = () => {
                     href="https://wkycdirectorscut.blogspot.com/2026/04/wkyc-garners-27-regional-emmy.html"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>
@@ -212,7 +214,7 @@ const About = () => {
                     href="https://chicagoemmyonline.org/files/2023/10/2023-Chicago-Midwest-Nomination-List.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>
@@ -279,7 +281,7 @@ const About = () => {
                     href="https://www.aaccwi.org/boc2023"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>
@@ -308,7 +310,7 @@ const About = () => {
                     href="https://goramblers.myschoolapp.com/page/news-detail?pk=1560959&siteId=1102&ssl=1"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>
@@ -337,7 +339,7 @@ const About = () => {
                     href="https://www.goramblers.org/portrait-of-a-rambler-bryant-mccray"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>
@@ -363,7 +365,7 @@ const About = () => {
                     href="https://snc.edu/news/magazine/student-run-video-news-service-builds-audience-campus"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>
@@ -389,7 +391,7 @@ const About = () => {
                     href="https://www.cbs58.com/news/cbs-58-reporter-bryant-mccray-wins-milwaukees-stepping-with-the-stars-mens-competition"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-auto inline-flex items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 self-start text-sm text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     Read more <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   </a>

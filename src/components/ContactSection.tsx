@@ -20,7 +20,7 @@ import NightTrail from "@/components/NightTrail";
 const CONTACT_EMAIL = "bryant.l.mccray@gmail.com";
 
 const SOCIALS: { label: string; href: string }[] = [
-  { label: "Reel", href: "https://youtu.be/sKE1ZCnN0e8" },
+  { label: "Reel", href: "https://youtu.be/3xhS6QEm7A0" },
   { label: "WGN-TV", href: "https://wgntv.com/author/bryant-mccray/" },
   { label: "YouTube", href: "https://www.youtube.com/@BryantMcNews" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/bryant-mccray-018bba69" },
@@ -111,10 +111,15 @@ const ContactSection = () => {
           font-size: 0.75rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: rgba(255, 255, 255, 0.4);
+          color: rgba(255, 255, 255, 0.6);
         }
         .contact-closer__socials { display: flex; gap: 1.75rem; }
         .contact-closer__socials a {
+          display: inline-flex;
+          align-items: center;
+          min-height: 44px;
+          min-width: 44px;
+          justify-content: center;
           color: inherit;
           text-decoration: none;
           transition: color 0.3s ease;

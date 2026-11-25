@@ -1,9 +1,11 @@
 import NightBand from "@/components/NightBand";
 import FeaturedVideo from "@/components/FeaturedVideo";
+import Seo from "@/components/Seo";
+import { stillSrcSet, REEL_ID, REEL_TITLE, REEL_LINK, REEL_POSTER, REEL_ALT } from "@/lib/stills";
 import React, { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { stories } from "@/data/stories";
-import { ArrowRight, Play, X } from "lucide-react";
+import { ArrowRight, FileText, Mail, Play, X } from "lucide-react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
@@ -70,7 +72,7 @@ const records: HeroRecord[] = [
     frame,
     slug,
   })),
-  { key: "reel-2026", name: "Reporter Reel 2026", reporter: "Bryant McCray", date: "2026", station: "WGN-TV · WKYC-TV", market: "Chicago & Cleveland", category: "Broadcast Reel", youtubeId: "sKE1ZCnN0e8", still: "/stills/reporter-reel-2026.jpg", frame: "maxres1", link: "https://youtu.be/sKE1ZCnN0e8" },
+  { key: "reel-2026", name: "Reporter Reel 2026", reporter: "Bryant McCray", date: "2026", station: "WGN-TV · WKYC-TV", market: "Chicago & Cleveland", category: "Broadcast Reel", youtubeId: REEL_ID, still: REEL_POSTER, frame: "maxres1", link: REEL_LINK },
 ];
 
 const recognition = [
@@ -89,9 +91,14 @@ const firstSentence = (text: string) => {
 const FRAME_FALLBACK: Record<string, string> = { maxres1: "hq1", maxres2: "hq2", maxres3: "hq3" };
 
 // A clean still from the WGN master wins; YouTube frames are only the fallback.
-const FreezeFrame = ({ id, alt, className, loading, variant = "maxresdefault", still }: { id: string; alt: string; className?: string; loading?: "lazy" | "eager"; variant?: string; still?: string }) => (
+const FreezeFrame = ({ id, alt, className, loading, variant = "maxresdefault", still, sizes = "100vw" }: { id: string; alt: string; className?: string; loading?: "lazy" | "eager"; variant?: string; still?: string; sizes?: string }) => (
   <img
     src={still ?? `https://img.youtube.com/vi/${id}/${variant}.jpg`}
+    srcSet={stillSrcSet(still)}
+    sizes={sizes}
+    width={1920}
+    height={1080}
+    decoding="async"
     alt={alt}
     loading={loading}
     className={className}
@@ -164,7 +171,9 @@ const MetaRow = ({
   scramble,
   delay,
   cycle,
+  className = "",
 }: {
+  className?: string;
   label: string;
   value: string;
   scramble: boolean;
@@ -173,8 +182,8 @@ const MetaRow = ({
 }) => {
   const display = useScramble(value.toUpperCase(), scramble, delay, 500, cycle);
   return (
-    <div className="flex items-baseline justify-between gap-6 border-b border-border py-3">
-      <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground record-meta-label">{label}</span>
+    <div className={`flex items-baseline justify-between gap-6 border-b border-border py-3 ${className}`}>
+      <span className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground record-meta-label">{label}</span>
       <span className="text-[11px] uppercase tracking-[0.1em] text-foreground text-right tabular-nums">
         {display}
       </span>
@@ -183,6 +192,22 @@ const MetaRow = ({
 };
 
 const featuredWork = heroStories;
+
+const heroAction = "inline-flex min-h-11 items-center justify-center gap-2 px-5 text-xs uppercase tracking-widest transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+
+const HeroActions = ({ onWatch }: { onWatch: () => void }) => (
+  <>
+    <button type="button" onClick={onWatch} className={`${heroAction} night-action-primary`}>
+      <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" /> Watch with sound
+    </button>
+    <a href="mailto:bryant.l.mccray@gmail.com" className={`${heroAction} night-action-secondary`}>
+      <Mail className="h-3.5 w-3.5" aria-hidden="true" /> Email me
+    </a>
+    <a href="/Bryant_McCray_Resume.pdf" target="_blank" rel="noopener noreferrer" className={`${heroAction} night-action-secondary`}>
+      <FileText className="h-3.5 w-3.5" aria-hidden="true" /> Résumé (PDF)
+    </a>
+  </>
+);
 
 const Index = () => {
   const [selectedVideo, setSelectedVideo] = useState<{ title: string; link: string } | null>(null);
@@ -263,11 +288,66 @@ const Index = () => {
 
   const scramble = !shouldReduceMotion;
 
+  // Swipe between records on touch screens; auto-advance pauses while a finger is down.
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const onTouchStart = (event: React.TouchEvent) => {
+    const t = event.touches[0];
+    touchStart.current = { x: t.clientX, y: t.clientY };
+    setPaused(true);
+  };
+  const onTouchEnd = (event: React.TouchEvent) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    setPaused(false);
+    if (!start) return;
+    const t = event.changedTouches[0];
+    const dx = t.clientX - start.x;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(t.clientY - start.y)) {
+      event.preventDefault();
+      goTo(dx < 0 ? (displayed + 1) % records.length : (displayed - 1 + records.length) % records.length);
+    }
+  };
+
 
   return (
     <PageTransition>
-      <main className="min-h-screen bg-background overflow-x-clip">
+      <Seo title="Bryant McCray | TV News Reporter, WGN-TV Chicago" description="Bryant McCray, TV news reporter at WGN-TV Chicago and four-time Regional Emmy® nominee. Watch the 2026 reporter reel." path="/" />
+      <main className="min-h-[100svh] bg-background overflow-x-clip">
         <Navigation />
+
+        {/* Reel first: the application reel is the first screen */}
+        <NightBand
+          aria-labelledby="home-title"
+          className="night-safe-x pb-14 pt-[calc(5rem+env(safe-area-inset-top)+2rem)] md:flex md:min-h-[88svh] md:items-center md:pb-20"
+        >
+          <div className="wide-container relative z-10 grid w-full gap-8 md:grid-cols-12 md:items-center md:gap-12">
+            <div className="md:col-span-5">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-accent mb-4">TV News Reporter · WGN-TV Chicago</p>
+              <h1 id="home-title" className="font-serif text-foreground mb-5" style={{ fontSize: "clamp(2.5rem, 9vw, 4.5rem)", lineHeight: 1.02 }}>
+                Bryant McCray
+              </h1>
+              <p className="text-base md:text-lg leading-[1.6] text-muted-foreground max-w-md">
+                Four-time Regional Emmy® nominee. Breaking news, politics and the people inside the story.
+              </p>
+              <div className="hidden md:flex mt-8 flex-wrap gap-3">{/* desktop actions */}
+                <HeroActions onWatch={() => setSelectedVideo({ title: REEL_TITLE, link: REEL_LINK })} />
+              </div>
+            </div>
+            <div className="md:col-span-7">
+              <FeaturedVideo
+                youtubeId={REEL_ID}
+                poster={REEL_POSTER}
+                alt={REEL_ALT}
+                title={REEL_TITLE}
+                loop
+                onWatchWithSound={() => setSelectedVideo({ title: REEL_TITLE, link: REEL_LINK })}
+              />
+            </div>
+            <div className="flex flex-col gap-3 md:hidden">
+              <HeroActions onWatch={() => setSelectedVideo({ title: REEL_TITLE, link: REEL_LINK })} />
+            </div>
+          </div>
+        </NightBand>
 
         {/* Record Hero */}
         <NightBand
@@ -276,7 +356,12 @@ const Index = () => {
           onClick={openRecord}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
-          className="relative min-h-[84vh] w-full overflow-hidden overflow-x-hidden pt-28 md:pt-32"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          onTouchCancel={() => { touchStart.current = null; setPaused(false); }}
+          aria-roledescription="carousel"
+          aria-label="WGN-TV stories"
+          className="night-safe-x relative min-h-[84svh] w-full overflow-hidden overflow-x-hidden border-t border-border pt-12 md:pt-16"
         >
           {/* Freeze frame behind the record; swaps under the wipe panel and cross-fades in */}
           <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
@@ -287,7 +372,7 @@ const Index = () => {
               transition={{ duration: shouldReduceMotion ? 0.2 : 0.6 }}
               className="absolute inset-0"
             >
-              <FreezeFrame id={record.youtubeId} still={record.still} variant={record.frame} alt="" className="h-full w-full object-cover" />
+              <FreezeFrame id={record.youtubeId} still={record.still} variant={record.frame} alt="" loading="lazy" className="h-full w-full object-cover" />
             </motion.div>
             <div
               className="absolute inset-0"
@@ -315,7 +400,7 @@ const Index = () => {
             />
           )}
 
-          <div className="editorial-container pointer-events-none relative z-10 flex min-h-[calc(84vh-7rem)] flex-col">
+          <div className="editorial-container pointer-events-none relative z-10 flex min-h-[calc(84svh-4rem)] flex-col">
             <div className="h-px w-full bg-border" />
 
             <div
@@ -325,13 +410,13 @@ const Index = () => {
             >
               <div>
                 <MetaRow label="Name" value={record.name} scramble={scramble} delay={450} cycle={displayed} />
-                <MetaRow label="Reporter" value={record.reporter} scramble={scramble} delay={490} cycle={displayed} />
+                <MetaRow className="max-sm:hidden" label="Reporter" value={record.reporter} scramble={scramble} delay={490} cycle={displayed} />
                 <MetaRow label="Date" value={record.date} scramble={scramble} delay={530} cycle={displayed} />
               </div>
               <div>
                 <MetaRow label="Station" value={record.station} scramble={scramble} delay={570} cycle={displayed} />
-                <MetaRow label="Market" value={record.market} scramble={scramble} delay={610} cycle={displayed} />
-                <MetaRow label="Category" value={record.category} scramble={scramble} delay={650} cycle={displayed} />
+                <MetaRow className="max-sm:hidden" label="Market" value={record.market} scramble={scramble} delay={610} cycle={displayed} />
+                <MetaRow className="max-sm:hidden" label="Category" value={record.category} scramble={scramble} delay={650} cycle={displayed} />
               </div>
             </div>
 
@@ -340,7 +425,7 @@ const Index = () => {
             {/* Index markers */}
             <div
               data-record-markers
-              className="pointer-events-auto flex items-center gap-2 pb-6"
+              className="pointer-events-auto -ml-2.5 flex items-center gap-0 pb-3"
               style={{ marginBottom: `calc(${headlineHeight}px + 1.5rem)` }}
             >
               {records.map((item, i) => (
@@ -352,10 +437,16 @@ const Index = () => {
                     event.stopPropagation();
                     goTo(i);
                   }}
-                  className={`h-px transition-all duration-300 ${
-                    i === displayed ? "w-16 bg-accent" : "w-6 record-marker-inactive"
-                  }`}
-                />
+                  aria-current={i === displayed ? "true" : undefined}
+                  className="flex h-11 min-w-11 items-center justify-center px-2.5"
+                >
+                  <span
+                    aria-hidden
+                    className={`block h-px transition-all duration-300 ${
+                      i === displayed ? "w-16 bg-accent" : "w-6 record-marker-inactive"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           </div>
@@ -373,7 +464,7 @@ const Index = () => {
               >
                 <p
                   className="max-w-5xl font-serif text-foreground break-words"
-                  style={{ fontSize: "clamp(2.25rem, 7vw, 6.5rem)", lineHeight: 1.02, letterSpacing: "-0.02em" }}
+                  style={{ fontSize: "clamp(1.875rem, 7vw, 6.5rem)", lineHeight: 1.05, letterSpacing: "-0.02em", overflowWrap: "normal", hyphens: "manual" }}
                 >
                   {record.name}
                 </p>
@@ -388,7 +479,7 @@ const Index = () => {
         {/* Identity band */}
         <section className="py-24 md:py-32 border-t border-border">
           <div className="editorial-container">
-            <h1 className="font-serif text-display text-foreground mb-6">
+            <h2 className="font-serif text-display text-foreground mb-6">
               <span className="block overflow-hidden">
                 <motion.span
                   className="block"
@@ -403,7 +494,7 @@ const Index = () => {
                   McCray
                 </motion.span>
               </span>
-            </h1>
+            </h2>
 
             <motion.p
               className="text-subhead text-muted-foreground mb-3"
@@ -457,81 +548,10 @@ const Index = () => {
               <p className="mt-6 text-sm text-muted-foreground">
                 Also: emcee, AACC Wisconsin 2023 Breakfast of Champions · Featured, Loyola Academy "Portrait of a Rambler"
               </p>
-              <Link to="/about" className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-widest text-accent hover:text-foreground transition-colors duration-300">
+              <Link to="/about" className="mt-2 inline-flex min-h-11 items-center gap-2 text-xs uppercase tracking-widest text-accent hover:text-foreground transition-colors duration-300">
                 Full recognition <span aria-hidden>→</span>
               </Link>
             </FadeIn>
-          </div>
-        </section>
-
-        {/* Press Reel Highlight */}
-        <section className="py-20 bg-secondary/50">
-          <div className="editorial-container">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <FadeIn direction="left">
-                <div>
-                  <p className="text-xs text-accent tracking-widest uppercase mb-4">
-                    Press Reel
-                  </p>
-                  <h2 className="font-serif text-headline text-foreground mb-6">
-                    Reporter Reel 2026
-                  </h2>
-                  <p className="text-muted-foreground leading-relaxed mb-2">
-                    Live shots and stories from WGN-TV Chicago and WKYC Cleveland. Breaking news, severe weather, and politics.
-                  </p>
-                  <p className="text-xs text-muted-foreground tracking-widest uppercase mb-8">
-                    WGN-TV · WKYC-TV · Chicago & Cleveland · 2026
-                  </p>
-                  <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
-                    <Button 
-                      variant="editorial" 
-                      size="sm" 
-                      onClick={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://youtu.be/sKE1ZCnN0e8" })}
-                      className="flex items-center gap-2"
-                    >
-                      Watch Reel <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </motion.div>
-                </div>
-              </FadeIn>
-              
-              <FadeIn direction="right" delay={0.2}>
-                <HoverLift>
-                  {shouldReduceMotion ? (
-                  <button 
-                    onClick={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://youtu.be/sKE1ZCnN0e8" })}
-                    className="aspect-video relative group cursor-pointer overflow-hidden border border-border block w-full"
-                  >
-                    <motion.img 
-                      src="/stills/reporter-reel-2026.jpg" 
-                      alt="Bryant McCray reporting live for WGN-TV in West Englewood"
-                      className="w-full h-full object-cover"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ duration: 0.4 }}
-                    />
-                    <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300 flex items-center justify-center">
-                      <motion.div 
-                        className="w-16 h-16 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center group-hover:bg-background transition-colors duration-300"
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <Play className="h-6 w-6 ml-1 text-foreground" />
-                      </motion.div>
-                    </div>
-                  </button>
-                  ) : (
-                    <FeaturedVideo
-                      youtubeId="sKE1ZCnN0e8"
-                      poster="/stills/reporter-reel-2026.jpg"
-                      alt="Bryant McCray reporting live for WGN-TV in West Englewood"
-                      title="Bryant McCray Reporter Reel 2026"
-                      loop
-                      onWatchWithSound={() => setSelectedVideo({ title: "Reporter Reel 2026", link: "https://youtu.be/sKE1ZCnN0e8" })}
-                    />
-                  )}
-                </HoverLift>
-              </FadeIn>
-            </div>
           </div>
         </section>
 
@@ -567,6 +587,7 @@ const Index = () => {
                           id={story.youtubeId}
                           still={story.still}
                           variant={frame}
+                          sizes="(min-width: 768px) 288px, 100vw"
                           alt={`Bryant McCray, WGN-TV reporter, ${story.headline}`}
                           loading="lazy"
                           className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105"
@@ -622,8 +643,10 @@ const Index = () => {
             <DialogTitle className="sr-only">{selectedVideo?.title}</DialogTitle>
             <div className="relative">
               <button
+                type="button"
+                aria-label="Close video"
                 onClick={() => setSelectedVideo(null)}
-                className="absolute -top-10 right-0 z-50 p-2 text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute -top-12 right-0 z-50 p-2.5 text-muted-foreground hover:text-foreground transition-colors"
               >
                 <X className="h-6 w-6" />
               </button>

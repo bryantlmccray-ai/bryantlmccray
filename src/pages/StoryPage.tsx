@@ -6,6 +6,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import FeaturedVideo from "@/components/FeaturedVideo";
+import Seo from "@/components/Seo";
+import { stillSrcSet } from "@/lib/stills";
 
 import NotFound from "@/pages/NotFound";
 import { stories } from "@/data/stories";
@@ -16,20 +18,14 @@ const StoryPage = () => {
 
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-    const siteDescription = document.head.querySelector<HTMLMetaElement>('meta[name="description"]:not([data-rh])');
-    siteDescription?.remove();
-    return () => {
-      if (siteDescription) document.head.appendChild(siteDescription);
-    };
   }, [slug]);
 
   if (!story) return <NotFound />;
 
   return (
     <PageTransition>
+      <Seo title={`${story.headline} | Bryant McCray, WGN-TV`} description={story.metaDescription} path={`/stories/${story.slug}`} />
       <Helmet>
-        <title>{`${story.headline} | Bryant McCray`}</title>
-        <meta name="description" content={story.metaDescription} />
         {story.coverage && (
           <script type="application/ld+json">
             {JSON.stringify({
@@ -48,7 +44,7 @@ const StoryPage = () => {
           </script>
         )}
       </Helmet>
-      <main className="min-h-screen bg-background">
+      <main className="min-h-[100svh] bg-background">
         <Navigation />
         <article>
           <div className="pt-32 pb-10 md:pt-40 md:pb-12">
@@ -56,10 +52,10 @@ const StoryPage = () => {
               <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-5">
                 {story.kicker}
               </p>
-              <h1 className="font-serif text-4xl md:text-5xl leading-tight text-foreground mb-6">
+              <h1 className="font-serif text-foreground mb-6 text-balance" style={{ fontSize: "clamp(1.875rem, 6.5vw, 3rem)", lineHeight: 1.12, overflowWrap: "normal", hyphens: "manual" }}>
                 {story.headline}
               </h1>
-              <p className="text-muted-foreground text-base leading-relaxed">
+              <p className="text-muted-foreground text-base leading-[1.6] max-w-[65ch]">
                 {story.dek}
               </p>
             </header>
@@ -67,6 +63,9 @@ const StoryPage = () => {
               <div className="editorial-container mt-10">
                 <img
                   src={story.still}
+                  srcSet={stillSrcSet(story.still)}
+                  sizes="(min-width: 896px) 832px, 100vw"
+                  decoding="async"
                   alt={`From Bryant McCray's WGN-TV report: ${story.headline}`}
                   width={1920}
                   height={1080}
@@ -103,7 +102,7 @@ const StoryPage = () => {
                     {story.coverage.map((item) => (
                       <li key={item.url} className="py-4">
                         <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-2">{item.outlet}</p>
-                        <a href={item.url} target="_blank" rel="noopener" className="text-sm text-foreground leading-relaxed hover:text-accent transition-colors duration-300">
+                        <a href={item.url} target="_blank" rel="noopener" className="inline-block py-2 text-sm text-foreground leading-relaxed hover:text-accent transition-colors duration-300">
                           {item.title}
                         </a>
                       </li>
@@ -114,7 +113,7 @@ const StoryPage = () => {
               <p className="text-xs text-muted-foreground mt-6 leading-relaxed">
                 Reported by Bryant McCray. WGN-TV Chicago.
               </p>
-              <Link to="/work" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors duration-300 mt-12">
+              <Link to="/work" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors duration-300 mt-12">
                 <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Work
               </Link>
             </div>

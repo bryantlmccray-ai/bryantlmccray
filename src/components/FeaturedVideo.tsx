@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Play } from "lucide-react";
+import { stillSrcSet } from "@/lib/stills";
 
 type FeaturedVideoProps = {
   youtubeId: string;
@@ -42,7 +43,7 @@ const FeaturedVideo = ({ youtubeId, poster, alt, title, loop = false, onWatchWit
 
   return (
     <div ref={boxRef} className="aspect-video relative overflow-hidden border border-border w-full">
-      <img src={poster} alt={alt} className="absolute inset-0 w-full h-full object-cover" />
+      <img src={poster} srcSet={stillSrcSet(poster)} sizes="(min-width: 768px) 640px, 100vw" width={1920} height={1080} decoding="async" alt={alt} className="absolute inset-0 w-full h-full object-cover" />
       {withSound ? (
         <iframe
           src={soundSrc}
@@ -70,13 +71,14 @@ const FeaturedVideo = ({ youtubeId, poster, alt, title, loop = false, onWatchWit
               title={title}
               allow="autoplay; encrypted-media; picture-in-picture"
               tabIndex={-1}
+              aria-hidden="true"
               className="pointer-events-none absolute inset-0 w-full h-full border-0"
             />
           )}
           <button
             type="button"
             onClick={playWithSound}
-            className="absolute bottom-3 left-3 z-10 inline-flex items-center gap-2 bg-background/90 backdrop-blur-sm px-3 py-2 text-xs uppercase tracking-widest text-foreground hover:text-accent transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="absolute bottom-3 left-3 z-10 inline-flex min-h-11 items-center gap-2 bg-background/90 backdrop-blur-sm px-4 text-xs uppercase tracking-widest text-foreground hover:text-accent transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" /> Watch with sound
           </button>

@@ -1,5 +1,6 @@
 import { useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
+import Seo from "@/components/Seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -13,15 +14,13 @@ const WRITING_STILLS: Record<string, { src: string; alt: string }> = {
 
 const Writing = () => {
   useLayoutEffect(() => {
-    const previousTitle = document.title;
-    document.title = "Writing | Bryant McCray";
     window.scrollTo({ top: 0, behavior: "instant" });
-    return () => { document.title = previousTitle; };
   }, []);
 
   return (
     <PageTransition>
-      <main className="min-h-screen bg-background">
+      <Seo title="Writing | Bryant McCray, Reporter, Chicago" description="WGN-TV stories by Bryant McCray, rewritten for the page: Chicago politics, transit, schools and neighborhoods." path="/writing" />
+      <main className="min-h-[100svh] bg-background">
         <Navigation />
         <header className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">

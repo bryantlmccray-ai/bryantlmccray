@@ -10,6 +10,7 @@ import galleryRambleWalk from "@/assets/gallery-ramble-walk.jpg";
 import galleryRambleInterview from "@/assets/gallery-ramble-interview.jpg";
 import galleryWgnEnglewood from "@/assets/gallery-wgn-englewood.jpg";
 import galleryWgnLakefront from "@/assets/gallery-wgn-lakefront.jpg";
+import Seo from "@/components/Seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -110,15 +111,13 @@ const affiliations = [
 const CareerPage = () => {
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
   useLayoutEffect(() => {
-    const previousTitle = document.title;
-    document.title = "Career | Bryant McCray";
     window.scrollTo({ top: 0, behavior: "instant" });
-    return () => { document.title = previousTitle; };
   }, []);
 
   return (
     <PageTransition>
-      <main className="min-h-screen bg-background">
+      <Seo title="Career | Bryant McCray, TV Reporter" description="Bryant McCray's career in TV news: WGN-TV Chicago, WKYC Cleveland, CBS 58 Milwaukee and WFRV Green Bay." path="/career" />
+      <main className="min-h-[100svh] bg-background">
         <Navigation />
 
         {/* Hero */}

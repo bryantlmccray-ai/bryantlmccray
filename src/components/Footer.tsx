@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
-    <footer className="py-20 border-t border-border">
+    <footer className="pt-20 pb-[calc(5rem+env(safe-area-inset-bottom))] border-t border-border">
       <div className="editorial-container">
         <div className="flex flex-col items-center text-center">
           <p className="text-muted-foreground text-sm mb-6 max-w-md">

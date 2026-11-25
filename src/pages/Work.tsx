@@ -7,8 +7,10 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { Helmet } from "react-helmet-async";
+import Seo from "@/components/Seo";
 import { stories, type Story } from "@/data/stories";
 import { syndication } from "@/data/syndication";
+import { stillSrcSet, REEL_LINK, REEL_TITLE } from "@/lib/stills";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import hazardousRoadsThumb from "@/assets/hazardous-roads-thumbnail.jpg";
@@ -28,7 +30,7 @@ const getYouTubeId = (url: string): string | null => {
 
 const workItems: { title: string; category: string; description: string; year: string; station: string; market: string; thumbnail: string; link: string; alt?: string }[] = [
   {
-    title: "Reporter Reel 2026",
+    title: REEL_TITLE,
     category: "On-Air Segments",
     description: "Live shots and stories from WGN-TV Chicago and WKYC Cleveland. Breaking news, severe weather, and politics.",
     year: "2026",
@@ -36,7 +38,7 @@ const workItems: { title: string; category: string; description: string; year: s
     market: "Chicago & Cleveland",
     thumbnail: "/stills/reporter-reel-2026.jpg",
     alt: "Bryant McCray reporting live for WGN-TV in West Englewood",
-    link: "https://youtu.be/sKE1ZCnN0e8",
+    link: REEL_LINK,
   },
   {
     title: "One Traffic Stop, An Unlikely Rescue",
@@ -255,7 +257,7 @@ type CardProps = { image: string; alt: string; category: string; headline: strin
 const CardBody = ({ image, alt, category, headline, dateLine, dek }: CardProps) => (
   <>
     <div className="overflow-hidden border border-border mb-5">
-      <img src={image} alt={alt} loading="lazy" className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105" />
+      <img src={image} srcSet={stillSrcSet(image)} sizes="(min-width: 768px) 280px, 100vw" width={1920} height={1080} alt={alt} loading="lazy" decoding="async" className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105" />
     </div>
     <p className="text-xs text-accent tracking-widest uppercase mb-2">{category}</p>
     <h3 className="font-serif text-xl md:text-2xl text-foreground leading-snug group-hover:text-accent transition-colors duration-300 mb-2">{headline}</h3>
@@ -272,7 +274,13 @@ const Work = () => {
   const reduceMotion = useReducedMotion();
 
   const wgnStories = stories.filter((story) => story.still);
-  const [lead, ...rest] = wgnStories;
+  // Lead with range: one hard-news story beside one people story.
+  const PAIR = [
+    { slug: "election-night-2026", label: "Hard news" },
+    { slug: "nwi-storm-series", label: "People" },
+  ];
+  const pair = PAIR.map((p) => ({ ...p, story: wgnStories.find((s) => s.slug === p.slug) })).filter((p): p is { slug: string; label: string; story: Story } => !!p.story);
+  const rest = wgnStories.filter((s) => !PAIR.some((p) => p.slug === s.slug));
   const moreWgn = workItems.filter((item) => item.station.startsWith("WGN"));
   const beforeChicago = workItems.filter((item) => !item.station.startsWith("WGN"));
 
@@ -346,7 +354,7 @@ const Work = () => {
               type="button"
               aria-label="Close video"
               onClick={() => setSelectedVideo(null)}
-              className="absolute -top-10 right-0 z-50 p-2 text-primary-foreground hover:text-accent transition-colors"
+              className="absolute -top-12 right-0 z-50 p-2.5 text-primary-foreground hover:text-accent transition-colors"
             >
               <X className="h-6 w-6" />
             </button>
@@ -370,6 +378,7 @@ const Work = () => {
 
   return (
     <PageTransition>
+      <Seo title="Work | Bryant McCray, TV Reporter, Chicago" description="Breaking news, politics and community stories reported by Bryant McCray for WGN-TV Chicago, WKYC Cleveland and CBS 58 Milwaukee." path="/work" />
       <Helmet>
         <script type="application/ld+json">
           {JSON.stringify({
@@ -393,7 +402,7 @@ const Work = () => {
           }).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
-      <main className="min-h-screen overflow-x-hidden bg-background">
+      <main className="min-h-[100svh] overflow-x-hidden bg-background">
         <Navigation />
         
         <header className="pt-32 pb-12 md:pt-40 md:pb-16">
@@ -407,28 +416,35 @@ const Work = () => {
           </div>
         </header>
 
-        {/* Lead story */}
-        {lead && (
-          <section className="pb-12 md:pb-16">
-            <div className="editorial-container">
-              <Link to={`/stories/${lead.slug}`} onClick={scrollTop} className="group grid gap-8 border-t border-border pt-10 md:grid-cols-12 md:items-center">
-                <div className="md:col-span-7 overflow-hidden border border-border">
-                  <img
-                    src={storyImage(lead)}
-                    alt={`From Bryant McCray's WGN-TV report: ${lead.headline}`}
-                    className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="md:col-span-5">
-                  <p className="text-xs text-accent tracking-widest uppercase mb-3">{STORY_CATEGORY[lead.slug] ?? "WGN-TV"}</p>
-                  <h2 className="font-serif text-3xl md:text-4xl text-foreground leading-tight group-hover:text-accent transition-colors duration-300 mb-4">{lead.headline}</h2>
-                  <p className="text-muted-foreground leading-relaxed mb-4">{lead.dek}</p>
-                  <p className="text-xs text-muted-foreground tracking-widest uppercase">WGN-TV · {storyDate(lead)}</p>
-                </div>
-              </Link>
-            </div>
-          </section>
-        )}
+        {/* Lead pair: hard news and people */}
+        <section className="pb-12 md:pb-16">
+          <div className="editorial-container">
+            <ul className="grid gap-10 border-t border-border pt-10 md:grid-cols-2">
+              {pair.map(({ slug, label, story }) => (
+                <li key={slug}>
+                  <Link to={`/stories/${slug}`} onClick={scrollTop} className="group block">
+                    <div className="overflow-hidden border border-border mb-5">
+                      <img
+                        src={storyImage(story)}
+                        srcSet={stillSrcSet(storyImage(story))}
+                        sizes="(min-width: 768px) 420px, 100vw"
+                        width={1920}
+                        height={1080}
+                        decoding="async"
+                        alt={`From Bryant McCray's WGN-TV report: ${story.headline}`}
+                        className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <p className="text-xs text-accent tracking-widest uppercase mb-2">{label}</p>
+                    <h2 className="font-serif text-2xl md:text-3xl text-foreground leading-tight group-hover:text-accent transition-colors duration-300 mb-2">{story.headline}</h2>
+                    <p className="text-xs text-muted-foreground tracking-widest uppercase mb-3">WGN-TV · {storyDate(story)}</p>
+                    <p className="text-base text-muted-foreground leading-[1.6]">{firstSentence(story.dek)}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
         {/* Remaining WGN stories */}
         <section className="pb-16 md:pb-20">
@@ -504,7 +520,7 @@ const Work = () => {
 
         {/* McCray Ventures Link */}
         <div className="editorial-container pb-8">
-          <Link to="/mccray-ventures" onClick={() => window.scrollTo(0, 0)} className="text-[10px] text-muted-foreground hover:text-accent transition-colors duration-300 underline-offset-2 hover:underline">
+          <Link to="/mccray-ventures" onClick={() => window.scrollTo(0, 0)} className="inline-flex min-h-11 items-center text-[11px] text-muted-foreground hover:text-accent transition-colors duration-300 underline-offset-2 hover:underline">
             McCray Ventures, LLC
           </Link>
         </div>
