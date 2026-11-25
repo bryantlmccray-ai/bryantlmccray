@@ -490,7 +490,7 @@ const Index = () => {
                   >
                     <motion.img 
                       src="https://img.youtube.com/vi/sKE1ZCnN0e8/hqdefault.jpg" 
-                      alt="Reporter Reel 2026 Thumbnail"
+                      alt="Bryant McCray reporter reel 2026, WGN-TV Chicago"
                       className="w-full h-full object-cover"
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.4 }}

@@ -7,7 +7,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import bryantHeadshot from "@/assets/bryant-headshot.jpeg";
-import bryantOnair from "@/assets/bryant-onair.jpeg";
 import aaccwiMark from "@/assets/aaccwi-mark.png";
 import loyolaAcademyLogo from "@/assets/loyola-academy-logo.png";
 
@@ -48,7 +47,7 @@ const About = () => {
                     <div className="aspect-[4/5] overflow-hidden border border-border">
                       <img 
                         src={bryantHeadshot} 
-                        alt="Bryant McCray - Professional Headshot"
+                        alt="Bryant McCray, WGN-TV reporter in Chicago, headshot"
                         className="w-full h-full object-cover object-top"
                       />
                     </div>
@@ -64,8 +63,10 @@ const About = () => {
                   >
                     <div className="aspect-[3/4] overflow-hidden border-4 border-background shadow-2xl">
                       <img 
-                        src={bryantOnair} 
-                        alt="Bryant McCray - On Air"
+                        src="/images/bryant-mccray-wgn-reporter-chicago.jpg"
+                        alt="Bryant McCray, WGN-TV reporter, reporting in Chicago"
+                        width={1206}
+                        height={1608}
                         className="w-full h-full object-cover object-top"
                       />
                     </div>
