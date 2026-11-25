@@ -38,13 +38,14 @@ type HeroRecord = {
   market: string;
   category: string;
   youtubeId: string;
+  frame?: string;
   slug?: string;
   link?: string;
 };
 
-const HERO_ORDER: { slug: string; date: string; market: string; category: string }[] = [
+const HERO_ORDER: { slug: string; date: string; market: string; category: string; frame?: string }[] = [
   { slug: "nwi-storm-series", date: "August 2026", market: "Munster, Indiana", category: "Breaking News" },
-  { slug: "election-night-2026", date: "November 2026", market: "Chicago", category: "Politics" },
+  { slug: "election-night-2026", date: "November 2026", market: "Chicago", category: "Politics", frame: "maxres3" },
   { slug: "bears-stadium-fight", date: "2026", market: "Arlington Heights and Chicago", category: "Politics" },
   { slug: "amtrak-rail-yard", date: "2026", market: "Pilsen, Chinatown and Bridgeport", category: "Community" },
 ];
@@ -55,7 +56,7 @@ const heroStories = HERO_ORDER.map((entry) => {
 });
 
 const records: HeroRecord[] = [
-  ...heroStories.map(({ slug, date, market, category, story }) => ({
+  ...heroStories.map(({ slug, date, market, category, frame, story }) => ({
     key: slug,
     name: story.headline,
     reporter: "Bryant McCray",
@@ -64,9 +65,10 @@ const records: HeroRecord[] = [
     market,
     category,
     youtubeId: story.youtubeId,
+    frame,
     slug,
   })),
-  { key: "reel-2026", name: "Reporter Reel 2026", reporter: "Bryant McCray", date: "2026", station: "WGN-TV · WKYC-TV", market: "Chicago & Cleveland", category: "Broadcast Reel", youtubeId: "sKE1ZCnN0e8", link: "https://youtu.be/sKE1ZCnN0e8" },
+  { key: "reel-2026", name: "Reporter Reel 2026", reporter: "Bryant McCray", date: "2026", station: "WGN-TV · WKYC-TV", market: "Chicago & Cleveland", category: "Broadcast Reel", youtubeId: "sKE1ZCnN0e8", frame: "maxres1", link: "https://youtu.be/sKE1ZCnN0e8" },
 ];
 
 const recognition = [
@@ -82,9 +84,11 @@ const firstSentence = (text: string) => {
 };
 
 // maxres freeze frame with a one-time fallback to hqdefault.
-const FreezeFrame = ({ id, alt, className, loading }: { id: string; alt: string; className?: string; loading?: "lazy" | "eager" }) => (
+const FRAME_FALLBACK: Record<string, string> = { maxres1: "hq1", maxres2: "hq2", maxres3: "hq3" };
+
+const FreezeFrame = ({ id, alt, className, loading, variant = "maxresdefault" }: { id: string; alt: string; className?: string; loading?: "lazy" | "eager"; variant?: string }) => (
   <img
-    src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`}
+    src={`https://img.youtube.com/vi/${id}/${variant}.jpg`}
     alt={alt}
     loading={loading}
     className={className}
@@ -92,7 +96,7 @@ const FreezeFrame = ({ id, alt, className, loading }: { id: string; alt: string;
       const img = e.currentTarget;
       if (!img.dataset.fallback) {
         img.dataset.fallback = "1";
-        img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+        img.src = `https://img.youtube.com/vi/${id}/${FRAME_FALLBACK[variant] ?? "hqdefault"}.jpg`;
       }
     }}
   />
@@ -286,7 +290,7 @@ const Index = () => {
               transition={{ duration: shouldReduceMotion ? 0.2 : 0.6 }}
               className="absolute inset-0"
             >
-              <FreezeFrame id={record.youtubeId} alt="" className="h-full w-full object-cover" />
+              <FreezeFrame id={record.youtubeId} variant={record.frame} alt="" className="h-full w-full object-cover" />
             </motion.div>
             <div
               className="absolute inset-0"
@@ -566,7 +570,7 @@ const Index = () => {
             </FadeIn>
 
             <StaggerContainer className="space-y-8">
-              {featuredWork.map(({ slug, date, category, story }) => (
+              {featuredWork.map(({ slug, date, category, frame, story }) => (
                 <StaggerItem key={slug}>
                   <Link
                     to={`/stories/${slug}`}
@@ -581,6 +585,7 @@ const Index = () => {
                       <div className="w-full md:w-72 flex-shrink-0 overflow-hidden">
                         <FreezeFrame
                           id={story.youtubeId}
+                          variant={frame}
                           alt={`Bryant McCray, WGN-TV reporter, ${story.headline}`}
                           loading="lazy"
                           className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-105"
