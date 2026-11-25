@@ -26,7 +26,7 @@ const getYouTubeId = (url: string): string | null => {
   return null;
 };
 
-const workItems = [
+const workItems: { title: string; category: string; description: string; year: string; station: string; market: string; thumbnail: string; link: string; alt?: string }[] = [
   {
     title: "Reporter Reel 2026",
     category: "On-Air Segments",
@@ -34,7 +34,8 @@ const workItems = [
     year: "2026",
     station: "WGN-TV · WKYC-TV",
     market: "Chicago & Cleveland",
-    thumbnail: "https://img.youtube.com/vi/sKE1ZCnN0e8/hqdefault.jpg",
+    thumbnail: "/stills/reporter-reel-2026.jpg",
+    alt: "Bryant McCray reporting live for WGN-TV in West Englewood",
     link: "https://youtu.be/sKE1ZCnN0e8",
   },
   {
@@ -285,7 +286,7 @@ const Work = () => {
       >
         <CardBody
           image={item.thumbnail}
-          alt={`Bryant McCray, ${item.station} reporter, ${item.title}`}
+          alt={item.alt ?? `Bryant McCray, ${item.station} reporter, ${item.title}`}
           category={item.category}
           headline={item.title}
           dateLine={`${item.station} · ${item.market} · ${item.year}`}

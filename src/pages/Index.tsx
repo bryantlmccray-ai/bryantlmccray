@@ -69,7 +69,7 @@ const records: HeroRecord[] = [
     frame,
     slug,
   })),
-  { key: "reel-2026", name: "Reporter Reel 2026", reporter: "Bryant McCray", date: "2026", station: "WGN-TV · WKYC-TV", market: "Chicago & Cleveland", category: "Broadcast Reel", youtubeId: "sKE1ZCnN0e8", frame: "maxres1", link: "https://youtu.be/sKE1ZCnN0e8" },
+  { key: "reel-2026", name: "Reporter Reel 2026", reporter: "Bryant McCray", date: "2026", station: "WGN-TV · WKYC-TV", market: "Chicago & Cleveland", category: "Broadcast Reel", youtubeId: "sKE1ZCnN0e8", still: "/stills/reporter-reel-2026.jpg", frame: "maxres1", link: "https://youtu.be/sKE1ZCnN0e8" },
 ];
 
 const recognition = [
@@ -501,8 +501,8 @@ const Index = () => {
                     className="aspect-video relative group cursor-pointer overflow-hidden border border-border block w-full"
                   >
                     <motion.img 
-                      src="https://img.youtube.com/vi/sKE1ZCnN0e8/hqdefault.jpg" 
-                      alt="Bryant McCray reporter reel 2026, WGN-TV Chicago"
+                      src="/stills/reporter-reel-2026.jpg" 
+                      alt="Bryant McCray reporting live for WGN-TV in West Englewood"
                       className="w-full h-full object-cover"
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.4 }}
