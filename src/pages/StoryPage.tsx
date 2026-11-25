@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import Navigation from "@/components/Navigation";
-import NightBand from "@/components/NightBand";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 
@@ -51,7 +50,7 @@ const StoryPage = () => {
       <main className="min-h-screen bg-background">
         <Navigation />
         <article>
-          <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20">
+          <div className="pt-32 pb-10 md:pt-40 md:pb-12">
             <header className="editorial-container">
               <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-5">
                 {story.kicker}
@@ -63,7 +62,18 @@ const StoryPage = () => {
                 {story.dek}
               </p>
             </header>
-          </NightBand>
+            {story.still && (
+              <div className="editorial-container mt-10">
+                <img
+                  src={story.still}
+                  alt={`From Bryant McCray's WGN-TV report: ${story.headline}`}
+                  width={1920}
+                  height={1080}
+                  className="w-full aspect-[3/2] md:aspect-[16/9] object-cover border border-border"
+                />
+              </div>
+            )}
+          </div>
           <section className="py-12 md:py-16">
             <div className="editorial-container">
               <div className="aspect-video w-full">

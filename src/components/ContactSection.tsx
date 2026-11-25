@@ -17,7 +17,7 @@ import NightTrail from "@/components/NightTrail";
  * Every shader prop below is a static literal. None of it is React state.
  */
 
-const CONTACT_EMAIL = "Bryant.l.mccray@gmail.com";
+const CONTACT_EMAIL = "bryant.l.mccray@gmail.com";
 
 const SOCIALS: { label: string; href: string }[] = [
   { label: "Reel", href: "https://youtu.be/sKE1ZCnN0e8" },

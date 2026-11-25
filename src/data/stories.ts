@@ -1,6 +1,8 @@
 export type Story = {
   slug: string;
   youtubeId: string;
+  /** Clean still from the WGN master; preferred over YouTube frames wherever the story is pictured. */
+  still?: string;
   kicker: string;
   headline: string;
   dek: string;
@@ -14,6 +16,7 @@ export type Story = {
 export const stories: Story[] = [
   {
     slug: "election-night-2026",
+    still: "/stills/election-night-2026.jpg",
     youtubeId: "vEyqRmLleUk",
     kicker: "WGN NEWS · NOVEMBER 2026 · CHICAGO",
     headline: "Election Night 2026",
@@ -28,6 +31,7 @@ export const stories: Story[] = [
   },
   {
     slug: "amtrak-rail-yard",
+    still: "/stills/amtrak-rail-yard.jpg",
     youtubeId: "gCQBi65OJZ0",
     kicker: "WGN NEWS · 2026 · PILSEN, CHINATOWN AND BRIDGEPORT",
     headline: "Amtrak and the South Side Rail Yard",
@@ -38,6 +42,7 @@ export const stories: Story[] = [
   },
   {
     slug: "bears-stadium-fight",
+    still: "/stills/bears-stadium-fight.jpg",
     youtubeId: "AeIe9BmfADo",
     kicker: "WGN NEWS · 2026 · ARLINGTON HEIGHTS AND CHICAGO",
     headline: "The Bears Stadium Fight",
@@ -48,6 +53,7 @@ export const stories: Story[] = [
   },
   {
     slug: "nwi-storm-series",
+    still: "/stills/nwi-storm-series.jpg",
     youtubeId: "5hQTl-y7-YQ",
     kicker: "WGN NEWS · AUGUST 2026 · MUNSTER, INDIANA",
     headline: "After the Storm: Northwest Indiana",

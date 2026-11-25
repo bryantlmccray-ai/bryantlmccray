@@ -56,7 +56,7 @@ export const WritingCover = ({ sample }: { sample: WritingSample }) => {
     >
       <motion.div
         className="absolute inset-0 bg-card"
-        style={{ rotateX: interactive ? rotateX : 0, rotateY: interactive ? rotateY : 0, boxShadow: shadow }}
+        style={{ boxShadow: shadow }}
         animate={{ y: interactive && hovered ? -6 : 0, scale: interactive && hovered ? 1.02 : 1, opacity: !interactive && hovered ? 0.85 : 1 }}
         transition={interactive ? { type: "spring", ...spring } : { duration: 0.15 }}
       >

@@ -1,5 +1,4 @@
 import NightBand from "@/components/NightBand";
-import headshotPortrait from "@/assets/bryant-headshot.jpeg";
 import React, { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { stories } from "@/data/stories";
@@ -38,6 +37,7 @@ type HeroRecord = {
   market: string;
   category: string;
   youtubeId: string;
+  still?: string;
   frame?: string;
   slug?: string;
   link?: string;
@@ -65,6 +65,7 @@ const records: HeroRecord[] = [
     market,
     category,
     youtubeId: story.youtubeId,
+    still: story.still,
     frame,
     slug,
   })),
@@ -86,15 +87,16 @@ const firstSentence = (text: string) => {
 // maxres freeze frame with a one-time fallback to hqdefault.
 const FRAME_FALLBACK: Record<string, string> = { maxres1: "hq1", maxres2: "hq2", maxres3: "hq3" };
 
-const FreezeFrame = ({ id, alt, className, loading, variant = "maxresdefault" }: { id: string; alt: string; className?: string; loading?: "lazy" | "eager"; variant?: string }) => (
+// A clean still from the WGN master wins; YouTube frames are only the fallback.
+const FreezeFrame = ({ id, alt, className, loading, variant = "maxresdefault", still }: { id: string; alt: string; className?: string; loading?: "lazy" | "eager"; variant?: string; still?: string }) => (
   <img
-    src={`https://img.youtube.com/vi/${id}/${variant}.jpg`}
+    src={still ?? `https://img.youtube.com/vi/${id}/${variant}.jpg`}
     alt={alt}
     loading={loading}
     className={className}
     onError={(e) => {
       const img = e.currentTarget;
-      if (!img.dataset.fallback) {
+      if (!still && !img.dataset.fallback) {
         img.dataset.fallback = "1";
         img.src = `https://img.youtube.com/vi/${id}/${FRAME_FALLBACK[variant] ?? "hqdefault"}.jpg`;
       }
@@ -260,12 +262,6 @@ const Index = () => {
 
   const scramble = !shouldReduceMotion;
 
-  const revealInitial = shouldReduceMotion ? false : { opacity: 0, y: 30 };
-  const revealTransition = (delay: number, duration = 0.6) => ({
-    duration: shouldReduceMotion ? 0 : duration,
-    delay: shouldReduceMotion ? 0 : delay,
-    ease: [0.22, 1, 0.36, 1] as const,
-  });
 
   return (
     <PageTransition>
@@ -274,7 +270,7 @@ const Index = () => {
 
         {/* Record Hero */}
         <NightBand
-          portrait={{ src: headshotPortrait, alt: "Bryant McCray", position: "center top" }}
+          portrait={{ src: "/stills/bryant-field-nwi.jpg", alt: "Bryant McCray reporting for WGN-TV in Northwest Indiana after the August 2026 storm", position: "50% 20%" }}
           portraitPlacement="record-gap"
           onClick={openRecord}
           onMouseEnter={() => setPaused(true)}
@@ -290,7 +286,7 @@ const Index = () => {
               transition={{ duration: shouldReduceMotion ? 0.2 : 0.6 }}
               className="absolute inset-0"
             >
-              <FreezeFrame id={record.youtubeId} variant={record.frame} alt="" className="h-full w-full object-cover" />
+              <FreezeFrame id={record.youtubeId} still={record.still} variant={record.frame} alt="" className="h-full w-full object-cover" />
             </motion.div>
             <div
               className="absolute inset-0"
@@ -395,10 +391,6 @@ const Index = () => {
               <span className="block overflow-hidden">
                 <motion.span
                   className="block"
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 100 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={revealTransition(0.15, 1)}
                 >
                   Bryant
                 </motion.span>
@@ -406,10 +398,6 @@ const Index = () => {
               <span className="block overflow-hidden">
                 <motion.span
                   className="block"
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 100 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={revealTransition(0.3, 1)}
                 >
                   McCray
                 </motion.span>
@@ -417,38 +405,22 @@ const Index = () => {
             </h1>
 
             <motion.p
-              initial={revealInitial}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={revealTransition(0.5)}
               className="text-subhead text-muted-foreground mb-3"
             >
               Reporter. WGN-TV, Chicago.
             </motion.p>
 
             <motion.p
-              initial={revealInitial}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={revealTransition(0.6)}
               className="font-serif italic text-muted-foreground mb-8"
             >
               Raised on the West Side. Reporting for the whole city now.
             </motion.p>
 
             <motion.div
-              initial={shouldReduceMotion ? false : { scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={revealTransition(0.65, 0.8)}
               className="accent-line mb-8 origin-left"
             />
 
             <motion.p
-              initial={revealInitial}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={revealTransition(0.8)}
               className="text-lg text-foreground/80 leading-relaxed max-w-xl"
             >
               I cover breaking news and politics for WGN-TV in Chicago. Four-time Regional Emmy® Award Nominee, with three of those nominations this year.
@@ -577,18 +549,15 @@ const Index = () => {
                     aria-label={`Read the story: ${story.headline}`}
                     className="block group py-8 border-b border-border last:border-b-0"
                   >
-                    <motion.div
-                      className="flex flex-col md:flex-row md:items-start gap-6"
-                      whileHover={{ x: 10 }}
-                      transition={{ duration: 0.3 }}
-                    >
+                    <div className="flex flex-col md:flex-row md:items-start gap-6">
                       <div className="w-full md:w-72 flex-shrink-0 overflow-hidden">
                         <FreezeFrame
                           id={story.youtubeId}
+                          still={story.still}
                           variant={frame}
                           alt={`Bryant McCray, WGN-TV reporter, ${story.headline}`}
                           loading="lazy"
-                          className="w-full aspect-video object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
                       <div className="flex-1 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
@@ -604,7 +573,7 @@ const Index = () => {
                           <ArrowRight className="h-5 w-5" />
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   </Link>
                 </StaggerItem>
               ))}
@@ -623,7 +592,7 @@ const Index = () => {
               className="inline-block"
             >
               <Button variant="editorial" size="sm" asChild>
-                <a href="mailto:Bryant.l.mccray@gmail.com">
+                <a href="mailto:bryant.l.mccray@gmail.com">
                   Get in Touch
                 </a>
               </Button>

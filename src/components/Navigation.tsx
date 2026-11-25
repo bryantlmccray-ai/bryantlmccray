@@ -7,11 +7,9 @@ const Navigation = () => {
   const location = useLocation();
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
     { href: "/work", label: "Work" },
     { href: "/writing", label: "Writing" },
-    { href: "/experience", label: "Experience" },
+    { href: "/about", label: "About" },
     { href: "/career", label: "Career" },
   ];
 

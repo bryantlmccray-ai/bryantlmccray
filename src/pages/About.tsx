@@ -1,4 +1,3 @@
-import NightBand from "@/components/NightBand";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -6,7 +5,7 @@ import { FadeIn } from "@/components/ScrollAnimations";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import bryantHeadshot from "@/assets/bryant-headshot.jpeg";
+import { testimonials } from "@/data/testimonials";
 import aaccwiMark from "@/assets/aaccwi-mark.png";
 import loyolaAcademyLogo from "@/assets/loyola-academy-logo.png";
 
@@ -17,7 +16,7 @@ const About = () => {
       <main className="min-h-screen bg-background">
         <Navigation />
         
-        <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20">
+        <header className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">
             <FadeIn>
               <p className="text-xs text-accent tracking-widest uppercase mb-4">
@@ -30,55 +29,37 @@ const About = () => {
               </h1>
             </FadeIn>
           </div>
-        </NightBand>
+        </header>
 
-        <section className="pt-16 pb-24 md:pt-20 md:pb-32">
+        <section className="pt-4 pb-24 md:pt-8 md:pb-32">
           <div className="editorial-container">
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 max-md:overflow-x-clip">
               {/* Creative Photo Layout */}
               <FadeIn direction="left" className="lg:col-span-5 order-2 lg:order-1">
-                <div className="relative">
-                  {/* Main headshot - larger, positioned at top */}
-                  <motion.div 
-                    className="relative z-10"
-                    whileHover={{ scale: 1.02 }}
+                <div className="relative pb-24 md:pb-28">
+                  <motion.div
+                    className="overflow-hidden border border-border"
+                    whileHover={reduceMotion ? undefined : { scale: 1.01 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <div className="aspect-[4/5] overflow-hidden border border-border">
-                      <img 
-                        src={bryantHeadshot} 
-                        alt="Bryant McCray, WGN-TV reporter in Chicago, headshot"
-                        className="w-full h-full object-cover object-top"
-                      />
-                    </div>
+                    <img
+                      src="/stills/bryant-field-nwi.jpg"
+                      alt="Bryant McCray reporting for WGN-TV in Northwest Indiana after the August 2026 storm"
+                      width={1920}
+                      height={1080}
+                      className="w-full aspect-[4/5] object-cover"
+                    />
                   </motion.div>
-                  
-                  {/* On-air photo - smaller, overlapping bottom right */}
-                  <motion.div 
-                    className="absolute -bottom-8 right-0 md:-right-8 w-2/3 z-20"
-                    initial={{ opacity: 0, x: 30, y: 30 }}
-                    animate={{ opacity: 1, x: 0, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    whileHover={{ scale: 1.05, rotate: 2 }}
-                  >
-                    <div className="aspect-[3/4] overflow-hidden border-4 border-background shadow-2xl">
-                      <img 
-                        src="/images/bryant-mccray-wgn-reporter-chicago.jpg"
-                        alt="Bryant McCray, WGN-TV reporter, reporting in Chicago"
-                        width={1206}
-                        height={1608}
-                        className="w-full h-full object-cover object-top"
-                      />
-                    </div>
-                  </motion.div>
-                  
-                  {/* Decorative accent */}
-                  <motion.div 
-                    className="absolute -top-4 left-0 md:-left-4 w-24 h-24 border border-accent/30"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                  />
+                  <div className="absolute bottom-0 right-0 w-3/5 overflow-hidden border-4 border-background">
+                    <img
+                      src="/stills/bryant-field-westside.jpg"
+                      alt="Bryant McCray reporting live for WGN-TV on Chicago's West Side"
+                      width={1920}
+                      height={1080}
+                      loading="lazy"
+                      className="w-full aspect-[3/2] object-cover"
+                    />
+                  </div>
                 </div>
               </FadeIn>
 
@@ -240,6 +221,25 @@ const About = () => {
             </div>
           </div>
         </section>
+
+        {testimonials.length > 0 && (
+          <section className="pb-24 md:pb-32">
+            <div className="editorial-container">
+              <div className="accent-line mb-10" />
+              <p className="text-xs text-accent tracking-widest uppercase mb-4">What colleagues say</p>
+              <div className="grid md:grid-cols-2 gap-8 mt-8">
+                {testimonials.map((t) => (
+                  <figure key={`${t.name}-${t.organization}`} className="border border-border p-6 md:p-8">
+                    <blockquote className="font-serif text-xl text-foreground leading-relaxed mb-6">"{t.quote}"</blockquote>
+                    <figcaption className="text-sm text-muted-foreground">
+                      <span className="text-foreground">{t.name}</span>, {t.title}, {t.organization}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         <section className="pb-24 md:pb-32">
           <div className="editorial-container">

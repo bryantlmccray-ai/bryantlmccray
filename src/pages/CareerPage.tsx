@@ -1,10 +1,31 @@
-import NightBand from "@/components/NightBand";
-import headshotPortrait from "@/assets/bryant-headshot.jpeg";
+import { useLayoutEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import galleryEmmy from "@/assets/gallery-emmy.jpeg";
+import galleryInterview1 from "@/assets/gallery-interview-1.jpeg";
+import galleryInterview2 from "@/assets/gallery-interview-2.jpeg";
+import galleryHosting from "@/assets/gallery-hosting.jpg";
+import galleryRambleLaugh from "@/assets/gallery-ramble-laugh.jpg";
+import galleryRambleWalk from "@/assets/gallery-ramble-walk.jpg";
+import galleryRambleInterview from "@/assets/gallery-ramble-interview.jpg";
+import galleryWgnEnglewood from "@/assets/gallery-wgn-englewood.jpg";
+import galleryWgnLakefront from "@/assets/gallery-wgn-lakefront.jpg";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
+
+const galleryImages = [
+  { src: galleryWgnEnglewood, alt: "Live for WGN-TV on the West Englewood fire" },
+  { src: galleryWgnLakefront, alt: "Live from the lakefront for WGN-TV on the Illinois governor's race" },
+  { src: galleryEmmy, alt: "At the Chicago/Midwest Emmy Awards" },
+  { src: galleryInterview1, alt: "Studio interview session" },
+  { src: galleryInterview2, alt: "On-stage interview at theater" },
+  { src: galleryHosting, alt: "Hosting an event" },
+  { src: galleryRambleInterview, alt: "Interview for Loyola Academy's Ramble 2025 film" },
+  { src: galleryRambleWalk, alt: "With Brittany McCray at Loyola Academy, Ramble 2025 film" },
+  { src: galleryRambleLaugh, alt: "Behind the scenes, Loyola Academy's Ramble 2025 film" },
+];
 
 const careerTimeline = [
   {
@@ -87,13 +108,21 @@ const affiliations = [
 ];
 
 const CareerPage = () => {
+  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
+  useLayoutEffect(() => {
+    const previousTitle = document.title;
+    document.title = "Career | Bryant McCray";
+    window.scrollTo({ top: 0, behavior: "instant" });
+    return () => { document.title = previousTitle; };
+  }, []);
+
   return (
     <PageTransition>
       <main className="min-h-screen bg-background">
         <Navigation />
 
         {/* Hero */}
-        <NightBand className="pt-32 pb-16 md:pt-40 md:pb-20" portrait={{ src: headshotPortrait, alt: "Bryant McCray", position: "center top" }}>
+        <header className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">
             <FadeIn>
               <p className="text-xs text-accent tracking-widest uppercase mb-4">
@@ -111,7 +140,7 @@ const CareerPage = () => {
               </p>
             </FadeIn>
           </div>
-        </NightBand>
+        </header>
 
         {/* Timeline */}
         <section className="py-16 border-t border-border">
@@ -127,7 +156,7 @@ const CareerPage = () => {
                 <StaggerItem key={index}>
                   <motion.div
                     className="py-8 border-b border-border last:border-b-0"
-                    whileHover={{ x: 10, backgroundColor: "hsl(var(--secondary) / 0.3)" }}
+                    whileHover={{ backgroundColor: "hsl(var(--secondary) / 0.3)" }}
                     transition={{ duration: 0.3 }}
                   >
                     <div className="grid md:grid-cols-12 gap-4">
@@ -157,6 +186,37 @@ const CareerPage = () => {
             </StaggerContainer>
           </div>
         </section>
+
+        {/* Gallery */}
+        <section className="py-16 border-t border-border">
+          <div className="editorial-container">
+            <h2 className="font-serif text-2xl text-foreground mb-10">Gallery</h2>
+            <div className="flex flex-wrap gap-3 md:gap-4">
+              {galleryImages.map((image) => (
+                <motion.button
+                  type="button"
+                  key={image.alt}
+                  aria-label={`View photo: ${image.alt}`}
+                  className="relative w-20 h-20 md:w-24 md:h-24 overflow-hidden rounded-sm cursor-pointer"
+                  whileHover={{ scale: 1.15, zIndex: 10 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  onClick={() => setSelectedImage(image)}
+                >
+                  <img src={image.src} alt={image.alt} loading="lazy" className="w-full h-full object-cover" />
+                </motion.button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+          <DialogContent className="max-w-4xl p-2 bg-background/95 backdrop-blur-sm border-border">
+            <DialogTitle className="sr-only">{selectedImage?.alt}</DialogTitle>
+            {selectedImage && (
+              <img src={selectedImage.src} alt={selectedImage.alt} className="w-full h-auto max-h-[80vh] object-contain rounded-sm" />
+            )}
+          </DialogContent>
+        </Dialog>
 
         {/* Skills */}
         <section className="py-16 border-t border-border bg-secondary/30">
@@ -197,7 +257,7 @@ const CareerPage = () => {
                 <StaggerItem key={index}>
                   <motion.div
                     className="py-6"
-                    whileHover={{ y: -8, scale: 1.02 }}
+                    whileHover={{ y: -4 }}
                     transition={{ duration: 0.3 }}
                   >
                     <p className="text-xs text-accent tracking-widest uppercase mb-2">

@@ -234,15 +234,13 @@
     border: 1px solid var(--night-border);
   }
   .night-band__portrait-image {
-    filter: grayscale(1) contrast(1.05) brightness(0.92);
-    transition: filter 700ms ease-out;
+    filter: none;
   }
 }
 @media (min-width: 1024px) {
   .night-band--portrait { --portrait-width: 128px; --portrait-height: 172px; }
 }
 @media (hover: hover) and (pointer: fine) {
-  .night-band__portrait-image:hover { filter: grayscale(0) contrast(1.05) brightness(1); }
 }
 @media (prefers-reduced-motion: reduce) {
   .night-band__trail > * { transition: none; }

@@ -1,22 +1,18 @@
-import NightBand from "@/components/NightBand";
-import onairPortrait from "@/assets/bryant-onair.jpeg";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import { Play, X } from "lucide-react";
-import { motion, AnimatePresence, useReducedMotion, useSpring } from "framer-motion";
+import { X } from "lucide-react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import { FadeIn } from "@/components/ScrollAnimations";
 import { Helmet } from "react-helmet-async";
-import { stories } from "@/data/stories";
+import { stories, type Story } from "@/data/stories";
 import { syndication } from "@/data/syndication";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
 import hazardousRoadsThumb from "@/assets/hazardous-roads-thumbnail.jpg";
 
-const StoryWall = lazy(() => import("@/components/StoryWall"));
 
 // Extract YouTube video ID from various URL formats
 const getYouTubeId = (url: string): string | null => {
@@ -29,14 +25,6 @@ const getYouTubeId = (url: string): string | null => {
   }
   return null;
 };
-const categories = [
-  "All",
-  "Breaking News",
-  "Investigation",
-  "Enterprise Reporting",
-  "Culture & Community",
-  "On-Air Segments",
-];
 
 const workItems = [
   {
@@ -66,7 +54,7 @@ const workItems = [
     year: "2026",
     station: "WGN-TV",
     market: "Chicago",
-    thumbnail: "https://img.youtube.com/vi/PItaO0WWoXA/mqdefault.jpg",
+    thumbnail: "/stills/englewood-fire.jpg",
     link: "https://youtu.be/PItaO0WWoXA",
   },
   {
@@ -86,7 +74,7 @@ const workItems = [
     year: "2026",
     station: "WGN-TV",
     market: "Chicago",
-    thumbnail: "https://img.youtube.com/vi/KVdYVU2TNJU/mqdefault.jpg",
+    thumbnail: "/stills/ai-safety-law.jpg",
     link: "https://youtu.be/KVdYVU2TNJU",
   },
   {
@@ -241,115 +229,71 @@ const workItems = [
   },
 ];
 
-type StoryThumbnailProps = {
-  thumbnail: string;
-  title: string;
-  videoOpen: boolean;
-  fallback?: string;
-  lazy?: boolean;
+const STORY_CATEGORY: Record<string, string> = {
+  "nwi-storm-series": "Breaking News",
+  "election-night-2026": "Politics",
+  "bears-stadium-fight": "Politics",
+  "amtrak-rail-yard": "Community",
 };
 
-const StoryThumbnail = ({ thumbnail, title, videoOpen, fallback, lazy }: StoryThumbnailProps) => {
-  const [hovered, setHovered] = useState(false);
-  const surfaceRef = useRef<HTMLDivElement>(null);
-  const cueRef = useRef<HTMLDivElement>(null);
-  const pointerRef = useRef({ x: 0, y: 0 });
-  const reduceMotion = useReducedMotion();
-  const x = useSpring(0, { stiffness: 260, damping: 24, mass: 0.45 });
-  const y = useSpring(0, { stiffness: 260, damping: 24, mass: 0.45 });
+// "WGN NEWS · NOVEMBER 2026 · CHICAGO" -> "November 2026"
+const storyDate = (story: Story) => {
+  const part = story.kicker.split("·")[1]?.trim() ?? "";
+  return part.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+};
 
-  useEffect(() => {
-    if (!hovered) return;
+const firstSentence = (text: string) => {
+  const match = text.match(/^.*?[.!?](\s|$)/);
+  return (match ? match[0] : text).trim();
+};
 
-    let frame = 0;
-    const positionCue = () => {
-      const surface = surfaceRef.current;
-      const cue = cueRef.current;
-      if (surface && cue) {
-        const bounds = surface.getBoundingClientRect();
-        const cueWidth = cue.offsetWidth;
-        const cueHeight = cue.offsetHeight;
-        const pointerX = pointerRef.current.x - bounds.left;
-        const pointerY = pointerRef.current.y - bounds.top;
-        const offset = 8;
-        const nextX = pointerX + offset + cueWidth <= bounds.width
-          ? pointerX + offset
-          : pointerX - offset - cueWidth;
-        const nextY = pointerY + offset + cueHeight <= bounds.height
-          ? pointerY + offset
-          : pointerY - offset - cueHeight;
+const storyImage = (story: Story) => story.still ?? `https://i.ytimg.com/vi/${story.youtubeId}/hqdefault.jpg`;
 
-        x.set(Math.max(0, Math.min(nextX, bounds.width - cueWidth)));
-        y.set(Math.max(0, Math.min(nextY, bounds.height - cueHeight)));
-      }
-      frame = window.requestAnimationFrame(positionCue);
-    };
+type CardProps = { image: string; alt: string; category: string; headline: string; dateLine: string; dek: string };
 
-    frame = window.requestAnimationFrame(positionCue);
-    return () => window.cancelAnimationFrame(frame);
-  }, [hovered, x, y]);
-
-  const moveCue = (event: React.PointerEvent<HTMLDivElement>) => {
-    pointerRef.current = { x: event.clientX, y: event.clientY };
-  };
-
-  return (
-    <div
-      ref={surfaceRef}
-      className="aspect-video border border-border overflow-hidden relative"
-      onPointerEnter={(event) => {
-        setHovered(true);
-        moveCue(event);
-      }}
-      onPointerMove={moveCue}
-      onPointerLeave={() => {
-        setHovered(false);
-      }}
-      onPointerDown={() => {
-        setHovered(false);
-      }}
-    >
-      <motion.div className="absolute inset-0" whileHover={{ scale: 1.02 }}>
-        <img
-          src={thumbnail}
-          alt={title}
-          loading={lazy ? "lazy" : undefined}
-          onError={(event) => {
-            const image = event.currentTarget;
-            if (fallback && !image.dataset.fallbackApplied) {
-              image.dataset.fallbackApplied = "1";
-              image.src = fallback;
-            }
-          }}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/20 transition-colors duration-300" />
-      </motion.div>
-      <motion.div
-        ref={cueRef}
-        aria-hidden="true"
-        className="pointer-events-none absolute left-0 top-0 z-10 inline-flex w-max max-w-full items-center gap-1.5 whitespace-nowrap text-sm font-medium text-primary-foreground mix-blend-exclusion"
-        style={{ x, y }}
-        animate={{ opacity: hovered && !videoOpen ? 1 : 0 }}
-        transition={{ duration: reduceMotion ? 0.2 : 0.15, ease: "easeOut" }}
-      >
-        <Play className="h-4 w-4 fill-current" />
-        <span>Play</span>
-      </motion.div>
+const CardBody = ({ image, alt, category, headline, dateLine, dek }: CardProps) => (
+  <>
+    <div className="overflow-hidden border border-border mb-5">
+      <img src={image} alt={alt} loading="lazy" className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105" />
     </div>
-  );
-};
+    <p className="text-xs text-accent tracking-widest uppercase mb-2">{category}</p>
+    <h3 className="font-serif text-xl md:text-2xl text-foreground leading-snug group-hover:text-accent transition-colors duration-300 mb-2">{headline}</h3>
+    <p className="text-xs text-muted-foreground tracking-widest uppercase mb-3">{dateLine}</p>
+    <p className="text-sm text-muted-foreground leading-relaxed">{dek}</p>
+  </>
+);
 
+const scrollTop = () => window.scrollTo({ top: 0, behavior: "instant" });
 
 const Work = () => {
-  const [activeCategory, setActiveCategory] = useState("All");
   const [selectedVideo, setSelectedVideo] = useState<{ title: string; link: string } | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const reduceMotion = useReducedMotion();
 
-  const filteredWork = activeCategory === "All" 
-    ? workItems 
-    : workItems.filter(item => item.category === activeCategory);
+  const wgnStories = stories.filter((story) => story.still);
+  const [lead, ...rest] = wgnStories;
+  const moreWgn = workItems.filter((item) => item.station.startsWith("WGN"));
+  const beforeChicago = workItems.filter((item) => !item.station.startsWith("WGN"));
+
+  const workCard = (item: (typeof workItems)[number]) => (
+    <li key={item.link}>
+      <button
+        type="button"
+        onClick={() => setSelectedVideo({ title: item.title, link: item.link })}
+        aria-label={`Watch: ${item.title}`}
+        className="group block w-full text-left"
+      >
+        <CardBody
+          image={item.thumbnail}
+          alt={`Bryant McCray, ${item.station} reporter, ${item.title}`}
+          category={item.category}
+          headline={item.title}
+          dateLine={`${item.station} · ${item.market} · ${item.year}`}
+          dek={item.description}
+        />
+      </button>
+    </li>
+  );
 
   const videoId = selectedVideo ? getYouTubeId(selectedVideo.link) : null;
 
@@ -451,72 +395,68 @@ const Work = () => {
       <main className="min-h-screen overflow-x-hidden bg-background">
         <Navigation />
         
-        <NightBand className="pt-32 pb-12 md:pt-40 md:pb-16" portrait={{ src: onairPortrait, alt: "Bryant McCray on air for WGN-TV", position: "center 20%" }}>
+        <header className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">
-            <FadeIn>
-              <p className="text-xs text-accent tracking-widest uppercase mb-4">
-                Work
-              </p>
-            </FadeIn>
-            
-            <FadeIn delay={0.1}>
-              <h1 className="font-serif text-headline text-foreground mb-6">
-                Selected Reporting
-              </h1>
-            </FadeIn>
-            
-            <FadeIn delay={0.2}>
-              <p className="text-muted-foreground max-w-xl leading-relaxed">
-                Selected reporting and on-air work spanning breaking news, enterprise 
-                storytelling, and community-driven journalism.
-              </p>
-            </FadeIn>
+            <p className="text-xs text-accent tracking-widest uppercase mb-4">Work</p>
+            <h1 className="font-serif text-headline text-foreground mb-6">Selected Reporting</h1>
+            <p className="text-muted-foreground max-w-xl leading-relaxed">
+              Selected reporting and on-air work spanning breaking news, enterprise 
+              storytelling, and community-driven journalism.
+            </p>
           </div>
-        </NightBand>
+        </header>
 
-        <section className="story-wall-section">
-          <style>{`
-            @media (max-width: 767px) {
-              .story-wall-section { display: none; }
-            }
-          `}</style>
-          <div className="editorial-container">
-            <Suspense fallback={null}>
-              <StoryWall
-                stories={filteredWork}
-                onSelect={(story) => setSelectedVideo({ title: story.title, link: story.link })}
-                fallback={null}
-              />
-            </Suspense>
-          </div>
-        </section>
+        {/* Lead story */}
+        {lead && (
+          <section className="pb-12 md:pb-16">
+            <div className="editorial-container">
+              <Link to={`/stories/${lead.slug}`} onClick={scrollTop} className="group grid gap-8 border-t border-border pt-10 md:grid-cols-12 md:items-center">
+                <div className="md:col-span-7 overflow-hidden border border-border">
+                  <img
+                    src={storyImage(lead)}
+                    alt={`From Bryant McCray's WGN-TV report: ${lead.headline}`}
+                    className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="md:col-span-5">
+                  <p className="text-xs text-accent tracking-widest uppercase mb-3">{STORY_CATEGORY[lead.slug] ?? "WGN-TV"}</p>
+                  <h2 className="font-serif text-3xl md:text-4xl text-foreground leading-tight group-hover:text-accent transition-colors duration-300 mb-4">{lead.headline}</h2>
+                  <p className="text-muted-foreground leading-relaxed mb-4">{lead.dek}</p>
+                  <p className="text-xs text-muted-foreground tracking-widest uppercase">WGN-TV · {storyDate(lead)}</p>
+                </div>
+              </Link>
+            </div>
+          </section>
+        )}
 
-        {/* Filter */}
-        <section className="py-12 md:py-16">
+        {/* Remaining WGN stories */}
+        <section className="pb-16 md:pb-20">
           <div className="editorial-container">
-            <p className="text-xs text-accent uppercase tracking-widest mb-4">Stories</p>
-            <ul className="border-t border-border">
-              {stories.map((story) => (
+            <ul className="grid gap-10 border-t border-border pt-10 md:grid-cols-3">
+              {rest.map((story) => (
                 <li key={story.slug}>
-                  <Link to={`/stories/${story.slug}`} onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="group block border-b border-border py-8">
-                    <div className="grid gap-6 md:grid-cols-12 md:items-center">
-                      <div className="md:col-span-5">
-                        <StoryThumbnail
-                          thumbnail={`https://i.ytimg.com/vi/${story.youtubeId}/maxresdefault.jpg`}
-                          fallback={`https://i.ytimg.com/vi/${story.youtubeId}/hqdefault.jpg`}
-                          title={story.headline}
-                          videoOpen={selectedVideo !== null}
-                          lazy
-                        />
-                      </div>
-                      <div className="md:col-span-7">
-                        <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-3">{story.kicker}</p>
-                        <h2 className="font-serif text-2xl md:text-3xl text-foreground group-hover:text-accent transition-colors duration-300">{story.headline}</h2>
-                      </div>
-                    </div>
+                  <Link to={`/stories/${story.slug}`} onClick={scrollTop} className="group block">
+                    <CardBody
+                      image={storyImage(story)}
+                      alt={`From Bryant McCray's WGN-TV report: ${story.headline}`}
+                      category={STORY_CATEGORY[story.slug] ?? "WGN-TV"}
+                      headline={story.headline}
+                      dateLine={`WGN-TV · ${storyDate(story)}`}
+                      dek={firstSentence(story.dek)}
+                    />
                   </Link>
                 </li>
               ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* More WGN reporting */}
+        <section className="pb-16 md:pb-20">
+          <div className="editorial-container">
+            <p className="text-xs text-accent uppercase tracking-widest mb-6">More from WGN-TV</p>
+            <ul className="grid gap-10 border-t border-border pt-10 md:grid-cols-3">
+              {moreWgn.map(workCard)}
             </ul>
           </div>
         </section>
@@ -551,102 +491,13 @@ const Work = () => {
           </div>
         </section>
 
-        <section className="py-8 border-y border-border sticky top-20 bg-background/95 backdrop-blur-sm z-40">
+        {/* Before Chicago */}
+        <section className="py-12 md:py-16">
           <div className="editorial-container">
-            <div className="flex flex-wrap gap-6">
-              {categories.map((category) => (
-                <motion.button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  className={`text-sm transition-colors duration-300 relative ${
-                    activeCategory === category
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {category}
-                  {activeCategory === category && (
-                    <motion.div
-                      layoutId="activeCategory"
-                      className="absolute -bottom-2 left-0 right-0 h-0.5 bg-accent"
-                      transition={{ duration: 0.3 }}
-                    />
-                  )}
-                </motion.button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Work Grid */}
-        {/* NOTE: If a category with no items is added back, render the empty state outside the AnimatePresence wrapper and only mount the animated list when filteredWork.length > 0. */}
-        <section className="py-16">
-          <div className="editorial-container">
-            <div className="space-y-0">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeCategory}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {filteredWork.map((item, index) => (
-
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: index * 0.1 }}
-                    >
-                      <button
-                        onClick={() => setSelectedVideo({ title: item.title, link: item.link })}
-                        className="group block py-10 border-b border-border cursor-pointer w-full text-left"
-                      >
-                        <motion.div 
-                          className="grid md:grid-cols-12 gap-6 items-start"
-                          whileHover={{ x: 10 }}
-                        >
-                          {/* Thumbnail */}
-                          <div className="md:col-span-4">
-                            <StoryThumbnail
-                              thumbnail={item.thumbnail}
-                              title={item.title}
-                              videoOpen={selectedVideo !== null}
-                            />
-                          </div>
-
-                          {/* Content */}
-                          <div className="md:col-span-8">
-                            <div className="flex items-start justify-between gap-4">
-                              <div>
-                                <div className="flex items-center gap-4 mb-2">
-                                  <p className="text-xs text-accent tracking-widest uppercase">
-                                    {item.category}
-                                  </p>
-                                </div>
-                                <p className="text-xs text-muted-foreground tracking-widest uppercase mb-2">
-                                  {item.station} · {item.market} · {item.year}
-                                </p>
-
-                                <h2 className="font-serif text-2xl text-foreground group-hover:text-accent transition-colors duration-300 mb-3">
-                                  {item.title}
-                                </h2>
-                                <p className="text-muted-foreground max-w-lg">
-                                  {item.description}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </motion.div>
-                      </button>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </AnimatePresence>
-            </div>
+            <p className="text-xs text-accent uppercase tracking-widest mb-6">Before Chicago</p>
+            <ul className="grid gap-10 border-t border-border pt-10 md:grid-cols-3">
+              {beforeChicago.map(workCard)}
+            </ul>
           </div>
         </section>
 
