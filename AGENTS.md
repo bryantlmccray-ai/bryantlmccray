@@ -15,6 +15,6 @@
 - Mobile hit areas are at least 44px, hover zoom is disabled under (hover: none), heights use svh, and fixed or full-bleed elements pad with env(safe-area-inset-*); the mobile menu is a portal so the nav's backdrop blur cannot clip it.
 - Editorial lists over cards: items are separated by a single top hairline with no outer border, panel, shadow or rounding; titles are the links (.link-plain, underline on hover/focus only), primary actions use the square `solid` button variant and secondary actions are underlined text, and accent eyebrows appear only in the Home opening band and on story pages; copper datelines (from Story.dateline) are the one accent allowed in story items.
 
-- Layering primitives live in src/components/Editorial.tsx (Overlap, Caption, Dateline, Margin, SectionHead) and still captions come from src/lib/storyMeta.ts, so captions use only story data and Work, About and Career share one section and margin-note treatment.
+- Editorial primitives live in src/components/Editorial.tsx, including shared double-rule nameplates and bylines for Home and About; still captions come from src/lib/storyMeta.ts, so publication furniture stays consistent and captions use only supplied data.
 - Paper grain is a background-image on main.bg-background in index.css, so it sits under text and dark bands cover it.
 - Story-specific credits and related reporting live in story data and render through StoryPage, so station attribution and supporting links do not leak between stories.

@@ -1,6 +1,29 @@
 import type { ReactNode } from "react";
 import { stillSrcSet } from "@/lib/stills";
 
+/** Publication furniture: the same double rule and dateline strip on light section fronts. */
+export const DoubleRule = () => (
+  <div className="border-t-[3px] border-foreground pt-1" aria-hidden="true"><div className="border-t border-foreground" /></div>
+);
+
+export const PublicationNameplate = ({ title, center }: { title?: string; center: string }) => (
+  <div>
+    <DoubleRule />
+    {title && <h1 className="font-serif text-[56px] md:text-[80px] leading-none text-foreground py-6">{title}</h1>}
+    <div className={`grid gap-2 border-y border-border py-3 text-sm text-muted-foreground md:grid-cols-3 md:items-center ${title ? "" : "mt-6"}`}>
+      <span>Chicago</span>
+      <span className="md:text-center">{center}</span>
+      <span className="md:text-right">Updated November 2026</span>
+    </div>
+  </div>
+);
+
+export const Byline = ({ date }: { date: string }) => (
+  <p className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs leading-relaxed text-muted-foreground">
+    <span className="uppercase tracking-widest">By Bryant McCray</span><span>{date}</span>
+  </p>
+);
+
 /** Copper small-caps dateline that opens a dek: "MUNSTER, Ind." */
 export const Dateline = ({ city, state }: { city: string; state?: string }) => {
   const text = state ? `${city}, ${state}` : city;

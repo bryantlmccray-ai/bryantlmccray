@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Extend the newspaper section front to About and Home while preserving existing copy, media and dark bands.
+- [x] Verify both pages at 390 WebKit and 1440, links, photo overlaps and muted reel settings; save without publishing. Existing YouTube iframe warning remains in WebKit.
+
 - [x] Redesign Writing as a newspaper section front with the Ryan Field lead, date-ordered rail/grid and unchanged PDF copy.
 - [x] Verify Writing at 390 WebKit and 1440, all PDF links and ordering, and save without publishing.
 

@@ -1,9 +1,14 @@
 /// <reference types="node" />
 import { describe, it } from "node:test";
 import { strict as assert } from "node:assert";
-import { writingFront } from "./writingFront";
+import { writingFront, newestWriting } from "./writingFront";
 
 describe("Writing section order", () => {
+  it("shows the three newest pieces on Home without the curated lead override", () => {
+    assert.deepEqual(newestWriting().map((sample) => sample.slug), [
+      "cta-union-safety", "ryan-field-pat-ryan", "bud-billiken-97",
+    ]);
+  });
   it("keeps the exclusive Ryan Field interview as the lead", () => {
     assert.equal(writingFront().lead?.slug, "ryan-field-pat-ryan");
   });

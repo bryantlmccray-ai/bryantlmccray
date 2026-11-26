@@ -60,6 +60,9 @@ export const writingOpening = (sample: WritingSample) => {
 
 export const writingLeadQuote = "This stadium is defying the traditional way of doing things by making some bold bets to do things very differently.";
 
+export const newestWriting = (count = 3, samples: WritingSample[] = writingSamples) =>
+  [...samples].sort((a, b) => Date.parse(b.date) - Date.parse(a.date)).slice(0, count);
+
 export const writingFront = (samples: WritingSample[] = writingSamples) => {
   const ordered = [...samples].sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
   const lead = ordered.find((sample) => sample.slug === "ryan-field-pat-ryan");

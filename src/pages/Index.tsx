@@ -1,18 +1,19 @@
 import NightBand from "@/components/NightBand";
 import FeaturedVideo from "@/components/FeaturedVideo";
 import Seo from "@/components/Seo";
-import { Caption, Dateline, Overlap } from "@/components/Editorial";
+import { Caption, Dateline, Overlap, PublicationNameplate, DoubleRule, Byline } from "@/components/Editorial";
 import { stillCaption } from "@/lib/storyMeta";
 import { stillSrcSet, REEL_ID, REEL_TITLE, REEL_LINK, REEL_POSTER, REEL_ALT } from "@/lib/stills";
 import React, { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { stories } from "@/data/stories";
+import { newestWriting, writingTopics, writingPhotos } from "@/lib/writingFront";
 import { X } from "lucide-react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import PageTransition from "@/components/PageTransition";
-import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
+import { FadeIn } from "@/components/ScrollAnimations";
 import {
   Dialog,
   DialogContent,
@@ -55,9 +56,9 @@ const HERO_ORDER: { slug: string; date: string; market: string; category: string
   { slug: "amtrak-rail-yard", date: "2026", market: "Pilsen, Chinatown and Bridgeport", category: "Community" },
 ];
 
-const heroStories = HERO_ORDER.map((entry) => {
-  const story = stories.find((s) => s.slug === entry.slug)!;
-  return { ...entry, story };
+const heroStories = HERO_ORDER.flatMap((entry) => {
+  const story = stories.find((s) => s.slug === entry.slug);
+  return story ? [{ ...entry, story }] : [];
 });
 
 const records: HeroRecord[] = [
@@ -194,6 +195,7 @@ const MetaRow = ({
 };
 
 const featuredWork = heroStories;
+const writingDesk = newestWriting();
 
 // Primary: solid square button with plain text. Secondary: underlined text links.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -207,6 +209,23 @@ const HeroActions = (_props: { onWatch: () => void }) => (
     </a>
   </>
 );
+
+const HomeStory = ({ entry, lead = false }: { entry: (typeof featuredWork)[number]; lead?: boolean }) => {
+  const { slug, date, category, frame, story } = entry;
+  return <article data-home-story={slug} className="min-w-0">
+    <figure className="mb-5">
+      <FreezeFrame id={story.youtubeId} still={story.still} variant={frame} sizes={lead ? "(min-width: 1024px) 640px, 100vw" : "(min-width: 1024px) 320px, 100vw"} alt={`Bryant McCray, WGN-TV reporter, ${story.headline}`} loading="lazy" className="w-full aspect-[3/2] object-cover" />
+      {story.still && <Caption>{stillCaption(story)}</Caption>}
+    </figure>
+    <p className="text-xs uppercase tracking-widest text-accent mb-3">{category}</p>
+    <h3 className={`font-serif text-foreground leading-[1.08] mb-4 ${lead ? "text-[32px] md:text-[44px]" : "text-2xl"}`}>
+      <Link to={`/stories/${slug}`} aria-label={`Read the story: ${story.headline}`} className="link-plain inline-block min-h-11">{story.headline}</Link>
+    </h3>
+    <p className={`text-muted-foreground leading-relaxed ${lead ? "font-serif text-xl" : "text-base"}`}><Dateline {...story.dateline} />{firstSentence(story.dek)}</p>
+    <Byline date={date} />
+    <p className="mt-1 text-sm text-muted-foreground">WGN-TV</p>
+  </article>;
+};
 
 const Index = () => {
   const [selectedVideo, setSelectedVideo] = useState<{ title: string; link: string } | null>(null);
@@ -475,8 +494,12 @@ const Index = () => {
           </div>
         </NightBand>
 
+        {/* Light publication front */}
+        <div className="editorial-container pt-12 md:pt-16">
+          <PublicationNameplate center="Bryant McCray, WGN-TV" />
+        </div>
         {/* Identity band */}
-        <section className="py-24 md:py-32 border-t border-border">
+        <section className="py-12 md:py-16">
           <div className="editorial-container grid gap-12 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-6">
             <h2 className="font-serif text-display text-foreground mb-6">
@@ -515,8 +538,8 @@ const Index = () => {
             </motion.p>
             </div>
             <Overlap
-              className="lg:col-span-6 lg:mt-6"
-              main={{ src: "/stills/election-night-2026.jpg", alt: "Voters at the booths on Election Day 2026 in Chicago", caption: stillCaption(stories.find((s) => s.slug === "election-night-2026")!), sizes: "(min-width: 1024px) 420px, 100vw" }}
+              className="lg:col-span-6 lg:border-l lg:border-border lg:pl-7"
+              main={{ src: "/stills/election-night-2026.jpg", alt: "Voters at the booths on Election Day 2026 in Chicago", caption: "Election Night 2026. WGN-TV, November 2026. WGN-TV broadcast still.", sizes: "(min-width: 1024px) 420px, 100vw" }}
               inset={{ src: "/stills/bryant-skyline-lakefront.jpg", alt: "Bryant McCray reporting live on the Chicago lakefront with the skyline behind him.", caption: "Live on the lakefront, Election Night 2026. WGN-TV broadcast still.", sizes: "(min-width: 640px) 200px, 75vw", className: "object-top" }}
               insetClass="sm:-mt-[13%] sm:ml-[3%] sm:w-[44%]"
             />
@@ -524,9 +547,10 @@ const Index = () => {
         </section>
 
         {/* Recognition */}
-        <section className="py-16 md:py-20 border-t border-border">
+        <section className="py-16 md:py-20">
           <div className="editorial-container">
-            <FadeIn>
+            <DoubleRule />
+            <FadeIn className="pt-6">
               <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">Four Regional Emmy® nominations.</h2>
               <table className="w-full border-b border-border text-left">
                 <caption className="sr-only">Regional Emmy nominations</caption>
@@ -580,43 +604,40 @@ const Index = () => {
               <p className="text-muted-foreground leading-relaxed mb-6">Four stories from my first year at WGN-TV. The rest are under All work.</p>
             </FadeIn>
 
-            <StaggerContainer className="border-b border-border">
-              {featuredWork.map(({ slug, date, category, frame, story }) => (
-                <StaggerItem key={slug}>
-                  <Link
-                    to={`/stories/${slug}`}
-                    aria-label={`Read the story: ${story.headline}`}
-                    className="block group py-8 border-t border-border"
-                  >
-                    <div className="flex flex-col md:flex-row md:items-start gap-6">
-                      <figure className="w-full md:w-72 flex-shrink-0">
-                        <div className="overflow-hidden">
-                        <FreezeFrame
-                          id={story.youtubeId}
-                          still={story.still}
-                          variant={frame}
-                          sizes="(min-width: 768px) 288px, 100vw"
-                          alt={`Bryant McCray, WGN-TV reporter, ${story.headline}`}
-                          loading="lazy"
-                          className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        </div>
-                        {story.still && <Caption>{stillCaption(story)}</Caption>}
-                      </figure>
-                      <div className="flex-1 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                        <div className="flex-1">
-                          <p className="text-sm text-muted-foreground mb-2">{category} · WGN-TV · {date}</p>
-                          <h3 className="link-plain-target font-serif text-2xl text-foreground mb-2">
-                            {story.headline}
-                          </h3>
-                          <p className="text-muted-foreground max-w-lg"><Dateline {...story.dateline} />{firstSentence(story.dek)}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
+            <div className="grid border-t border-border lg:grid-cols-3">
+              {featuredWork[0] && <div className="min-w-0 py-8 lg:col-span-2 lg:pr-10"><HomeStory entry={featuredWork[0]} lead /></div>}
+              <div className="divide-y divide-border lg:border-l lg:border-border lg:pl-7">
+                {featuredWork.slice(1, 3).map((entry) => <div key={entry.slug} className="border-t border-border py-8 lg:border-t-0"><HomeStory entry={entry} /></div>)}
+              </div>
+            </div>
+            <div className="grid border-b border-border md:grid-cols-2 lg:grid-cols-3">
+              {featuredWork.slice(3).map((entry) => <div key={entry.slug} className="min-w-0 border-t border-border py-8 md:pr-6 md:border-r"><HomeStory entry={entry} /></div>)}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 md:py-20 border-t border-border">
+          <div className="editorial-container">
+            <div className="flex flex-wrap items-baseline justify-between gap-4 mb-6">
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground">From the Writing desk</h2>
+              <Link to="/writing" className="inline-flex min-h-11 items-center text-sm text-foreground underline underline-offset-[3px]">All writing</Link>
+            </div>
+            <div className="grid md:grid-cols-3">
+              {writingDesk.map((sample) => {
+                const photo = writingPhotos[sample.slug];
+                return <article key={sample.slug} data-writing-desk={sample.slug} className="min-w-0 border-t border-border py-8 md:px-6 md:[&:not(:first-child)]:border-l">
+                  {photo && <figure className="mb-5">
+                    <img src={photo.src} srcSet={stillSrcSet(photo.src)} sizes="(min-width: 768px) 360px, 100vw" width={1920} height={1080} loading="lazy" decoding="async" alt={photo.alt} className="w-full aspect-[3/2] object-cover" />
+                    <Caption>{photo.caption}</Caption>
+                  </figure>}
+                  <p className="text-xs uppercase tracking-widest text-accent mb-3">{writingTopics[sample.slug]}</p>
+                  <h3 className="font-serif text-2xl text-foreground leading-snug">
+                    {sample.pdf ? <a href={sample.pdf} target="_blank" rel="noopener noreferrer" className="link-plain inline-block min-h-11">{sample.head}</a> : sample.head}
+                  </h3>
+                  <Byline date={sample.date} />
+                </article>;
+              })}
+            </div>
           </div>
         </section>
         {/* Quiet CTA */}

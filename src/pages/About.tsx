@@ -2,10 +2,9 @@ import Seo from "@/components/Seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import { FadeIn } from "@/components/ScrollAnimations";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Margin, Overlap, SectionHead } from "@/components/Editorial";
+import { Overlap, SectionHead, PublicationNameplate, Byline } from "@/components/Editorial";
 import { testimonials } from "@/data/testimonials";
 import aaccwiMark from "@/assets/aaccwi-mark.png";
 import loyolaAcademyLogo from "@/assets/loyola-academy-logo.png";
@@ -43,95 +42,68 @@ const About = () => {
       <main className="min-h-[100svh] bg-background">
         <Navigation />
         
-        <header className="pt-32 pb-12 md:pt-40 md:pb-16">
-          <div className="editorial-container">
-            <FadeIn delay={0.1}>
-              <h1 className="font-serif text-headline text-foreground mb-8">
-                I grew up on the West Side. Now I report on the whole city.
-              </h1>
-            </FadeIn>
+        <header className="pt-28 pb-10 md:pt-32 md:pb-12">
+          <div className="wide-container">
+            <PublicationNameplate title="About" center="Reporter, WGN-TV" />
           </div>
         </header>
 
-        <section className="pt-4 pb-24 md:pt-8 md:pb-32">
-          <div className="editorial-container">
-            <SectionHead n={1} />
-            <Margin note={<><span className="block">WGN-TV</span><span className="block">Chicago</span><span className="block">Since 2026</span></>}>
-            <div className="grid lg:grid-cols-12 gap-12 lg:gap-12 max-md:overflow-x-clip">
-              {/* Creative Photo Layout */}
-              <FadeIn direction="left" className="lg:col-span-7 order-1">
-                <Overlap
-                  className=""
-                  main={{ src: "/stills/bryant-field-action.jpg", alt: "Bryant McCray reporting for WGN-TV beside a tree that fell on a car during a storm", caption: "Reporting in the field after a storm. WGN-TV.", width: 1620, height: 1080, className: "object-left", eager: true, sizes: "(min-width: 1024px) 480px, 100vw" }}
-                  inset={{ src: "/stills/bryant-field-westside.jpg", alt: "Bryant McCray reporting live for WGN-TV on Chicago's West Side", caption: "Reporting live on the West Side. WGN-TV.", sizes: "240px" }}
-                  side="right"
-                  insetClass="sm:-mt-[15%] sm:mr-[4%] sm:w-[36%]"
-                />
-              </FadeIn>
-
-              {/* Content */}
-              <div className="lg:col-span-5 order-2">
-
-                <FadeIn delay={0.3}>
-                  <div className="space-y-6 text-foreground/80 leading-relaxed">
-                    <p>
-                      I was raised on Chicago's West Side, with Mario's Italian Ice in one hand and Italian Fiesta pizza in the other. I went to Alain Locke Charter School, then Loyola Academy up in Wilmette.
-                    </p>
-
-                    <p>
-                      TV news started for me at St. Norbert College, on a student show called Knight Talk. From there it was Green Bay, then Milwaukee, then Cleveland. Now I'm home, at WGN.
-                    </p>
-
-                    <p>
-                      Chicago taught me early that people don't want to be impressed. They want to be understood. So that's how I report. I show up, I listen, and I let the people in the story carry it.
-                    </p>
-
-                    <p>
-                      Four-time Regional Emmy® Award Nominee. Three of those nominations came this year.
-                    </p>
-
-                    <p>
-                      My WGN reporting also runs on{" "}
-                      <Link
-                        to="/work"
-                        className="link-plain underline"
-                      >
-                        NewsNation and Nexstar stations
-                      </Link>{" "}
-                      across the Midwest.
-                    </p>
-                  </div>
-                </FadeIn>
-              </div>
-            </div>
-            </Margin>
-          </div>
-        </section>
-
         <section className="pb-20 md:pb-28">
-          <div className="editorial-container">
-            <SectionHead n={2}>
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground">
-                Four Regional Emmy® nominations.
+          <div className="wide-container grid gap-y-10 lg:grid-cols-3">
+            <article className="min-w-0 lg:col-span-2 lg:pr-10">
+              <h2 className="font-serif text-[32px] md:text-[44px] lg:text-[48px] leading-[1.08] text-foreground mb-6">
+                I grew up on the West Side. Now I report on the whole city.
               </h2>
-            </SectionHead>
-            <ul className="border-b border-border">
-              {RECOGNITION.map((row) => (
-                <li key={row.story} className="border-t border-border">
-                <Margin note={<div className="pt-6"><span className="block tabular-nums">{row.year}</span><span className="block">{row.station}</span></div>}>
-                <div className="grid gap-1 py-5 md:grid-cols-12 md:items-baseline md:gap-6">
-                  <span className="text-sm tabular-nums text-muted-foreground md:col-span-1 lg:hidden">{row.year}</span>
-                  <span className="text-sm text-muted-foreground md:col-span-3 lg:col-span-4">{row.honor}</span>
-                  <span className="md:col-span-6 lg:col-span-8">
-                    <ItemLink href={row.href} className="font-serif text-xl text-foreground">{row.story}</ItemLink>
-                    <span className="block text-sm text-muted-foreground mt-1">{row.detail}</span>
-                  </span>
-                  <span className="text-sm text-muted-foreground md:col-span-2 md:text-right lg:hidden">{row.station}</span>
-                </div>
-                </Margin>
-                </li>
-              ))}
-            </ul>
+              <Overlap
+                main={{ src: "/stills/bryant-field-action.jpg", alt: "Bryant McCray reporting for WGN-TV beside a tree that fell on a car during a storm", caption: "Reporting in the field after a storm. WGN-TV.", width: 1620, height: 1080, className: "object-left", eager: true, sizes: "(min-width: 1024px) 800px, 100vw" }}
+                inset={{ src: "/stills/bryant-field-westside.jpg", alt: "Bryant McCray reporting live for WGN-TV on Chicago's West Side", caption: "Reporting live on the West Side. WGN-TV.", sizes: "(min-width: 1024px) 280px, 75vw" }}
+                side="right"
+                insetClass="sm:-mt-[15%] sm:mr-[4%] sm:w-[36%]"
+              />
+              <Byline date="November 2026" />
+              <p className="mt-1 text-sm text-muted-foreground">WGN-TV · Chicago · Since 2026</p>
+              <div className="mt-6 space-y-6 font-serif text-xl text-foreground/80 leading-relaxed max-w-[65ch]">
+                <p className="first-letter:float-left first-letter:mr-2 first-letter:mt-1 first-letter:text-[64px] first-letter:leading-[0.85]">
+                  I was raised on Chicago's West Side, with Mario's Italian Ice in one hand and Italian Fiesta pizza in the other. I went to Alain Locke Charter School, then Loyola Academy up in Wilmette.
+                </p>
+                <p>
+                  TV news started for me at St. Norbert College, on a student show called Knight Talk. From there it was Green Bay, then Milwaukee, then Cleveland. Now I'm home, at WGN.
+                </p>
+                <blockquote className="border-y border-border py-5">
+                  <p className="text-2xl md:text-[32px] leading-snug">Chicago taught me early that people don't want to be impressed. They want to be understood.</p>
+                  <cite className="mt-3 block font-sans text-sm not-italic text-muted-foreground">Bryant McCray</cite>
+                </blockquote>
+                <p>
+                  Chicago taught me early that people don't want to be impressed. They want to be understood. So that's how I report. I show up, I listen, and I let the people in the story carry it.
+                </p>
+                <p>
+                  Four-time Regional Emmy® Award Nominee. Three of those nominations came this year.
+                </p>
+              </div>
+            </article>
+            <aside className="min-w-0 border-t border-border pt-8 lg:border-t-0 lg:border-l lg:pl-7 lg:pt-0">
+              <h2 className="font-serif text-3xl text-foreground mb-3">Honors</h2>
+              <p className="font-serif text-xl text-foreground mb-5">Four Regional Emmy® nominations.</p>
+              <ul className="border-b border-border">
+                {RECOGNITION.map((row) => (
+                  <li key={row.story} className="border-t border-border py-5">
+                    <p className="text-sm text-muted-foreground mb-2">{row.year} · {row.station}</p>
+                    <ItemLink href={row.href} className="font-serif text-xl text-foreground min-h-11">{row.story}</ItemLink>
+                    <p className="text-base text-muted-foreground mt-2 leading-relaxed">{row.honor}</p>
+                    <p className="text-base text-muted-foreground mt-1 leading-relaxed">{row.detail}</p>
+                  </li>
+                ))}
+              </ul>
+              <div className="border-b border-border py-6">
+                <h2 className="font-serif text-2xl text-foreground mb-3">Also carried on</h2>
+                <p className="text-base text-foreground/80 leading-relaxed">
+                  My WGN reporting also runs on{" "}
+                  <Link to="/work" className="link-plain underline">NewsNation and Nexstar stations</Link>{" "}
+                  across the Midwest.
+                </p>
+              </div>
+              <a href="mailto:bryant.l.mccray@gmail.com" className="mt-4 inline-flex min-h-11 items-center text-base text-foreground underline underline-offset-[3px]">Get in Touch</a>
+            </aside>
           </div>
         </section>
 
@@ -154,27 +126,20 @@ const About = () => {
         )}
 
         <section className="pb-24 md:pb-32">
-          <div className="editorial-container">
-            <SectionHead n={testimonials.length > 0 ? 4 : 3}>
+          <div className="wide-container">
+            <div className="border-t border-border pt-6 mb-8">
               <h2 className="font-serif text-2xl md:text-3xl text-foreground">
                 Rooms I've hosted. Places that told my story.
               </h2>
-            </SectionHead>
-            <ul className="border-b border-border">
+            </div>
+            <ul className="grid md:grid-cols-2 lg:grid-cols-3">
               {APPEARANCES.map((item) => (
-                <li key={item.title} className="border-t border-border">
-                <Margin note={<div className="pt-7"><span className="block">{item.label}</span><span className="block">{item.org}</span></div>}>
-                <div className="flex gap-5 py-6">
-                  <div className="w-14 shrink-0 pt-1">
-                    {item.logo && <img src={item.logo} alt={item.logoAlt} width={56} height={56} loading="lazy" decoding="async" className="h-auto max-h-12 w-14 object-contain object-left" />}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm text-muted-foreground mb-1 lg:hidden">{item.label} · {item.org}</p>
-                    <ItemLink href={item.href} className="font-serif text-xl text-foreground">{item.title}</ItemLink>
-                    <p className="text-sm text-muted-foreground leading-relaxed mt-1 max-w-[60ch]">{item.detail}</p>
-                  </div>
-                </div>
-                </Margin>
+                <li key={item.title} className="min-w-0 border-t border-border py-8 md:px-6 md:[&:nth-child(2n)]:border-l lg:[&:nth-child(2n)]:border-l-0 lg:[&:nth-child(3n+2)]:border-l lg:[&:nth-child(3n)]:border-l">
+                  <p className="text-xs uppercase tracking-widest text-accent mb-3">{item.label}</p>
+                  {item.logo && <img src={item.logo} alt={item.logoAlt} width={56} height={56} loading="lazy" decoding="async" className="mb-3 h-auto max-h-12 w-14 object-contain object-left" />}
+                  <p className="text-sm text-muted-foreground mb-1">{item.org}</p>
+                  <ItemLink href={item.href} className="font-serif text-2xl text-foreground min-h-11">{item.title}</ItemLink>
+                  <p className="text-base text-muted-foreground leading-relaxed mt-3">{item.detail}</p>
                 </li>
               ))}
             </ul>
