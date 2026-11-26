@@ -2,12 +2,16 @@ import type { ReactNode } from "react";
 import { stillSrcSet } from "@/lib/stills";
 
 /** Copper small-caps dateline that opens a dek: "MUNSTER, Ind." */
-export const Dateline = ({ city, state }: { city: string; state?: string }) => (
-  <span className="text-accent">
-    <span className="dateline-city">{city}</span>
-    {state ? `, ${state}` : ""}.{" "}
-  </span>
-);
+export const Dateline = ({ city, state }: { city: string; state?: string }) => {
+  const text = state ? `${city}, ${state}` : city;
+  return (
+    <span className="text-accent">
+      <span className="dateline-city">{city}</span>
+      {state ? `, ${state}` : ""}
+      {text.endsWith(".") ? "" : "."}{" "}
+    </span>
+  );
+};
 
 export const Caption = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
   <figcaption className={`mt-2 text-sm leading-snug text-muted-foreground ${className}`}>{children}</figcaption>
