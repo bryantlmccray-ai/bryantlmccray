@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Redesign Writing as a newspaper section front with the Ryan Field lead, date-ordered rail/grid and unchanged PDF copy.
+- [x] Verify Writing at 390 WebKit and 1440, all PDF links and ordering, and save without publishing.
+
 - [x] Swap the homepage inset and featured reel poster to the supplied skyline still with responsive WebP renditions.
 - [x] Investigate the desktop rectangle and verify photo crops at 390, 1190 at 2x, and 1440 without publishing; rectangle not reproduced, shader paint containment and unavailable fallback verified.
 

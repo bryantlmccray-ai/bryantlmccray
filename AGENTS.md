@@ -1,6 +1,6 @@
 # Architecture rules
 
-- Writing pages read the ordered samples from `src/data/writing.ts` and own their PageTransition, shared Navigation and Footer, document titles, and immediate scroll reset, so print copy remains separate from presentation without changing other pages.
+- Writing pages read immutable samples from `src/data/writing.ts`; the section front uses `writingFront` for a curated lead and date-sorted rail/grid, keeping presentation order separate from final copy. Pages own PageTransition, Navigation, Footer, metadata and immediate scroll reset.
 - Writing PDFs and images are served from `public/writing` at their supplied paths; WritingMedia owns pointer motion and disables it on mobile and reduced motion, keeping uploaded assets and interaction separate from final copy.
 - NightTrail owns the shared shader tree and unavailable fallback; NightBand is used only on Home (reel-first opening band, then the record slideshow) and ContactSection renders NightTrail directly; every other page opens with a plain cream header so evidence reads first.
 - NightBand owns the optional absolute desktop portrait; record-gap placement measures metadata, markers, and wordmark to shrink or hide it without changing hero layout.
