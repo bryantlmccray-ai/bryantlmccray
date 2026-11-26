@@ -72,7 +72,7 @@ const workItems: { title: string; category: string; description: string; year: s
     year: "2026",
     station: "WGN-TV",
     market: "Chicago",
-    thumbnail: "https://img.youtube.com/vi/z13ABz3426A/mqdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/z13ABz3426A/hqdefault.jpg",
     link: "https://youtu.be/z13ABz3426A",
   },
   {
@@ -92,7 +92,7 @@ const workItems: { title: string; category: string; description: string; year: s
     year: "2026",
     station: "WGN-TV",
     market: "Chicago",
-    thumbnail: "https://img.youtube.com/vi/Cdb3Ld1Hpfc/mqdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/Cdb3Ld1Hpfc/hqdefault.jpg",
     link: "https://youtu.be/Cdb3Ld1Hpfc",
   },
   {
@@ -102,7 +102,7 @@ const workItems: { title: string; category: string; description: string; year: s
     year: "2026",
     station: "WGN-TV",
     market: "Chicago",
-    thumbnail: "https://img.youtube.com/vi/-Wcr1Zvmvfc/mqdefault.jpg",
+    thumbnail: "https://img.youtube.com/vi/-Wcr1Zvmvfc/hqdefault.jpg",
     link: "https://youtu.be/-Wcr1Zvmvfc",
   },
   {

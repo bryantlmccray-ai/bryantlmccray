@@ -134,7 +134,7 @@ const Index = () => {
           <div className="wide-container grid gap-8 border-t border-border pt-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:items-center md:gap-12 md:pt-12">
             <figure className="press-photo min-w-0 md:max-w-sm">
               <picture>
-                <source type="image/webp" srcSet="/stills/bryant-rain-portrait-800.webp 800w, /stills/bryant-rain-portrait-1200.webp 1200w" sizes="(min-width: 768px) 384px, calc(100vw - 48px)" />
+                <source type="image/webp" srcSet={stillSrcSet("/stills/bryant-rain-portrait.jpg")} sizes="(min-width: 768px) 384px, calc(100vw - 48px)" />
                 <img src="/stills/bryant-rain-portrait.jpg" width={1206} height={1608} alt="Bryant McCray in a WGN hat and rain jacket, holding a WGN microphone." loading="lazy" decoding="async" className="block w-full aspect-[4/5] object-cover object-top" />
               </picture>
               <Caption>Reporting during storm coverage for WGN-TV, July 2026.</Caption>

@@ -1,5 +1,9 @@
 # Roadmap
 
+- [x] Replace the 26 supplied images in place and generate quality-92 responsive stills, including four Career v2 2400px renditions.
+- [x] Update available HD srcsets and the three visible Work YouTube thumbnails, preserving sizes, copy and layout.
+- [x] Verify five pages at 390 WebKit and 1440 retina, image selection, gallery full resolution and overflow; save without publishing. Unchanged sizes select 800/1600px for current slots; 2400px selection verified for a qualifying slot. Existing YouTube WebKit warning remains.
+
 - [x] Remove the retired automation page and its references; apply only the specified copy, hero actions and Career section changes.
 - [x] Verify removed-page fallback, exact copy, unchanged dates/stations, hero actions and build health.
 

@@ -8,6 +8,7 @@ import { SectionHead, PublicationNameplate, Byline, Margin, PageFlag } from "@/c
 import { testimonials } from "@/data/testimonials";
 import aaccwiMark from "@/assets/aaccwi-mark.png";
 import loyolaAcademyLogo from "@/assets/loyola-academy-logo.png";
+import { stillSrcSet } from "@/lib/stills";
 
 // Titles are the links: internal routes use Link, outside pages open in a new tab, no icons.
 const ItemLink = ({ href, className = "", children }: { href?: string; className?: string; children: ReactNode }) => {
@@ -58,7 +59,7 @@ const About = () => {
               <article className="min-w-0 lg:col-span-3 lg:pr-10">
                 <figure className="press-photo mb-8">
                   <picture>
-                    <source type="image/webp" srcSet="/stills/bryant-rain-portrait-800.webp 800w, /stills/bryant-rain-portrait-1200.webp 1200w" sizes="(min-width: 1024px) 760px, 100vw" />
+                    <source type="image/webp" srcSet={stillSrcSet("/stills/bryant-rain-portrait.jpg")} sizes="(min-width: 1024px) 760px, 100vw" />
                     <img src="/stills/bryant-rain-portrait.jpg" alt="Bryant McCray in a WGN hat and rain jacket, holding a WGN microphone." width={1206} height={1608} loading="eager" fetchPriority="high" decoding="async" className="block w-full aspect-[4/5] object-cover object-top" />
                   </picture>
                   <figcaption className="mt-2 text-sm text-muted-foreground">Reporting during storm coverage for WGN-TV, July 2026.</figcaption>
