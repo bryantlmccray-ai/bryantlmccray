@@ -24,7 +24,6 @@ const Writing = () => {
         <Navigation />
         <header className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">
-            <p className="text-xs text-accent tracking-widest uppercase mb-4">Writing</p>
             <h1 className="font-serif text-display text-foreground mb-6">Writing</h1>
             <p className="text-muted-foreground leading-relaxed">
               My WGN stories, rewritten for the page.
@@ -41,7 +40,7 @@ const Writing = () => {
                 >
                   <div className={`order-first ${index % 2 === 0 ? "md:order-last" : "md:order-first"}`}>
                     {WRITING_STILLS[sample.slug] ? (
-                      <Link to={`/writing/${sample.slug}`} className="group block w-full max-w-[320px] md:w-[260px] mx-auto md:mx-0 overflow-hidden border border-border">
+                      <Link to={`/writing/${sample.slug}`} className="group block w-full max-w-[320px] md:w-[260px] md:mx-0 overflow-hidden">
                         <img
                           src={WRITING_STILLS[sample.slug].src}
                           alt={WRITING_STILLS[sample.slug].alt}
@@ -54,11 +53,11 @@ const Writing = () => {
                     )}
                   </div>
                   <div className="min-w-0">
-                  <p className="text-xs uppercase tracking-widest text-muted-foreground mb-4">
+                  <p className="text-sm text-muted-foreground mb-3">
                     {sample.date} · Adapted from WGN-TV reporting
                   </p>
                   <h2 className="font-serif text-2xl md:text-3xl leading-snug mb-4 break-words">
-                    <Link to={`/writing/${sample.slug}`} className="text-foreground hover:text-accent transition-colors duration-300">
+                    <Link to={`/writing/${sample.slug}`} className="link-plain text-foreground">
                       {sample.head}
                     </Link>
                   </h2>

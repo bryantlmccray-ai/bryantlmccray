@@ -42,7 +42,7 @@ const FeaturedVideo = ({ youtubeId, poster, alt, title, loop = false, onWatchWit
   const playWithSound = () => (onWatchWithSound ? onWatchWithSound() : setWithSound(true));
 
   return (
-    <div ref={boxRef} className="aspect-video relative overflow-hidden border border-border w-full">
+    <div ref={boxRef} className="aspect-video relative overflow-hidden w-full">
       <img src={poster} srcSet={stillSrcSet(poster)} sizes="(min-width: 768px) 640px, 100vw" width={1920} height={1080} decoding="async" alt={alt} className="absolute inset-0 w-full h-full object-cover" />
       {withSound ? (
         <iframe
@@ -57,10 +57,10 @@ const FeaturedVideo = ({ youtubeId, poster, alt, title, loop = false, onWatchWit
           type="button"
           onClick={playWithSound}
           aria-label={`Play: ${title}`}
-          className="group absolute inset-0 flex items-center justify-center bg-foreground/10 hover:bg-foreground/20 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="group absolute inset-0 flex items-end justify-start p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <span className="w-16 h-16 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center group-hover:bg-background transition-colors duration-300">
-            <Play className="h-6 w-6 ml-1 text-foreground" aria-hidden="true" />
+          <span className="inline-flex min-h-11 items-center gap-2 rounded-[2px] bg-primary px-4 text-sm font-medium text-primary-foreground">
+            <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" /> Play with sound
           </span>
         </button>
       ) : (
@@ -78,9 +78,9 @@ const FeaturedVideo = ({ youtubeId, poster, alt, title, loop = false, onWatchWit
           <button
             type="button"
             onClick={playWithSound}
-            className="absolute bottom-3 left-3 z-10 inline-flex min-h-11 items-center gap-2 bg-background/90 backdrop-blur-sm px-4 text-xs uppercase tracking-widest text-foreground hover:text-accent transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="absolute bottom-3 left-3 z-10 inline-flex min-h-11 items-center rounded-[2px] bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" /> Watch with sound
+            Watch with sound
           </button>
         </>
       )}

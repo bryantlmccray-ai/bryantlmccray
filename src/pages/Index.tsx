@@ -5,12 +5,12 @@ import { stillSrcSet, REEL_ID, REEL_TITLE, REEL_LINK, REEL_POSTER, REEL_ALT } fr
 import React, { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { stories } from "@/data/stories";
-import { ArrowRight, FileText, Mail, Play, X } from "lucide-react";
+import { X } from "lucide-react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Navigation from "@/components/Navigation";
 import PageTransition from "@/components/PageTransition";
-import { FadeIn, StaggerContainer, StaggerItem, HoverLift } from "@/components/ScrollAnimations";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
 import {
   Dialog,
   DialogContent,
@@ -193,18 +193,17 @@ const MetaRow = ({
 
 const featuredWork = heroStories;
 
-const heroAction = "inline-flex min-h-11 items-center justify-center gap-2 px-5 text-xs uppercase tracking-widest transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
-
+// Primary: solid square button with plain text. Secondary: underlined text links.
 const HeroActions = ({ onWatch }: { onWatch: () => void }) => (
   <>
-    <button type="button" onClick={onWatch} className={`${heroAction} night-action-primary`}>
-      <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" /> Watch with sound
+    <button type="button" onClick={onWatch} className="night-action-primary inline-flex min-h-11 items-center justify-center px-5 text-sm font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+      Watch with sound
     </button>
-    <a href="mailto:bryant.l.mccray@gmail.com" className={`${heroAction} night-action-secondary`}>
-      <Mail className="h-3.5 w-3.5" aria-hidden="true" /> Email me
+    <a href="mailto:bryant.l.mccray@gmail.com" className="inline-flex min-h-11 items-center text-sm text-foreground underline decoration-1 underline-offset-[3px]">
+      Email me
     </a>
-    <a href="/Bryant_McCray_Resume.pdf" target="_blank" rel="noopener noreferrer" className={`${heroAction} night-action-secondary`}>
-      <FileText className="h-3.5 w-3.5" aria-hidden="true" /> Résumé (PDF)
+    <a href="/Bryant_McCray_Resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-sm text-foreground underline decoration-1 underline-offset-[3px]">
+      Résumé (PDF)
     </a>
   </>
 );
@@ -329,7 +328,7 @@ const Index = () => {
               <p className="text-base md:text-lg leading-[1.6] text-muted-foreground max-w-md">
                 Four-time Regional Emmy® nominee. Breaking news, politics and the people inside the story.
               </p>
-              <div className="hidden md:flex mt-8 flex-wrap gap-3">{/* desktop actions */}
+              <div className="hidden md:flex mt-8 flex-wrap items-center gap-x-6 gap-y-3">{/* desktop actions */}
                 <HeroActions onWatch={() => setSelectedVideo({ title: REEL_TITLE, link: REEL_LINK })} />
               </div>
             </div>
@@ -343,7 +342,7 @@ const Index = () => {
                 onWatchWithSound={() => setSelectedVideo({ title: REEL_TITLE, link: REEL_LINK })}
               />
             </div>
-            <div className="flex flex-col gap-3 md:hidden">
+            <div className="flex flex-col items-start gap-2 md:hidden [&>button]:w-full">
               <HeroActions onWatch={() => setSelectedVideo({ title: REEL_TITLE, link: REEL_LINK })} />
             </div>
           </div>
@@ -508,10 +507,6 @@ const Index = () => {
               Raised on the West Side. Reporting for the whole city now.
             </motion.p>
 
-            <motion.div
-              className="accent-line mb-8 origin-left"
-            />
-
             <motion.p
               className="text-lg text-foreground/80 leading-relaxed max-w-xl"
             >
@@ -524,32 +519,39 @@ const Index = () => {
         <section className="py-16 md:py-20 border-t border-border">
           <div className="editorial-container">
             <FadeIn>
-              <p className="text-xs text-accent tracking-widest uppercase mb-4">Recognition</p>
-              <h2 className="font-serif text-headline text-foreground mb-8">Four Regional Emmy® nominations.</h2>
-              <ul className="border-t border-border">
-                {recognition.map((row) => {
-                  const inner = (
-                    <>
-                      <span className="text-xs tabular-nums text-muted-foreground tracking-widest md:w-12">{row.year}</span>
-                      <span className="text-xs uppercase tracking-widest text-muted-foreground md:w-56">{row.chapter}</span>
-                      <span className="font-serif text-lg text-foreground flex-1 group-hover:text-accent transition-colors duration-300">{row.story}</span>
-                      <span className="text-sm text-muted-foreground md:w-60">{row.category}</span>
-                      <span className="text-xs uppercase tracking-widest text-muted-foreground md:w-16 md:text-right">{row.station}</span>
-                    </>
-                  );
-                  const cls = "group flex flex-col gap-1 py-4 md:flex-row md:items-baseline md:gap-6";
-                  return (
-                    <li key={row.story} className="border-b border-border">
-                      {row.href ? <Link to={row.href} className={cls}>{inner}</Link> : <div className={cls}>{inner}</div>}
-                    </li>
-                  );
-                })}
-              </ul>
+              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">Four Regional Emmy® nominations.</h2>
+              <table className="w-full border-b border-border text-left">
+                <caption className="sr-only">Regional Emmy nominations</caption>
+                <thead className="max-md:sr-only">
+                  <tr className="text-sm text-muted-foreground">
+                    <th scope="col" className="py-2 pr-4 font-normal">Year</th>
+                    <th scope="col" className="py-2 pr-4 font-normal">Honor</th>
+                    <th scope="col" className="py-2 pr-4 font-normal">Story</th>
+                    <th scope="col" className="py-2 font-normal md:text-right">Station</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recognition.map((row) => (
+                    <tr key={row.story} className="border-t border-border max-md:grid max-md:gap-1 max-md:py-4 align-baseline">
+                      <td className="text-sm tabular-nums text-muted-foreground md:py-4 md:pr-4">{row.year}</td>
+                      <td className="text-sm text-muted-foreground md:py-4 md:pr-4">{row.chapter}, {row.category}</td>
+                      <td className="md:py-4 md:pr-4">
+                        {row.href ? (
+                          <Link to={row.href} className="link-plain inline-block py-2.5 -my-1 font-serif text-lg text-foreground">{row.story}</Link>
+                        ) : (
+                          <span className="font-serif text-lg text-foreground">{row.story}</span>
+                        )}
+                      </td>
+                      <td className="text-sm text-muted-foreground md:py-4 md:text-right">{row.station}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
               <p className="mt-6 text-sm text-muted-foreground">
                 Also: emcee, AACC Wisconsin 2023 Breakfast of Champions · Featured, Loyola Academy "Portrait of a Rambler"
               </p>
-              <Link to="/about" className="mt-2 inline-flex min-h-11 items-center gap-2 text-xs uppercase tracking-widest text-accent hover:text-foreground transition-colors duration-300">
-                Full recognition <span aria-hidden>→</span>
+              <Link to="/about" className="mt-2 inline-flex min-h-11 items-center text-sm text-foreground underline decoration-1 underline-offset-[3px]">
+                Full recognition
               </Link>
             </FadeIn>
           </div>
@@ -559,27 +561,23 @@ const Index = () => {
         <section className="py-20 border-t border-border">
           <div className="editorial-container">
             <FadeIn>
-              <div className="flex items-center justify-between mb-12">
-                <h2 className="font-serif text-headline text-foreground">
+              <div className="flex items-baseline justify-between gap-6 mb-6">
+                <h2 className="font-serif text-2xl md:text-3xl text-foreground">
                   Selected Work
                 </h2>
-                <motion.div whileHover={{ x: 5 }} transition={{ duration: 0.2 }}>
-                  <Button variant="accent" size="sm" asChild>
-                    <Link to="/work" className="flex items-center gap-2">
-                      View All <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </motion.div>
+                <Link to="/work" className="inline-flex min-h-11 items-center text-sm text-foreground underline decoration-1 underline-offset-[3px]">
+                  All work
+                </Link>
               </div>
             </FadeIn>
 
-            <StaggerContainer className="space-y-8">
+            <StaggerContainer className="border-b border-border">
               {featuredWork.map(({ slug, date, category, frame, story }) => (
                 <StaggerItem key={slug}>
                   <Link
                     to={`/stories/${slug}`}
                     aria-label={`Read the story: ${story.headline}`}
-                    className="block group py-8 border-b border-border last:border-b-0"
+                    className="block group py-8 border-t border-border"
                   >
                     <div className="flex flex-col md:flex-row md:items-start gap-6">
                       <div className="w-full md:w-72 flex-shrink-0 overflow-hidden">
@@ -595,15 +593,11 @@ const Index = () => {
                       </div>
                       <div className="flex-1 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                         <div className="flex-1">
-                          <p className="text-xs text-accent tracking-widest uppercase mb-2">{category}</p>
-                          <p className="text-xs text-muted-foreground tracking-widest uppercase mb-2">WGN-TV · {date}</p>
-                          <h3 className="font-serif text-2xl text-foreground group-hover:text-accent transition-colors duration-300 mb-2">
+                          <p className="text-sm text-muted-foreground mb-2">{category} · WGN-TV · {date}</p>
+                          <h3 className="link-plain-target font-serif text-2xl text-foreground mb-2">
                             {story.headline}
                           </h3>
                           <p className="text-muted-foreground max-w-lg">{firstSentence(story.dek)}</p>
-                        </div>
-                        <div className="flex items-center text-muted-foreground group-hover:text-accent transition-colors duration-300">
-                          <ArrowRight className="h-5 w-5" />
                         </div>
                       </div>
                     </div>
@@ -614,22 +608,14 @@ const Index = () => {
           </div>
         </section>
         {/* Quiet CTA */}
-        <FadeIn className="py-24">
-          <div className="editorial-container text-center">
-            <p className="text-muted-foreground mb-6">
+        <FadeIn className="py-20">
+          <div className="editorial-container">
+            <p className="text-foreground/80 mb-5">
               Got a story, or a role I should know about? Email me.
             </p>
-            <motion.div 
-              whileHover={{ scale: 1.05 }} 
-              whileTap={{ scale: 0.95 }}
-              className="inline-block"
-            >
-              <Button variant="editorial" size="sm" asChild>
-                <a href="mailto:bryant.l.mccray@gmail.com">
-                  Get in Touch
-                </a>
-              </Button>
-            </motion.div>
+            <Button variant="solid" asChild>
+              <a href="mailto:bryant.l.mccray@gmail.com">Get in Touch</a>
+            </Button>
           </div>
         </FadeIn>
 

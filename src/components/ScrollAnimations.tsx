@@ -64,7 +64,6 @@ interface HoverLiftProps {
 export const HoverLift = ({ children, className = "" }: HoverLiftProps) => {
   return (
     <motion.div
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
       className={className}
     >
       {children}

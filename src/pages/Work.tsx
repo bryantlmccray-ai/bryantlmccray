@@ -252,18 +252,21 @@ const firstSentence = (text: string) => {
 
 const storyImage = (story: Story) => story.still ?? `https://i.ytimg.com/vi/${story.youtubeId}/hqdefault.jpg`;
 
-type CardProps = { image: string; alt: string; category: string; headline: string; dateLine: string; dek: string };
+// One row of an editorial list: date and text left, small photo right, hairline above.
+type RowProps = { index?: number; image: string; alt: string; meta: string; headline: string; dek: string };
 
-const CardBody = ({ image, alt, category, headline, dateLine, dek }: CardProps) => (
-  <>
-    <div className="overflow-hidden border border-border mb-5">
-      <img src={image} srcSet={stillSrcSet(image)} sizes="(min-width: 768px) 280px, 100vw" width={1920} height={1080} alt={alt} loading="lazy" decoding="async" className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105" />
+const ListRow = ({ index, image, alt, meta, headline, dek }: RowProps) => (
+  <div className="flex gap-5 py-6 md:gap-8">
+    {index !== undefined && <span className="w-6 shrink-0 pt-1 text-sm tabular-nums text-muted-foreground">{String(index).padStart(2, "0")}</span>}
+    <div className="min-w-0 flex-1">
+      <p className="text-sm text-muted-foreground mb-1">{meta}</p>
+      <h3 className="link-plain-target font-serif text-xl md:text-2xl text-foreground leading-snug mb-1">{headline}</h3>
+      <p className="text-sm text-muted-foreground leading-relaxed max-w-[60ch]">{dek}</p>
     </div>
-    <p className="text-xs text-accent tracking-widest uppercase mb-2">{category}</p>
-    <h3 className="font-serif text-xl md:text-2xl text-foreground leading-snug group-hover:text-accent transition-colors duration-300 mb-2">{headline}</h3>
-    <p className="text-xs text-muted-foreground tracking-widest uppercase mb-3">{dateLine}</p>
-    <p className="text-sm text-muted-foreground leading-relaxed">{dek}</p>
-  </>
+    <div className="w-24 shrink-0 overflow-hidden md:w-40">
+      <img src={image} srcSet={stillSrcSet(image)} sizes="160px" width={1920} height={1080} alt={alt} loading="lazy" decoding="async" className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105" />
+    </div>
+  </div>
 );
 
 const scrollTop = () => window.scrollTo({ top: 0, behavior: "instant" });
@@ -284,20 +287,19 @@ const Work = () => {
   const moreWgn = workItems.filter((item) => item.station.startsWith("WGN"));
   const beforeChicago = workItems.filter((item) => !item.station.startsWith("WGN"));
 
-  const workCard = (item: (typeof workItems)[number]) => (
-    <li key={item.link}>
+  const workRow = (item: (typeof workItems)[number]) => (
+    <li key={item.link} className="border-t border-border">
       <button
         type="button"
         onClick={() => setSelectedVideo({ title: item.title, link: item.link })}
         aria-label={`Watch: ${item.title}`}
         className="group block w-full text-left"
       >
-        <CardBody
+        <ListRow
           image={item.thumbnail}
           alt={item.alt ?? `Bryant McCray, ${item.station} reporter, ${item.title}`}
-          category={item.category}
+          meta={`${item.year} · ${item.station}, ${item.market}`}
           headline={item.title}
-          dateLine={`${item.station} · ${item.market} · ${item.year}`}
           dek={item.description}
         />
       </button>
@@ -331,7 +333,7 @@ const Work = () => {
           role="dialog"
           aria-modal="true"
           aria-label={selectedVideo.title}
-          className="fixed inset-0 z-[100] flex items-center justify-center overflow-x-hidden bg-foreground/90 p-4 backdrop-blur-sm md:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-x-hidden bg-foreground/90 p-4 md:p-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -339,7 +341,7 @@ const Work = () => {
           onClick={() => setSelectedVideo(null)}
         >
           <motion.div
-            className="relative w-full max-w-4xl bg-background border border-border"
+            className="relative w-full max-w-4xl bg-background"
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.94 }}
             animate={reduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.94 }}
@@ -407,7 +409,6 @@ const Work = () => {
         
         <header className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">
-            <p className="text-xs text-accent tracking-widest uppercase mb-4">Work</p>
             <h1 className="font-serif text-headline text-foreground mb-6">Selected Reporting</h1>
             <p className="text-muted-foreground max-w-xl leading-relaxed">
               Selected reporting and on-air work spanning breaking news, enterprise 
@@ -423,7 +424,7 @@ const Work = () => {
               {pair.map(({ slug, label, story }) => (
                 <li key={slug}>
                   <Link to={`/stories/${slug}`} onClick={scrollTop} className="group block">
-                    <div className="overflow-hidden border border-border mb-5">
+                    <div className="overflow-hidden mb-5">
                       <img
                         src={storyImage(story)}
                         srcSet={stillSrcSet(storyImage(story))}
@@ -435,9 +436,8 @@ const Work = () => {
                         className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
-                    <p className="text-xs text-accent tracking-widest uppercase mb-2">{label}</p>
-                    <h2 className="font-serif text-2xl md:text-3xl text-foreground leading-tight group-hover:text-accent transition-colors duration-300 mb-2">{story.headline}</h2>
-                    <p className="text-xs text-muted-foreground tracking-widest uppercase mb-3">WGN-TV · {storyDate(story)}</p>
+                    <p className="text-sm text-muted-foreground mb-2">{label} · WGN-TV · {storyDate(story)}</p>
+                    <h2 className="link-plain-target font-serif text-2xl md:text-3xl text-foreground leading-tight mb-2">{story.headline}</h2>
                     <p className="text-base text-muted-foreground leading-[1.6]">{firstSentence(story.dek)}</p>
                   </Link>
                 </li>
@@ -446,61 +446,50 @@ const Work = () => {
           </div>
         </section>
 
-        {/* Remaining WGN stories */}
+        {/* Remaining WGN stories: numbered list */}
         <section className="pb-16 md:pb-20">
           <div className="editorial-container">
-            <ul className="grid gap-10 border-t border-border pt-10 md:grid-cols-3">
-              {rest.map((story) => (
-                <li key={story.slug}>
+            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">More WGN stories</h2>
+            <ol className="border-b border-border">
+              {rest.map((story, i) => (
+                <li key={story.slug} className="border-t border-border">
                   <Link to={`/stories/${story.slug}`} onClick={scrollTop} className="group block">
-                    <CardBody
+                    <ListRow
+                      index={i + 1}
                       image={storyImage(story)}
                       alt={`From Bryant McCray's WGN-TV report: ${story.headline}`}
-                      category={STORY_CATEGORY[story.slug] ?? "WGN-TV"}
+                      meta={`${STORY_CATEGORY[story.slug] ?? "WGN-TV"} · WGN-TV · ${storyDate(story)}`}
                       headline={story.headline}
-                      dateLine={`WGN-TV · ${storyDate(story)}`}
                       dek={firstSentence(story.dek)}
                     />
                   </Link>
                 </li>
               ))}
-            </ul>
-          </div>
-        </section>
-
-        {/* More WGN reporting */}
-        <section className="pb-16 md:pb-20">
-          <div className="editorial-container">
-            <p className="text-xs text-accent uppercase tracking-widest mb-6">More from WGN-TV</p>
-            <ul className="grid gap-10 border-t border-border pt-10 md:grid-cols-3">
-              {moreWgn.map(workCard)}
-            </ul>
+              {moreWgn.map(workRow)}
+            </ol>
           </div>
         </section>
 
         {/* Syndication */}
         <section className="py-12 md:py-16">
           <div className="editorial-container">
-            <p className="text-xs text-accent uppercase tracking-widest mb-4">Carried nationally</p>
+            <h2 className="font-serif text-2xl text-foreground mb-4">Carried nationally</h2>
             <p className="text-muted-foreground max-w-xl leading-relaxed mb-8">
               My WGN reporting, as published by NewsNation and Nexstar stations across the Midwest.
             </p>
-            <ul className="border-t border-border">
+            <ul className="border-b border-border">
               {syndication.map((piece) => (
                 <li key={piece.url}>
                   <a
                     href={piece.url}
                     target="_blank"
                     rel="noopener"
-                    className="group block border-b border-border py-6"
+                    className="group block border-t border-border py-6"
                   >
-                    <p className="text-xs uppercase tracking-widest leading-relaxed mb-3">
-                      <span className="text-accent">{piece.outlet}</span>
-                      <span className="text-muted-foreground"> · {piece.scope}</span>
-                    </p>
-                    <h2 className="font-serif text-lg md:text-xl text-foreground leading-snug group-hover:text-accent transition-colors duration-300">
+                    <p className="text-sm text-muted-foreground mb-2">{piece.outlet} · {piece.scope}</p>
+                    <h3 className="link-plain-target font-serif text-lg md:text-xl text-foreground leading-snug">
                       {piece.headline}
-                    </h2>
+                    </h3>
                   </a>
                 </li>
               ))}
@@ -511,9 +500,22 @@ const Work = () => {
         {/* Before Chicago */}
         <section className="py-12 md:py-16">
           <div className="editorial-container">
-            <p className="text-xs text-accent uppercase tracking-widest mb-6">Before Chicago</p>
-            <ul className="grid gap-10 border-t border-border pt-10 md:grid-cols-3">
-              {beforeChicago.map(workCard)}
+            <h2 className="font-serif text-2xl text-foreground mb-4">Before Chicago</h2>
+            <ul className="border-b border-border">
+              {beforeChicago.map((item) => (
+                <li key={item.link} className="border-t border-border">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedVideo({ title: item.title, link: item.link })}
+                    aria-label={`Watch: ${item.title}`}
+                    className="group grid w-full gap-1 py-4 text-left md:grid-cols-12 md:items-baseline md:gap-6"
+                  >
+                    <span className="text-sm tabular-nums text-muted-foreground md:col-span-2">{item.year}</span>
+                    <span className="link-plain-target font-serif text-lg text-foreground md:col-span-7">{item.title}</span>
+                    <span className="text-sm text-muted-foreground md:col-span-3 md:text-right">{item.station}, {item.market}</span>
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
         </section>

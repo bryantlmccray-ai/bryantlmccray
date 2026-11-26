@@ -55,7 +55,7 @@ const Navigation = () => {
   }, [isOpen]);
 
   return (
-    <nav aria-label="Main" className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm pt-[env(safe-area-inset-top)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
+    <nav aria-label="Main" className="fixed top-0 left-0 right-0 z-50 bg-background pt-[env(safe-area-inset-top)] pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)]">
       <div className="editorial-container">
         <div className="flex items-center justify-between h-20">
           <Link

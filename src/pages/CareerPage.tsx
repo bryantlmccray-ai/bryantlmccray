@@ -1,5 +1,4 @@
 import { useLayoutEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import galleryEmmy from "@/assets/gallery-emmy.jpeg";
 import galleryInterview1 from "@/assets/gallery-interview-1.jpeg";
@@ -123,11 +122,6 @@ const CareerPage = () => {
         {/* Hero */}
         <header className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">
-            <FadeIn>
-              <p className="text-xs text-accent tracking-widest uppercase mb-4">
-                Career
-              </p>
-            </FadeIn>
             <FadeIn delay={0.1}>
               <h1 className="font-serif text-headline text-foreground mb-6">
                 Where I've Been
@@ -142,10 +136,10 @@ const CareerPage = () => {
         </header>
 
         {/* Timeline */}
-        <section className="py-16 border-t border-border">
+        <section className="py-16">
           <div className="editorial-container">
             <FadeIn>
-              <h2 className="font-serif text-2xl text-foreground mb-10">
+              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-8">
                 Experience
               </h2>
             </FadeIn>
@@ -153,11 +147,7 @@ const CareerPage = () => {
             <StaggerContainer className="space-y-0">
               {careerTimeline.map((item, index) => (
                 <StaggerItem key={index}>
-                  <motion.div
-                    className="py-8 border-b border-border last:border-b-0"
-                    whileHover={{ backgroundColor: "hsl(var(--secondary) / 0.3)" }}
-                    transition={{ duration: 0.3 }}
-                  >
+                  <div className="py-8 border-t border-border">
                     <div className="grid md:grid-cols-12 gap-4">
                       <div className="md:col-span-3">
                         <p className="text-sm text-muted-foreground">{item.period}</p>
@@ -166,12 +156,12 @@ const CareerPage = () => {
                         <h3 className="font-serif text-xl text-foreground mb-1">
                           {item.role}
                         </h3>
-                        <p className="text-accent text-sm mb-3">{item.org}</p>
+                        <p className="text-foreground text-sm mb-3">{item.org}</p>
                         <ul className="space-y-1.5">
                           {item.bullets.map((b, i) => (
                             <li
                               key={i}
-                              className="text-muted-foreground text-sm leading-relaxed pl-4 relative before:content-['–'] before:absolute before:left-0 before:text-accent"
+                              className="text-muted-foreground text-sm leading-relaxed"
                             >
                               {b}
                             </li>
@@ -179,7 +169,7 @@ const CareerPage = () => {
                         </ul>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 </StaggerItem>
               ))}
             </StaggerContainer>
@@ -187,38 +177,36 @@ const CareerPage = () => {
         </section>
 
         {/* Gallery */}
-        <section className="py-16 border-t border-border">
+        <section className="py-16">
           <div className="editorial-container">
             <h2 className="font-serif text-2xl text-foreground mb-10">Gallery</h2>
             <div className="flex flex-wrap gap-3 md:gap-4">
               {galleryImages.map((image) => (
-                <motion.button
+                <button
                   type="button"
                   key={image.alt}
                   aria-label={`View photo: ${image.alt}`}
-                  className="relative w-20 h-20 md:w-24 md:h-24 overflow-hidden rounded-sm cursor-pointer"
-                  whileHover={{ scale: 1.15, zIndex: 10 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="group relative w-20 h-20 md:w-24 md:h-24 overflow-hidden cursor-pointer"
                   onClick={() => setSelectedImage(image)}
                 >
-                  <img src={image.src} alt={image.alt} loading="lazy" className="w-full h-full object-cover" />
-                </motion.button>
+                  <img src={image.src} alt={image.alt} width={96} height={96} loading="lazy" decoding="async" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                </button>
               ))}
             </div>
           </div>
         </section>
 
         <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-          <DialogContent className="max-w-4xl p-2 bg-background/95 backdrop-blur-sm border-border">
+          <DialogContent className="max-w-4xl p-2 bg-background border-0 rounded-none">
             <DialogTitle className="sr-only">{selectedImage?.alt}</DialogTitle>
             {selectedImage && (
-              <img src={selectedImage.src} alt={selectedImage.alt} className="w-full h-auto max-h-[80vh] object-contain rounded-sm" />
+              <img src={selectedImage.src} alt={selectedImage.alt} className="w-full h-auto max-h-[80vh] object-contain" />
             )}
           </DialogContent>
         </Dialog>
 
         {/* Skills */}
-        <section className="py-16 border-t border-border bg-secondary/30">
+        <section className="py-16">
           <div className="editorial-container">
             <FadeIn>
               <h2 className="font-serif text-2xl text-foreground mb-10">
@@ -226,24 +214,13 @@ const CareerPage = () => {
               </h2>
             </FadeIn>
             <FadeIn delay={0.2}>
-              <div className="flex flex-wrap gap-3">
-                {skills.map((skill) => (
-                  <motion.span
-                    key={skill}
-                    className="text-sm text-foreground border border-border px-4 py-2 rounded-sm bg-background"
-                    whileHover={{ borderColor: "hsl(var(--accent))", color: "hsl(var(--accent))" }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
+              <p className="text-foreground/80 leading-relaxed max-w-[60ch]">{skills.join(" · ")}</p>
             </FadeIn>
           </div>
         </section>
 
         {/* Awards */}
-        <section className="py-16 border-t border-border">
+        <section className="py-16">
           <div className="editorial-container">
             <FadeIn>
               <h2 className="font-serif text-2xl text-foreground mb-10">
@@ -251,30 +228,22 @@ const CareerPage = () => {
               </h2>
             </FadeIn>
 
-            <StaggerContainer className="grid md:grid-cols-2 gap-8">
+            <ul className="border-b border-border">
               {awards.map((award, index) => (
-                <StaggerItem key={index}>
-                  <motion.div
-                    className="py-6"
-                    whileHover={{ y: -4 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <p className="text-xs text-accent tracking-widest uppercase mb-2">
-                      {award.year}
-                    </p>
-                    <h3 className="font-serif text-lg text-foreground mb-1">
-                      {award.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">{award.org}</p>
-                  </motion.div>
-                </StaggerItem>
+                <li key={index} className="grid gap-1 border-t border-border py-5 md:grid-cols-12 md:gap-4">
+                  <span className="text-sm tabular-nums text-muted-foreground md:col-span-3">{award.year}</span>
+                  <span className="md:col-span-9">
+                    <span className="block font-serif text-lg text-foreground">{award.title}</span>
+                    <span className="block text-sm text-muted-foreground">{award.org}</span>
+                  </span>
+                </li>
               ))}
-            </StaggerContainer>
+            </ul>
           </div>
         </section>
 
         {/* Education */}
-        <section className="py-16 border-t border-border bg-secondary/30">
+        <section className="py-16">
           <div className="editorial-container">
             <FadeIn>
               <h2 className="font-serif text-2xl text-foreground mb-10">
@@ -297,7 +266,7 @@ const CareerPage = () => {
         </section>
 
         {/* Affiliations */}
-        <section className="py-16 border-t border-border">
+        <section className="py-16">
           <div className="editorial-container">
             <FadeIn>
               <h2 className="font-serif text-2xl text-foreground mb-10">
@@ -307,14 +276,7 @@ const CareerPage = () => {
             <FadeIn delay={0.2}>
               <div className="flex flex-wrap gap-x-8 gap-y-3">
                 {affiliations.map((org, index) => (
-                  <motion.p
-                    key={index}
-                    className="text-muted-foreground"
-                    whileHover={{ color: "hsl(var(--accent))", x: 5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {org}
-                  </motion.p>
+                  <p key={index} className="text-muted-foreground">{org}</p>
                 ))}
               </div>
             </FadeIn>

@@ -1,7 +1,6 @@
 import { useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
@@ -69,7 +68,7 @@ const StoryPage = () => {
                   alt={`From Bryant McCray's WGN-TV report: ${story.headline}`}
                   width={1920}
                   height={1080}
-                  className="w-full aspect-[3/2] md:aspect-[16/9] object-cover border border-border"
+                  className="w-full aspect-[3/2] md:aspect-[16/9] object-cover"
                 />
               </div>
             )}
@@ -102,7 +101,7 @@ const StoryPage = () => {
                     {story.coverage.map((item) => (
                       <li key={item.url} className="py-4">
                         <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-2">{item.outlet}</p>
-                        <a href={item.url} target="_blank" rel="noopener" className="inline-block py-2 text-sm text-foreground leading-relaxed hover:text-accent transition-colors duration-300">
+                        <a href={item.url} target="_blank" rel="noopener" className="link-plain inline-block py-2 text-sm text-foreground leading-relaxed">
                           {item.title}
                         </a>
                       </li>
@@ -113,8 +112,8 @@ const StoryPage = () => {
               <p className="text-xs text-muted-foreground mt-6 leading-relaxed">
                 Reported by Bryant McCray. WGN-TV Chicago.
               </p>
-              <Link to="/work" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="inline-flex min-h-11 items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors duration-300 mt-12">
-                <ArrowLeft className="h-4 w-4" aria-hidden="true" /> Work
+              <Link to="/work" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="link-plain inline-flex min-h-11 items-center text-sm text-foreground mt-12">
+                All work
               </Link>
             </div>
           </section>
