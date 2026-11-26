@@ -14,13 +14,41 @@ type FeaturedVideoProps = {
   onWatchWithSound?: () => void;
 };
 
-// Featured-video standard: muted inline autoplay once in view, poster until then,
+// Featured-video standard: muted inline autoplay once in view, poster until playing,
 // "Watch with sound" for the full player, and no autoplay under reduced motion.
 const FeaturedVideo = ({ youtubeId, poster, alt, title, loop = false, onWatchWithSound }: FeaturedVideoProps) => {
   const reduceMotion = useReducedMotion();
   const boxRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<HTMLIFrameElement>(null);
   const [inView, setInView] = useState(false);
   const [withSound, setWithSound] = useState(false);
+  const [playing, setPlaying] = useState(false);
+
+  useEffect(() => {
+    setPlaying(false);
+    const onMessage = (event: MessageEvent) => {
+      if (event.source !== playerRef.current?.contentWindow) return;
+      if (!["https://www.youtube-nocookie.com", "https://youtube-nocookie.com", "https://www.youtube.com", "https://youtube.com"].includes(event.origin)) return;
+      let message;
+      try {
+        message = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+      } catch {
+        return;
+      }
+      if (message?.event === "infoDelivery" && message.info?.playerState === 1) {
+        setPlaying(true);
+      }
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [youtubeId, withSound]);
+
+  const listenForPlayback = () => {
+    playerRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: "listening", id: youtubeId }),
+      "https://www.youtube-nocookie.com",
+    );
+  };
 
   useEffect(() => {
     const el = boxRef.current;
@@ -36,16 +64,19 @@ const FeaturedVideo = ({ youtubeId, poster, alt, title, loop = false, onWatchWit
   }, [inView, reduceMotion]);
 
   const base = `https://www.youtube-nocookie.com/embed/${youtubeId}`;
-  const mutedSrc = `${base}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0${loop ? `&loop=1&playlist=${youtubeId}` : ""}`;
-  const soundSrc = `${base}?autoplay=1&mute=0&controls=1&playsinline=1&rel=0&modestbranding=1`;
+  const apiParams = `&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`;
+  const mutedSrc = `${base}?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=0${loop ? `&loop=1&playlist=${youtubeId}` : ""}${apiParams}`;
+  const soundSrc = `${base}?autoplay=1&mute=0&controls=1&playsinline=1&rel=0&modestbranding=1${apiParams}`;
 
   const playWithSound = () => (onWatchWithSound ? onWatchWithSound() : setWithSound(true));
 
   return (
     <div ref={boxRef} className="aspect-video relative overflow-hidden w-full">
-      <img src={poster} srcSet={stillSrcSet(poster)} sizes="(min-width: 768px) 640px, 100vw" width={1920} height={1080} decoding="async" alt={alt} className="absolute inset-0 w-full h-full object-cover" />
+      <img src={poster} srcSet={stillSrcSet(poster)} sizes="(min-width: 768px) 640px, 100vw" width={1920} height={1080} decoding="async" alt={alt} className={`pointer-events-none absolute inset-0 z-[1] w-full h-full object-cover transition-opacity duration-200 motion-reduce:transition-none ${playing ? "opacity-0" : "opacity-100"}`} />
       {withSound ? (
         <iframe
+          ref={playerRef}
+          onLoad={listenForPlayback}
           src={soundSrc}
           title={title}
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
@@ -57,7 +88,7 @@ const FeaturedVideo = ({ youtubeId, poster, alt, title, loop = false, onWatchWit
           type="button"
           onClick={playWithSound}
           aria-label={`Play: ${title}`}
-          className="group absolute inset-0 flex items-end justify-start p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="group absolute inset-0 z-10 flex items-end justify-start p-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
           <span className="inline-flex min-h-11 items-center gap-2 rounded-[2px] bg-primary px-4 text-sm font-medium text-primary-foreground">
             <Play className="h-3.5 w-3.5 fill-current" aria-hidden="true" /> Play with sound
@@ -67,6 +98,8 @@ const FeaturedVideo = ({ youtubeId, poster, alt, title, loop = false, onWatchWit
         <>
           {inView && (
             <iframe
+              ref={playerRef}
+              onLoad={listenForPlayback}
               src={mutedSrc}
               title={title}
               allow="autoplay; encrypted-media; picture-in-picture"
