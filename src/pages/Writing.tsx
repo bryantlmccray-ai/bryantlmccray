@@ -75,7 +75,7 @@ const Writing = () => {
               <span className="md:text-right">Updated November 2026</span>
             </div>
             <p className="font-serif text-xl md:text-2xl text-foreground/80 leading-relaxed max-w-[75ch] mt-6">
-              My WGN stories, rewritten for the page. On air, a story has to fit the time it gets. Here it keeps the numbers and the context that didn't make the cut.
+              Chicago stories from my WGN reporting, rewritten for readers who want more than the broadcast.
             </p>
           </div>
         </header>
