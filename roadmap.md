@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Remove the retired automation page and its references; apply only the specified copy, hero actions and Career section changes.
+- [x] Verify removed-page fallback, exact copy, unchanged dates/stations, hero actions and build health.
+
 - [x] Add supplied Career timeline stills and responsive renditions, preserving all existing content and Gallery.
 - [x] Verify Career at 390 WebKit and 1440, crops, sharpness and overflow; save without publishing.
 

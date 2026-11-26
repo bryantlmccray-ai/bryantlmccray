@@ -43,8 +43,8 @@ const recognition = [
 ];
 
 const HeroActions = () => <>
-  <a href="mailto:bryant.l.mccray@gmail.com" className="inline-flex min-h-11 items-center text-sm text-foreground underline underline-offset-[3px]">Email me</a>
-  <a href="/Bryant_McCray_Resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center text-sm text-foreground underline underline-offset-[3px]">Résumé (PDF)</a>
+  <Button variant="solid" asChild className="min-h-11 w-full rounded-none md:w-auto"><a href="mailto:bryant.l.mccray@gmail.com">Email me</a></Button>
+  <Button variant="outline" asChild className="min-h-11 w-full rounded-none md:w-auto"><a href="/Bryant_McCray_Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé (PDF)</a></Button>
 </>;
 
 const Index = () => {
@@ -85,7 +85,7 @@ const Index = () => {
                 onWatchWithSound={() => setSelectedVideo({ title: REEL_TITLE, link: REEL_LINK })}
               />
             </div>
-            <div className="flex flex-col items-start gap-2 md:hidden [&>button]:w-full">
+            <div className="grid grid-cols-2 gap-2 md:hidden">
               <HeroActions />
             </div>
           </div>
@@ -140,7 +140,7 @@ const Index = () => {
               <Caption>Reporting during storm coverage for WGN-TV, July 2026.</Caption>
             </figure>
             <div className="min-w-0">
-              <h2 className="font-serif text-[32px] md:text-[44px] leading-[1.12] text-foreground">Raised on the West Side. Reporting for the whole city now.</h2>
+              <h2 className="font-serif text-[32px] md:text-[44px] leading-[1.12] text-foreground">From the West Side to WGN.</h2>
               <p className="mt-6 text-lg leading-relaxed text-foreground/80">I cover breaking news and politics for WGN-TV in Chicago.</p>
               <Link to="/about" className="mt-5 inline-flex min-h-11 items-center text-sm text-foreground underline underline-offset-[3px]">More about me</Link>
             </div>

@@ -84,17 +84,6 @@ const careerTimeline = [
   },
 ];
 
-const skills = [
-  "On-Air Delivery",
-  "Enterprise Reporting",
-  "Live Breaking News",
-  "Video Production",
-  "Digital Storytelling",
-  "Audience Strategy",
-  "AP Style Writing",
-  "Interview Technique",
-];
-
 const education = [
   {
     degree: "Bachelor of Science in Mass Communication",
@@ -114,7 +103,7 @@ const awards = [
     year: "2024",
   },
   {
-    title: "Emmy Nomination, Eye on AI: Deepfake Technology",
+    title: "Emmy Nomination, CBS 58 Eye on AI",
     org: "Chicago/Midwest Chapter, NATAS",
     year: "2023",
   },
@@ -238,18 +227,10 @@ const CareerPage = () => {
           </DialogContent>
         </Dialog>
 
-        {/* Skills */}
-        <section className="py-16">
-          <div className="editorial-container">
-            <SectionHead n={3}><h2 className="font-serif text-2xl text-foreground">Skills</h2></SectionHead>
-            <Margin><p className="text-foreground/80 leading-relaxed max-w-[60ch]">{skills.join(" · ")}</p></Margin>
-          </div>
-        </section>
-
         {/* Awards */}
         <section className="py-16">
           <div className="editorial-container">
-            <SectionHead n={4}><h2 className="font-serif text-2xl text-foreground">Recognition</h2></SectionHead>
+            <SectionHead n={3}><h2 className="font-serif text-2xl text-foreground">Recognition</h2></SectionHead>
 
             <ul className="border-b border-border">
               {awards.map((award, index) => (
@@ -272,7 +253,7 @@ const CareerPage = () => {
         {/* Education */}
         <section className="py-16">
           <div className="editorial-container">
-            <SectionHead n={5}><h2 className="font-serif text-2xl text-foreground">Education</h2></SectionHead>
+            <SectionHead n={4}><h2 className="font-serif text-2xl text-foreground">Education</h2></SectionHead>
             <Margin>
               {education.map((edu, index) => (
                 <div key={index}>
@@ -292,7 +273,7 @@ const CareerPage = () => {
         {/* Affiliations */}
         <section className="py-16">
           <div className="editorial-container">
-            <SectionHead n={6}><h2 className="font-serif text-2xl text-foreground">Affiliations</h2></SectionHead>
+            <SectionHead n={5}><h2 className="font-serif text-2xl text-foreground">Affiliations</h2></SectionHead>
             <Margin>
               <div className="flex flex-wrap gap-x-8 gap-y-3">
                 {affiliations.map((org, index) => (

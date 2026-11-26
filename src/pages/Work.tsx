@@ -47,7 +47,7 @@ const workItems: { title: string; category: string; description: string; year: s
   },
   {
     title: "One Traffic Stop, An Unlikely Rescue",
-    category: "Culture & Community",
+    category: "Crime & Justice",
     description: "A traffic stop, a raccoon, and a meth pipe. Nominated for a 2026 Great Lakes Emmy in Crime/Justice News.",
     year: "2025",
     station: "WKYC-TV",
@@ -128,7 +128,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "Shots Fired in Wooster",
     category: "Breaking News",
-    description: "Breaking coverage of an officer-involved shooting that shook a quiet Ohio community.",
+    description: "Breaking coverage of an officer-involved shooting in Wooster, Ohio.",
     year: "2024",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -138,7 +138,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "Double Shooting at Apartment Complex",
     category: "Breaking News",
-    description: "Breaking coverage as a man and woman are shot at a local apartment complex, with police investigating the scene.",
+    description: "A man and a woman shot at an apartment complex. Live from the scene as police worked it.",
     year: "2024",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -148,7 +148,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "Tragedy in the Skies",
     category: "Breaking News",
-    description: "A fatal plane crash in Tuscarawas County leaves investigators searching for answers.",
+    description: "A fatal plane crash in Tuscarawas County, and the investigators working out what happened.",
     year: "2024",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -158,7 +158,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "The TikTok Question",
     category: "Enterprise Reporting",
-    description: "As a potential ban looms, exploring what's at stake for creators, businesses, and national security.",
+    description: "A ban looming, and what it would cost creators, small businesses and national security.",
     year: "2024",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -168,7 +168,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "A Shared Purpose",
     category: "Culture & Community",
-    description: "A pastor and his wife, both activists, share not just a birthday but a lifelong mission for change.",
+    description: "Dr. Otis Moss Jr. and his wife, Edwina, share a birthday and a lifetime of activism.",
     year: "2024",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -178,7 +178,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "Healing in the Stacks",
     category: "Culture & Community",
-    description: "After a shooting at a Shaker Heights library, a community finds its way back together.",
+    description: "After a shooting at a Shaker Heights library, how the neighborhood came back to it.",
     year: "2024",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -188,7 +188,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "Home for the Holidays",
     category: "Culture & Community",
-    description: "A heartwarming look at what it means to come home, and the people who make it possible.",
+    description: "What it means to come home for the holidays, and the people who make it possible.",
     year: "2023",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -198,7 +198,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "After the Storm",
     category: "Culture & Community",
-    description: "How one community rallied together to help Hurricane Helene victims rebuild their lives.",
+    description: "A community collecting help for Hurricane Helene victims.",
     year: "2024",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -208,7 +208,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "Whiteout in Northeast Ohio",
     category: "Culture & Community",
-    description: "Live coverage as a winter storm blankets the region, bringing hazardous roads and community resilience.",
+    description: "Live as a winter storm buried Northeast Ohio roads.",
     year: "2024",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -218,7 +218,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "Downtown Cleveland Comes Alive",
     category: "Culture & Community",
-    description: "A look at a bustling Friday night in downtown Cleveland as residents and visitors fill the streets.",
+    description: "A Friday night in downtown Cleveland, the streets full.",
     year: "2023",
     station: "WKYC-TV",
     market: "Cleveland",
@@ -228,7 +228,7 @@ const workItems: { title: string; category: string; description: string; year: s
   {
     title: "On-Air Highlights",
     category: "On-Air Segments",
-    description: "A collection of on-air segments showcasing breaking news coverage, enterprise reporting, and community-driven storytelling.",
+    description: "WKYC on-air segments: breaking news, enterprise stories and community reporting.",
     year: "2024",
     station: "WKYC-TV",
     market: "Cleveland",

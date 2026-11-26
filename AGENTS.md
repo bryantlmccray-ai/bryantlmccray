@@ -11,6 +11,7 @@
 - FadeIn/StaggerContainer/StaggerItem are plain pass-through wrappers: text, cards and timelines never animate in on scroll; motion is limited to the Home hero, image hover zoom and ContactSection.
 - Experience is merged into /career (/experience redirects); testimonials live in src/data/testimonials.ts and render on About only when non-empty.
 - Career timeline entries own their still paths, captions and alt text; responsive photos render beside the text on desktop and before it on phones, independently of the Gallery.
+- Removed pages fall through to the existing NotFound route without redirects, so retired content is no longer presented as an active destination.
 - Per-route head tags go through src/components/Seo.tsx, which lifts the static index.html description/og/twitter/canonical tags while a route owns its own, so each tag appears once yet non-JS crawlers keep a fallback.
 - Stills in public/stills ship pre-generated -800.webp and -1600.webp siblings; use stillSrcSet() from src/lib/stills.ts for srcset, with the JPG as src fallback. The reel ID and title live in the same module so one change updates every reel reference.
 - Mobile hit areas are at least 44px, hover zoom is disabled under (hover: none), heights use svh, and fixed or full-bleed elements pad with env(safe-area-inset-*); the mobile menu is a portal so the nav's backdrop blur cannot clip it.

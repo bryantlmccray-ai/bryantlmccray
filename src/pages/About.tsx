@@ -77,10 +77,10 @@ const About = () => {
                     <cite className="mt-3 block font-sans text-sm not-italic text-muted-foreground">Bryant McCray</cite>
                   </blockquote>
                   <p>
-                    Chicago taught me early that people don't want to be impressed. They want to be understood. So that's how I report. I show up, I listen, and I let the people in the story carry it.
+                    So that's how I report. I show up, I listen, and I let the people in the story carry it.
                   </p>
                   <p>
-                    Four-time Regional Emmy® Award Nominee. Three of those nominations came this year.
+                    Four Regional Emmy® nominations so far, three of them this year for my work in Cleveland. One of those started with a traffic stop that turned up a raccoon and a meth pipe.
                   </p>
                 </div>
               </article>
