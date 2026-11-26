@@ -3,29 +3,56 @@ import Seo from "@/components/Seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import { Caption, Dateline } from "@/components/Editorial";
 import type { WritingSample } from "@/data/writing";
-import { writingFront, writingTopics } from "@/lib/writingFront";
+import { writingFront, writingTopics, writingPhotos, writingOpening, writingLeadQuote } from "@/lib/writingFront";
 import { stillSrcSet } from "@/lib/stills";
 
-const WritingItem = ({ sample, lead = false, rail = false }: { sample: WritingSample; lead?: boolean; rail?: boolean }) => (
+const WritingItem = ({ sample, lead = false, rail = false }: { sample: WritingSample; lead?: boolean; rail?: boolean }) => {
+  const photo = writingPhotos[sample.slug];
+  const opening = writingOpening(sample);
+  return (
   <article data-writing-slug={sample.slug} className="min-w-0">
+    {photo && (
+      <figure className="mb-5">
+        <picture>
+          <source media="(min-resolution: 2dppx)" srcSet={photo.src.replace(/\.jpg$/, "-1600.webp")} type="image/webp" />
+        <img src={photo.src} srcSet={stillSrcSet(photo.src)} sizes={lead ? "(min-width: 1024px) 800px, calc(100vw - 48px)" : "(min-width: 1024px) 400px, (min-width: 768px) 50vw, calc(100vw - 48px)"} width={1920} height={1080} alt={photo.alt} loading={lead ? "eager" : "lazy"} decoding="async" className="aspect-[3/2] w-full object-cover" />
+        </picture>
+        <Caption>{photo.caption}</Caption>
+      </figure>
+    )}
     <p className="text-xs uppercase tracking-widest text-accent mb-3">{writingTopics[sample.slug]}</p>
     <h2 className={`font-serif text-foreground leading-[1.08] mb-4 ${lead ? "text-[32px] md:text-[44px] lg:text-[48px]" : rail ? "text-2xl" : "text-[22px]"}`}>
       {sample.pdf ? (
         <a href={sample.pdf} target="_blank" rel="noopener noreferrer" className="link-plain inline-block min-h-11">{sample.head}</a>
       ) : sample.head}
     </h2>
-    {sample.slug === "illinois-ai-safety-law" && (
-      <img src="/stills/ai-safety-law.jpg" srcSet={stillSrcSet("/stills/ai-safety-law.jpg")} sizes="(min-width: 1024px) 320px, (min-width: 768px) 50vw, 100vw" width={1920} height={1080} alt="From Bryant McCray's WGN-TV report on the Illinois AI safety law" loading="lazy" decoding="async" className="aspect-[3/2] w-full object-cover mb-4" />
-    )}
     <p className={`leading-relaxed text-foreground/80 ${lead ? "font-serif text-xl" : "text-base"}`}>{sample.dek}</p>
     <p className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs leading-relaxed text-muted-foreground">
       <span className="uppercase tracking-widest">By Bryant McCray</span>
       <span>{sample.date}</span>
       {sample.pdf && <span>PDF</span>}
     </p>
+    {opening && (
+      <div className={`mt-5 font-serif leading-relaxed text-foreground ${lead || (!photo && !rail) ? "text-xl" : "text-lg"}`}>
+        {opening.paragraphs.map((paragraph, index) => (
+          <p key={paragraph} className={index ? "mt-4" : ""}>
+            {index === 0 && <Dateline city={opening.city} state={opening.state} />}{paragraph}
+          </p>
+        ))}
+        {lead && (
+          <blockquote className="my-6 border-y border-border py-5">
+            <p className="text-2xl md:text-[32px] leading-snug">“{writingLeadQuote}”</p>
+            <cite className="mt-3 block font-sans text-sm not-italic text-muted-foreground">Pat Ryan Jr.</cite>
+          </blockquote>
+        )}
+        {sample.pdf && <a href={sample.pdf} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex min-h-11 items-center font-sans text-sm text-muted-foreground underline underline-offset-4">Continue reading (PDF)</a>}
+      </div>
+    )}
   </article>
-);
+  );
+};
 
 const Writing = () => {
   const { lead, rail, remaining } = writingFront();

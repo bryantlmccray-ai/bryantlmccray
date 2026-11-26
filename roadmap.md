@@ -53,3 +53,6 @@
 - [x] Verify the exact snc.edu URL, JSON-LD parsing, card order and link targets, 390px overflow, and build health.
 
 - [x] Correct the CBS 58 Eye on AI Recognition card link to the slashed Emmy PDF URL and confirm no dashed form remains.
+
+- [x] Add six Writing broadcast stills, responsive WebP versions, exact published openings and Ryan Field pull quote.
+- [x] Verify Writing at 390 WebKit and 1440, retina image sources, exact copy, all 11 PDF links, no overflow or errors; save without publishing.
