@@ -194,11 +194,9 @@ const MetaRow = ({
 const featuredWork = heroStories;
 
 // Primary: solid square button with plain text. Secondary: underlined text links.
-const HeroActions = ({ onWatch }: { onWatch: () => void }) => (
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const HeroActions = (_props: { onWatch: () => void }) => (
   <>
-    <button type="button" onClick={onWatch} className="night-action-primary inline-flex min-h-11 items-center justify-center px-5 text-sm font-medium transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
-      Watch with sound
-    </button>
     <a href="mailto:bryant.l.mccray@gmail.com" className="inline-flex min-h-11 items-center text-sm text-foreground underline decoration-1 underline-offset-[3px]">
       Email me
     </a>
