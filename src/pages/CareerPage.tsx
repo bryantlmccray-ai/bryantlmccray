@@ -1,6 +1,8 @@
 import { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import aaccwiMark from "@/assets/aaccwi-mark.png";
+import loyolaAcademyLogo from "@/assets/loyola-academy-logo.png";
 import galleryEmmy from "@/assets/gallery-emmy.jpeg";
 import galleryInterview1 from "@/assets/gallery-interview-1.jpeg";
 import galleryInterview2 from "@/assets/gallery-interview-2.jpeg";
@@ -34,7 +36,7 @@ const careerTimeline = [
   {
     role: "General Assignment Reporter",
     org: "WGN-TV, Chicago, IL",
-    period: "May 2026 – Present",
+    period: "May 2026 to Present",
     photos: [
       { src: "/stills/bryant-skyline-lakefront.jpg", caption: "Live on the lakefront, Election Night 2026. WGN-TV broadcast still.", alt: "Bryant McCray reporting live on the Chicago lakefront." },
     ],
@@ -45,7 +47,7 @@ const careerTimeline = [
   {
     role: "Reporter",
     org: "WKYC (NBC), Cleveland, OH",
-    period: "2024 – 2025",
+    period: "2024 to 2025",
     photos: [
       { src: "/stills/career-wkyc-anchor.jpg", caption: "Anchoring at WKYC Studios, Cleveland. WKYC broadcast still.", alt: "Bryant McCray at the WKYC anchor desk." },
       { src: "/stills/career-wkyc-field-v2.jpg", caption: "In the field after Hurricane Helene. WKYC broadcast still.", alt: "Bryant McCray reporting in the field for WKYC." },
@@ -58,7 +60,7 @@ const careerTimeline = [
   {
     role: "Broadcast Reporter",
     org: "CBS 58, Milwaukee, WI",
-    period: "2022 – 2024",
+    period: "2022 to 2024",
     photos: [
       { src: "/stills/career-cbs58-live-v2.jpg", caption: "Live breaking news, Milwaukee. CBS 58 broadcast still, restored from archival video.", alt: "Bryant McCray reporting live at night for CBS 58." },
       { src: "/stills/career-cbs58-field-v2.jpg", caption: "Reporting in Milwaukee. CBS 58 broadcast still, restored from archival video.", alt: "Bryant McCray reporting outside a Boys and Girls Club for CBS 58." },
@@ -72,7 +74,7 @@ const careerTimeline = [
   {
     role: "Producer & Broadcast Reporter",
     org: "WFRV (CBS), Green Bay, WI",
-    period: "2016 – 2017",
+    period: "2016 to 2017",
     photos: [
       { src: "/stills/career-wfrv-phone.jpg", caption: "A stand-up shot on a phone, Green Bay. WFRV still, restored from archival video.", alt: "A phone showing Bryant McCray recording a stand-up." },
       { src: "/stills/career-wfrv-snow-v2.jpg", caption: "Live in the snow, Green Bay. WFRV still, restored from archival video.", alt: "Bryant McCray reporting live in winter gear for WFRV." },
@@ -113,6 +115,14 @@ const affiliations = [
   "National Association of Black Journalists",
   "Milwaukee Press Club",
 ];
+
+const APPEARANCES: { logo?: string; logoAlt?: string; label: string; org: string; title: string; detail: string; href: string }[] = [
+  { logo: aaccwiMark, logoAlt: "African American Chamber of Commerce of Wisconsin", label: "Emcee", org: "AACC Wisconsin", title: "2023 Breakfast of Champions", detail: "African American Chamber of Commerce of Wisconsin. Fiserv Forum, Milwaukee. September 27, 2023.", href: "https://www.aaccwi.org/boc2023" },
+  { logo: loyolaAcademyLogo, logoAlt: "Loyola Academy", label: "Speaker", org: "Loyola Academy", title: "Ramble 2025", detail: "Loyola Academy's benefit for tuition assistance. Shared my story with Brittany McCray, Class of 2012. March 15, 2025.", href: "https://goramblers.myschoolapp.com/page/news-detail?pk=1560959&siteId=1102&ssl=1" },
+  { logo: loyolaAcademyLogo, logoAlt: "Loyola Academy", label: "Featured", org: "Loyola Academy", title: "Portrait of a Rambler", detail: "Loyola Academy alumni profile. Class of 2012.", href: "https://www.goramblers.org/portrait-of-a-rambler-bryant-mccray" },
+  { label: "Featured", org: "St. Norbert College", title: "Founder of Knight Talk", detail: "St. Norbert's video news service, now GreenKnightTV, started as the student show I built in 2014. Class of 2016.", href: "https://snc.edu/news/magazine/student-run-video-news-service-builds-audience-campus" },
+];
+
 
 const CareerPage = () => {
   const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
@@ -281,6 +291,24 @@ const CareerPage = () => {
                 ))}
               </div>
             </Margin>
+          </div>
+        </section>
+
+        <section className="py-16">
+          <div className="editorial-container">
+            <SectionHead n={6}><h2 className="font-serif text-2xl text-foreground">Hosting and speaking</h2></SectionHead>
+            <ul className="border-b border-border">
+              {APPEARANCES.map((item) => (
+                <li key={item.title} className="border-t border-border py-6">
+                  <Margin note={item.label}>
+                    {item.logo && <img src={item.logo} alt={item.logoAlt} width={56} height={56} loading="lazy" decoding="async" className="mb-3 h-auto max-h-12 w-14 object-contain object-left" />}
+                    <p className="text-sm text-muted-foreground mb-1">{item.org}</p>
+                    <a href={item.href} target="_blank" rel="noopener noreferrer" className="link-plain inline-flex min-h-11 items-center font-serif text-2xl text-foreground">{item.title}</a>
+                    <p className="text-base text-muted-foreground leading-relaxed mt-3">{item.detail}</p>
+                  </Margin>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 

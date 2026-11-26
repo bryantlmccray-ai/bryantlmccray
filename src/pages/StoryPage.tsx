@@ -9,7 +9,7 @@ import Seo from "@/components/Seo";
 import { stillSrcSet } from "@/lib/stills";
 
 import NotFound from "@/pages/NotFound";
-import { stories } from "@/data/stories";
+import { stories, reporterNotes } from "@/data/stories";
 import { Caption, Dateline, Margin, PageFlag } from "@/components/Editorial";
 import { stillCaption, storyDate, storyStation } from "@/lib/storyMeta";
 
@@ -23,6 +23,7 @@ const StoryPage = () => {
 
   if (!story) return <NotFound />;
 
+  const notes = reporterNotes(story);
   const firstSentence = story.dek.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() ?? story.dek;
   const remainder = story.dek.slice(firstSentence.length).trim();
   const note = `${story.dateline.city}${story.dateline.state ? `, ${story.dateline.state}` : ""} · ${storyDate(story)} · ${storyStation(story)} · ${story.chapters.length || 1} ${story.chapters.length > 1 ? "segments" : "segment"}`;
@@ -104,6 +105,19 @@ const StoryPage = () => {
                   </li>
                 ))}
                 </ol>
+              )}
+              {notes.length > 0 && (
+                <section className="mt-8" aria-labelledby="reporter-note-heading">
+                  <h2 id="reporter-note-heading" className="font-serif text-2xl text-foreground mb-5">Reporter's note</h2>
+                  <div className="space-y-5">
+                    {notes.map((note) => (
+                      <p key={note.key} className="text-muted-foreground text-base leading-[1.6] max-w-[65ch]">
+                        <span className="block text-foreground">{note.label}</span>
+                        {note.text}
+                      </p>
+                    ))}
+                  </div>
+                </section>
               )}
               {story.related && (
                 <section className="mt-8" aria-labelledby="related-heading">

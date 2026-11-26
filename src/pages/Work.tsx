@@ -86,16 +86,6 @@ const workItems: { title: string; category: string; description: string; year: s
     link: "https://youtu.be/KVdYVU2TNJU",
   },
   {
-    title: "The U.S. and Iran Reach a Deal",
-    category: "Enterprise Reporting",
-    description: "A deal to reopen the passage that carries one fifth of the world's oil, and the 60 day clock on the question nobody has solved yet.",
-    year: "2026",
-    station: "WGN-TV",
-    market: "Chicago",
-    thumbnail: "https://img.youtube.com/vi/Cdb3Ld1Hpfc/hqdefault.jpg",
-    link: "https://youtu.be/Cdb3Ld1Hpfc",
-  },
-  {
     title: "The Bears, Chicago, and the Indiana Question",
     category: "Enterprise Reporting",
     description: "The governor points to years of fumbles. A suburban Republican drafts his own bill. Inside the fight to keep the Bears from crossing state lines.",

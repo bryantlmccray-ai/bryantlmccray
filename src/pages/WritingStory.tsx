@@ -37,7 +37,10 @@ const WritingStory = () => {
               <h1 className="font-serif text-headline text-foreground leading-tight break-words mb-6">{sample.head}</h1>
               <p className="italic text-muted-foreground text-lg leading-relaxed mb-6">{sample.dek}</p>
               <div className="flex flex-wrap items-baseline gap-x-6 gap-y-3 mb-4">
-                <p className="text-sm text-foreground">By Bryant McCray | {sample.date}</p>
+                <div>
+                  <p className="text-sm text-foreground">By Bryant McCray | {sample.date}</p>
+                  <p className="text-xs leading-relaxed text-muted-foreground">Adapted from my WGN-TV report.</p>
+                </div>
                 {sample.pdf && (
                   <a href={sample.pdf} target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-accent transition-colors duration-300 underline underline-offset-4">
                     Download PDF

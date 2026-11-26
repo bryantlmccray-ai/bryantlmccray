@@ -6,8 +6,6 @@ import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { SectionHead, PublicationNameplate, Byline, Margin, PageFlag } from "@/components/Editorial";
 import { testimonials } from "@/data/testimonials";
-import aaccwiMark from "@/assets/aaccwi-mark.png";
-import loyolaAcademyLogo from "@/assets/loyola-academy-logo.png";
 import { stillSrcSet } from "@/lib/stills";
 
 // Titles are the links: internal routes use Link, outside pages open in a new tab, no icons.
@@ -26,14 +24,6 @@ const RECOGNITION = [
   { year: "2026", honor: "Regional Emmy® nominee, NATAS Central Great Lakes", story: "Break in a Cold Case", detail: "Crime/Justice News, team coverage of the arrest in the murder of Aliza Sherman.", station: "WKYC, Cleveland", href: "https://wkycdirectorscut.blogspot.com/2026/04/wkyc-garners-27-regional-emmy.html" },
   { year: "2026", honor: "Regional Emmy® nominee, NATAS Central Great Lakes", story: "TikTok on the Clock as the Feed May Go Dark", detail: "Daily News Report, single shift.", station: "WKYC, Cleveland", href: "https://wkycdirectorscut.blogspot.com/2026/04/wkyc-garners-27-regional-emmy.html" },
   { year: "2023", honor: "Regional Emmy® nominee, NATAS Chicago/Midwest", story: "CBS 58 Eye on AI", detail: "Team nomination with the CBS 58 newsroom.", station: "WDJT, Milwaukee", href: "https://chicagoemmyonline.org/files/2023/10/2023-Chicago-Midwest-Nomination-List.pdf" },
-];
-
-const APPEARANCES: { logo?: string; logoAlt?: string; label: string; org: string; title: string; detail: string; href: string }[] = [
-  { logo: aaccwiMark, logoAlt: "African American Chamber of Commerce of Wisconsin", label: "Emcee", org: "AACC Wisconsin", title: "2023 Breakfast of Champions", detail: "African American Chamber of Commerce of Wisconsin. Fiserv Forum, Milwaukee. September 27, 2023.", href: "https://www.aaccwi.org/boc2023" },
-  { logo: loyolaAcademyLogo, logoAlt: "Loyola Academy", label: "Speaker", org: "Loyola Academy", title: "Ramble 2025", detail: "Loyola Academy's benefit for tuition assistance. Shared my story with Brittany McCray, Class of 2012. March 15, 2025.", href: "https://goramblers.myschoolapp.com/page/news-detail?pk=1560959&siteId=1102&ssl=1" },
-  { logo: loyolaAcademyLogo, logoAlt: "Loyola Academy", label: "Featured", org: "Loyola Academy", title: "Portrait of a Rambler", detail: "Loyola Academy alumni profile. Class of 2012.", href: "https://www.goramblers.org/portrait-of-a-rambler-bryant-mccray" },
-  { label: "Featured", org: "St. Norbert College", title: "Founder of Knight Talk", detail: "St. Norbert's video news service, now GreenKnightTV, started as the student show I built in 2014. Class of 2016.", href: "https://snc.edu/news/magazine/student-run-video-news-service-builds-audience-campus" },
-  { label: "In the news", org: "CBS 58", title: "Stepping with the Stars", detail: "Won the men's competition at Milwaukee's Stepping with the Stars, raising money for Aurora at Home. June 2023.", href: "https://www.cbs58.com/news/cbs-58-reporter-bryant-mccray-wins-milwaukees-stepping-with-the-stars-mens-competition" },
 ];
 
 const About = () => {
@@ -55,7 +45,7 @@ const About = () => {
             <h2 className="font-serif text-[32px] md:text-[44px] lg:text-[48px] leading-[1.08] text-foreground mb-6">
               I grew up on the West Side. Now I report on the whole city.
             </h2>
-            <Margin note="WGN-TV · Chicago · November 2026"><div className="grid gap-y-10 lg:grid-cols-5">
+            <Margin note="WGN-TV · Chicago"><div className="grid gap-y-10 lg:grid-cols-5">
               <article className="min-w-0 lg:col-span-3 lg:pr-10">
                 <figure className="press-photo mb-8">
                   <picture>
@@ -73,15 +63,15 @@ const About = () => {
                   <p>
                     TV news started for me at St. Norbert College, on a student show called Knight Talk. From there it was Green Bay, then Milwaukee, then Cleveland. Now I'm home, at WGN.
                   </p>
-                  <blockquote className="press-quote hanging-quote border-y border-border py-5">
-                    <p className="text-2xl md:text-[32px] leading-snug">Chicago taught me early that people don't want to be impressed. They want to be understood.</p>
-                    <cite className="mt-3 block font-sans text-sm not-italic text-muted-foreground">Bryant McCray</cite>
-                  </blockquote>
+                  <p>Chicago taught me early that people don't want to be impressed. They want to be understood.</p>
                   <p>
                     So that's how I report. I show up, I listen, and I let the people in the story carry it.
                   </p>
                   <p>
-                    Four Regional Emmy® nominations so far, three of them this year for my work in Cleveland. One of those started with a traffic stop that turned up a raccoon and a meth pipe.
+                    Four Regional Emmy® nominations so far, three of them this year for my work in Cleveland.
+                  </p>
+                  <p>
+                    One of those started with a traffic stop in Springfield Township, Ohio. Police pulled a car over and found a raccoon named Chewy in the driver's seat with a meth pipe in its mouth. The video went national. My job was the part after the laugh: what the stop was, and what happened to Chewy.
                   </p>
                 </div>
               </article>
@@ -129,27 +119,6 @@ const About = () => {
             </div>
           </section>
         )}
-
-        <section className="pb-24 md:pb-32">
-          <div className="wide-container">
-            <div className="border-t border-border pt-6 mb-8">
-              <h2 className="font-serif text-2xl md:text-3xl text-foreground">
-                Rooms I've hosted. Places that told my story.
-              </h2>
-            </div>
-            <ul className="grid md:grid-cols-2 lg:grid-cols-3">
-              {APPEARANCES.map((item) => (
-                <li key={item.title} className="min-w-0 border-t border-border py-8 md:px-6 md:[&:nth-child(2n)]:border-l lg:[&:nth-child(2n)]:border-l-0 lg:[&:nth-child(3n+2)]:border-l lg:[&:nth-child(3n)]:border-l">
-                  <p className="text-xs uppercase tracking-widest text-accent mb-3">{item.label}</p>
-                  {item.logo && <img src={item.logo} alt={item.logoAlt} width={56} height={56} loading="lazy" decoding="async" className="mb-3 h-auto max-h-12 w-14 object-contain object-left" />}
-                  <p className="text-sm text-muted-foreground mb-1">{item.org}</p>
-                  <ItemLink href={item.href} className="font-serif text-2xl text-foreground min-h-11">{item.title}</ItemLink>
-                  <p className="text-base text-muted-foreground leading-relaxed mt-3">{item.detail}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
 
         <Footer />
       </main>

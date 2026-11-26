@@ -158,6 +158,7 @@ const ContactSection = () => {
             );
           })}
         </div>
+        <p className="contact-closer__rights">Written and reported by Bryant McCray in Chicago. Last updated November 2026.</p>
         <p className="contact-closer__rights">
           {new Date().getFullYear()} Bryant McCray
         </p>

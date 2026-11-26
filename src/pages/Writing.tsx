@@ -36,6 +36,7 @@ const WritingItem = ({ sample, lead = false, rail = false }: { sample: WritingSa
       <span>{sample.date}</span>
       {sample.pdf && <span>PDF</span>}
     </p>
+    <p className="text-xs leading-relaxed text-muted-foreground">Adapted from my WGN-TV report.</p>
     {opening && (
       <div className={`mt-5 font-serif leading-relaxed text-foreground ${lead || (!photo && !rail) ? "text-xl" : "text-lg"}`}>
         {opening.paragraphs.map((paragraph, index) => (
@@ -75,7 +76,6 @@ const Writing = () => {
             <div className="grid gap-2 border-y border-border py-3 text-sm text-muted-foreground md:grid-cols-3 md:items-center">
               <span>Chicago</span>
               <span className="md:text-center">Adapted from WGN-TV reporting</span>
-              <span className="md:text-right">Updated November 2026</span>
             </div>
             <p className="font-serif text-xl md:text-2xl text-foreground/80 leading-relaxed max-w-[75ch] mt-6">
               Chicago stories from my WGN reporting, rewritten for readers who want more than the broadcast.

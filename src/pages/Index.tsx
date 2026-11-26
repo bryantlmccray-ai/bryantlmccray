@@ -4,7 +4,7 @@ import NightBand from "@/components/NightBand";
 import FeaturedVideo from "@/components/FeaturedVideo";
 import ReportingQuote from "@/components/ReportingQuote";
 import Seo from "@/components/Seo";
-import { Caption, Dateline, PublicationNameplate, DoubleRule, Byline, Margin, PageFlag, Folio } from "@/components/Editorial";
+import { Caption, Dateline, PublicationNameplate, Byline, Margin, PageFlag, Folio } from "@/components/Editorial";
 import { stillCaption, storyDate, storyStation } from "@/lib/storyMeta";
 import { stillSrcSet, REEL_ID, REEL_TITLE, REEL_LINK } from "@/lib/stills";
 import { stories } from "@/data/stories";
@@ -20,10 +20,9 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 const ContactSection = React.lazy(() => import("@/components/ContactSection"));
 const writingDesk = newestWriting();
 const voices = [
+  { slug: "save-a-lot-closures", quote: "It's the same old story, to be honest with you.", attribution: "John Kali Mwindaja, a West Side resident, on the Save A Lot closures, July 2026." },
   { slug: "bud-billiken-97", quote: "We are feeding a community.", attribution: "Lindsay, a vendor at the Bud Billiken Parade, August 2026." },
   { slug: "markham-storm-relief", quote: "Oh, this is horrible. We haven't been hit like this.", attribution: "Early Walker, Markham, after the July 2026 storms." },
-  { slug: "save-a-lot-closures", quote: "It's the same old story, to be honest with you.", attribution: "John Kali Mwindaja, a West Side resident, on the Save A Lot closures, July 2026." },
-  { slug: "ford-city-mall-closes", quote: "Just crazy to see such a huge building shut down for the final time.", attribution: "Ethan Donaldson, a shopper, on Ford City Mall closing, June 2026." },
 ];
 const beat = [
   { slug: "nwi-storm-series", category: "Breaking News" },
@@ -34,13 +33,6 @@ const beat = [
   const story = stories.find(story => story.slug === entry.slug);
   return story ? [{ ...entry, story }] : [];
 });
-
-const recognition = [
-  { year: "2026", chapter: "NATAS Central Great Lakes", story: "One Traffic Stop, An Unlikely Rescue", category: "Crime/Justice News", station: "WKYC", href: "/stories/one-traffic-stop-an-unlikely-rescue" },
-  { year: "2026", chapter: "NATAS Central Great Lakes", story: "Break in a Cold Case", category: "Crime/Justice News", station: "WKYC" },
-  { year: "2026", chapter: "NATAS Central Great Lakes", story: "TikTok on the Clock as the Feed May Go Dark", category: "Daily News Report (single shift)", station: "WKYC" },
-  { year: "2023", chapter: "NATAS Chicago/Midwest", story: "CBS 58 Eye on AI", category: "Team nomination", station: "WDJT" },
-];
 
 const HeroActions = () => <>
   <a href="mailto:bryant.l.mccray@gmail.com" className="font-sans text-base md:text-lg text-foreground underline underline-offset-4 decoration-1 min-h-11 inline-flex items-center hover:decoration-accent">Email me</a>
@@ -66,8 +58,9 @@ const Index = () => {
               <PageFlag>Home · The beat</PageFlag>
               <p className="text-[11px] uppercase tracking-[0.2em] text-accent mb-4">TV News Reporter · WGN-TV Chicago</p>
               <h1 id="home-title" className="font-serif text-[36px] md:text-[44px] lg:text-[52px] leading-[1.06] text-foreground mb-5" >
-                People don't want to be impressed. They want to be understood.
+                In Munster, in Pilsen, on the West Side, people keep asking who answers to them. I take that question to whoever should.
               </h1>
+              <p className="text-base md:text-lg leading-[1.6] text-muted-foreground max-w-md mb-5">People don't want to be impressed. They want to be understood.</p>
               <p className="text-base md:text-lg leading-[1.6] text-muted-foreground max-w-md">
                 Bryant McCray. Four-time Regional Emmy® nominee.
               </p>
@@ -102,7 +95,7 @@ const Index = () => {
               {voices.map((voice, index) => {
                 const sample = writingSamples.find(sample => sample.slug === voice.slug);
                 const opening = sample?.body[0]?.split(" | ")[0];
-                return <Margin key={voice.slug} note={[opening, sample?.date, "WGN-TV"].filter(Boolean).join(" · ")}><ReportingQuote {...voice} href={sample?.pdf} photo={writingPhotos[voice.slug]} photoRight={index === 1} extraLarge={index > 1} /></Margin>;
+                return <Margin key={voice.slug} note={[opening, sample?.date, "WGN-TV"].filter(Boolean).join(" · ")}><ReportingQuote {...voice} href={sample?.pdf} photo={writingPhotos[voice.slug]} photoRight={index === 2} extraLarge={!writingPhotos[voice.slug]} /></Margin>;
               })}
             </div>
           </div>
@@ -147,43 +140,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Recognition */}
-        <section className="py-16 md:py-20">
-          <div className="wide-container">
-            <DoubleRule />
-            <FadeIn className="pt-6">
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">Four Regional Emmy® nominations.</h2>
-              <table className="w-full border-b border-border text-left">
-                <caption className="sr-only">Regional Emmy nominations</caption>
-                <thead className="max-md:sr-only">
-                  <tr className="text-sm text-muted-foreground">
-                    <th scope="col" className="py-2 pr-4 font-normal">Year</th>
-                    <th scope="col" className="py-2 pr-4 font-normal">Honor</th>
-                    <th scope="col" className="py-2 pr-4 font-normal">Story</th>
-                    <th scope="col" className="py-2 font-normal md:text-right">Station</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {recognition.map((row) => (
-                    <tr key={row.story} className="border-t border-border max-md:grid max-md:gap-1 max-md:py-4 align-baseline">
-                      <td className="text-sm tabular-nums text-muted-foreground md:py-4 md:pr-4">{row.year}</td>
-                      <td className="text-sm text-muted-foreground md:py-4 md:pr-4">{row.chapter}, {row.category}</td>
-                      <td className="md:py-4 md:pr-4">
-                        {row.href ? (
-                          <Link to={row.href} className="link-plain inline-block py-2.5 -my-1 font-serif text-lg text-foreground">{row.story}</Link>
-                        ) : (
-                          <span className="font-serif text-lg text-foreground">{row.story}</span>
-                        )}
-                      </td>
-                      <td className="text-sm text-muted-foreground md:py-4 md:text-right">{row.station}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </FadeIn>
-          </div>
-        </section>
-
         <section className="py-16 md:py-20 border-t border-border">
           <div className="wide-container">
             <div className="flex flex-wrap items-baseline justify-between gap-4 mb-6">
@@ -202,7 +158,7 @@ const Index = () => {
                   <h3 className="font-serif text-2xl text-foreground leading-snug">
                     {sample.pdf ? <a href={sample.pdf} target="_blank" rel="noopener noreferrer" className="link-plain inline-block min-h-11">{sample.head}</a> : sample.head}
                   </h3>
-                  <Byline date={sample.date} />
+                  <Byline date={sample.date} adapted />
                 </article>;
               })}
             </div>

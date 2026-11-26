@@ -13,15 +13,17 @@ export const PublicationNameplate = ({ title, center }: { title?: string; center
     <div className={`grid gap-2 border-y border-border py-3 text-sm text-muted-foreground md:grid-cols-3 md:items-center ${title ? "" : "mt-6"}`}>
       <span>Chicago</span>
       <span className="md:text-center">{center}</span>
-      <span className="md:text-right">Updated November 2026</span>
     </div>
   </div>
 );
 
-export const Byline = ({ date }: { date: string }) => (
+export const Byline = ({ date, adapted = false }: { date: string; adapted?: boolean }) => (
+  <>
   <p className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-xs leading-relaxed text-muted-foreground">
     <span className="uppercase tracking-widest">By Bryant McCray</span><span>{date}</span>
   </p>
+  {adapted && <p className="text-xs leading-relaxed text-muted-foreground">Adapted from my WGN-TV report.</p>}
+  </>
 );
 
 /** Copper small-caps dateline that opens a dek: "MUNSTER, Ind." */
@@ -91,7 +93,6 @@ export const Folio = ({ page }: { page: string }) => (
   <div className="wide-container folio" aria-label={`${page} folio`}>
     <div className="grid grid-cols-2 gap-2 border-t border-border py-5 text-xs text-muted-foreground md:grid-cols-3">
       <span>bryantmccray.com</span><span className="text-right md:text-center">{page}</span>
-      <span className="col-span-2 md:col-span-1 md:text-right">Chicago · November 2026</span>
     </div>
   </div>
 );

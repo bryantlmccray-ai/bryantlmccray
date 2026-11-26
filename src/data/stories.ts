@@ -12,6 +12,9 @@ export type Story = {
   chapters: string[];
   metaDescription: string;
   credit?: string;
+  why?: string;
+  found?: string;
+  next?: string;
   related?: { outlet: string; title: string; url: string }[];
   coverage?: { outlet: string; title: string; url: string }[];
 };
@@ -96,3 +99,13 @@ export const stories: Story[] = [
     ],
   },
 ];
+
+/** Omit unset notes so unpublished reporting context never creates an empty section. */
+export const reporterNotes = (story: Pick<Story, "why" | "found" | "next">) => {
+  const fields = [
+    { key: "why", label: "Why I went", text: story.why },
+    { key: "found", label: "What I found", text: story.found },
+    { key: "next", label: "What happened next", text: story.next },
+  ];
+  return fields.filter((field): field is { key: string; label: string; text: string } => Boolean(field.text));
+};
