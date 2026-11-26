@@ -11,6 +11,8 @@ import Seo from "@/components/Seo";
 import { stories, type Story } from "@/data/stories";
 import { syndication } from "@/data/syndication";
 import { Dateline, Margin, Overlap, SectionHead } from "@/components/Editorial";
+import ReportingQuote from "@/components/ReportingQuote";
+import { writingPhotos } from "@/lib/writingFront";
 import { stillCaption, storyDate } from "@/lib/storyMeta";
 import type { ReactNode } from "react";
 import { stillSrcSet, REEL_LINK, REEL_TITLE } from "@/lib/stills";
@@ -413,6 +415,9 @@ const Work = () => {
         
         <header className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">
+            <div className="mb-12 md:mb-16">
+              <ReportingQuote quote="Oh, this is horrible. We haven't been hit like this." attribution="Early Walker, Markham, July 2026. From my WGN-TV report." photo={writingPhotos["markham-storm-relief"]} photoRight photoAfterOnMobile />
+            </div>
             <h1 className="font-serif text-headline text-foreground mb-6">Selected Reporting</h1>
             <p className="text-muted-foreground max-w-xl leading-relaxed">
               Chicago first, then Cleveland. Breaking news, politics and the people living through both. Every story here aired or was published.

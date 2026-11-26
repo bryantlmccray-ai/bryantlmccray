@@ -1,5 +1,9 @@
 # Roadmap
 
+- [x] Rebuild Home in five acts using Bryant's thesis, published quotes, full story deks, portrait and existing proof.
+- [x] Add the human openers to Work and Writing without changing their remaining content.
+- [x] Verify all three pages at 390 WebKit and 1440, PDF quotes, links, images and muted reel; save without publishing. Existing YouTube iframe warning remains in WebKit; desktop checks have no page errors.
+
 - [x] Replace About's lead photo with the supplied rain live shot, full width with a smaller West Side inset and exact caption.
 - [x] Verify About at 390 WebKit and 1440, including image sharpness, clear face and microphone, unchanged share image, and no horizontal scroll; save without publishing.
 

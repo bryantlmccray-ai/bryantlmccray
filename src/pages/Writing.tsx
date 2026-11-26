@@ -7,6 +7,8 @@ import { Caption, Dateline } from "@/components/Editorial";
 import type { WritingSample } from "@/data/writing";
 import { writingFront, writingTopics, writingPhotos, writingOpening, writingLeadQuote } from "@/lib/writingFront";
 import { stillSrcSet } from "@/lib/stills";
+import ReportingQuote from "@/components/ReportingQuote";
+import { writingSamples } from "@/data/writing";
 
 const WritingItem = ({ sample, lead = false, rail = false }: { sample: WritingSample; lead?: boolean; rail?: boolean }) => {
   const photo = writingPhotos[sample.slug];
@@ -77,6 +79,9 @@ const Writing = () => {
             <p className="font-serif text-xl md:text-2xl text-foreground/80 leading-relaxed max-w-[75ch] mt-6">
               Chicago stories from my WGN reporting, rewritten for readers who want more than the broadcast.
             </p>
+            <div className="mt-8">
+              <ReportingQuote quote="It's the same old story, to be honest with you." attribution="John Kali Mwindaja, on the Save A Lot closures." href={writingSamples.find(sample => sample.slug === "save-a-lot-closures")?.pdf} extraLarge />
+            </div>
           </div>
         </header>
         <section className="pb-24 md:pb-32">

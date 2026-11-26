@@ -2,7 +2,7 @@
 
 - Writing pages read immutable samples from `src/data/writing.ts`; `writingFront` owns the curated lead, date-sorted rail/grid, photo metadata and opening excerpts derived from existing body copy, keeping section-front presentation separate from final copy. Pages own PageTransition, Navigation, Footer, metadata and immediate scroll reset.
 - Writing PDFs and images are served from `public/writing` at their supplied paths; WritingMedia owns pointer motion and disables it on mobile and reduced motion, keeping uploaded assets and interaction separate from final copy.
-- NightTrail owns the shared shader tree and unavailable fallback; NightBand is used only on Home (reel-first opening band, then the record slideshow) and ContactSection renders NightTrail directly; every other page opens with a plain cream header so evidence reads first.
+- NightTrail owns the shared shader tree and unavailable fallback; NightBand is used only for Home's thesis and featured reel, and ContactSection renders NightTrail directly; every other page opens with a plain cream header so evidence reads first.
 - NightBand owns the optional absolute desktop portrait; record-gap placement measures metadata, markers, and wordmark to shrink or hide it without changing hero layout.
 - Keep the cream navigation bar across dark and light sections for stable contrast without scroll-driven theme changes.
 - Broadcast stories render through one StoryPage at /stories/:slug fed by src/data/stories.ts (newest first, also drives the Work Stories list); it owns the NightBand header, privacy-enhanced video, nonempty chapters, optional coverage links and citation JSON-LD, scroll reset and Helmet metadata with site-description dedupe, keeping story-specific additions data-driven.
@@ -18,3 +18,4 @@
 - Editorial primitives live in src/components/Editorial.tsx, including shared double-rule nameplates and bylines for Home and About; still captions come from src/lib/storyMeta.ts, so publication furniture stays consistent and captions use only supplied data.
 - Paper grain is a background-image on main.bg-background in index.css, so it sits under text and dark bands cover it.
 - Story-specific credits and related reporting live in story data and render through StoryPage, so station attribution and supporting links do not leak between stories.
+- ReportingQuote shares the published-voice treatment across Home, Work and Writing, keeping scene-photo captions separate from speaker attribution; Home's alternating beat rows use complete story-data deks rather than sentence truncation.
