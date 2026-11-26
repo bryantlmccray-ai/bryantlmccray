@@ -577,6 +577,7 @@ const Index = () => {
                   All work
                 </Link>
               </div>
+              <p className="text-muted-foreground leading-relaxed mb-6">Four stories from my first year at WGN-TV. The rest are under All work.</p>
             </FadeIn>
 
             <StaggerContainer className="border-b border-border">

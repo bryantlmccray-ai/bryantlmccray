@@ -17,3 +17,4 @@
 
 - Layering primitives live in src/components/Editorial.tsx (Overlap, Caption, Dateline, Margin, SectionHead) and still captions come from src/lib/storyMeta.ts, so captions use only story data and Work, About and Career share one section and margin-note treatment.
 - Paper grain is a background-image on main.bg-background in index.css, so it sits under text and dark bands cover it.
+- Story-specific credits and related reporting live in story data and render through StoryPage, so station attribution and supporting links do not leak between stories.

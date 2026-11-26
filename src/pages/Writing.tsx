@@ -26,7 +26,7 @@ const Writing = () => {
           <div className="editorial-container">
             <h1 className="font-serif text-display text-foreground mb-6">Writing</h1>
             <p className="text-muted-foreground leading-relaxed">
-              My WGN stories, rewritten for the page.
+              My WGN stories, rewritten for the page. On air, a story has to fit the time it gets. Here it keeps the numbers and the context that didn't make the cut.
             </p>
           </div>
         </header>

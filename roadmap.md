@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Apply the exact Home, Work, Writing, story and Career copy changes; preserve design and flagged WKYC entries.
+- [x] Check seven pages at 390 and 1440, report flagged source data, and save without publishing.
+
 - [x] Add the oldest traffic-stop story with optional coverage and citation metadata, preserving existing story output and Work grid.
 - [x] Verify the new story and Work link, unchanged previous stories, desktop/mobile, and build health; shared preview ref warnings remain outside this request.
 

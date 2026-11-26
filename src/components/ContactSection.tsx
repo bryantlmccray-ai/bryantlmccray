@@ -17,8 +17,6 @@ import NightTrail from "@/components/NightTrail";
  * Every shader prop below is a static literal. None of it is React state.
  */
 
-const CONTACT_EMAIL = "bryant.l.mccray@gmail.com";
-
 const SOCIALS: { label: string; href: string }[] = [
   { label: "Reel", href: "https://youtu.be/3xhS6QEm7A0" },
   { label: "WGN-TV", href: "https://wgntv.com/author/bryant-mccray/" },
@@ -35,7 +33,6 @@ const ContactSection = () => {
           isolation: isolate;
           display: flex;
           flex-direction: column;
-          min-height: 100dvh;
           overflow: hidden;
           background: #070708;
           color: #fff;
@@ -150,20 +147,6 @@ const ContactSection = () => {
 
       <NightTrail className="contact-closer__canvas" />
 
-      <section className="contact-closer__invite">
-        <h2 className="contact-closer__question reveal" style={{ "--reveal-delay": "0.1s" } as React.CSSProperties}>
-          Got a story?
-        </h2>
-        <a
-          className="contact-closer__cta reveal"
-          style={{ "--reveal-delay": "0.25s" } as React.CSSProperties}
-          href={`mailto:${CONTACT_EMAIL}`}
-        >
-          Contact me
-          <span className="contact-closer__underline" />
-        </a>
-      </section>
-
       <footer className="contact-closer__footer reveal" style={{ "--reveal-delay": "0.45s" } as React.CSSProperties}>
         <div className="contact-closer__socials">
           {SOCIALS.map((social) => {
@@ -178,7 +161,6 @@ const ContactSection = () => {
         <p className="contact-closer__rights">
           {new Date().getFullYear()} Bryant McCray
         </p>
-        <p className="contact-closer__hint">( move your cursor )</p>
       </footer>
     </main>
   );

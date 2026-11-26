@@ -415,8 +415,7 @@ const Work = () => {
           <div className="editorial-container">
             <h1 className="font-serif text-headline text-foreground mb-6">Selected Reporting</h1>
             <p className="text-muted-foreground max-w-xl leading-relaxed">
-              Selected reporting and on-air work spanning breaking news, enterprise 
-              storytelling, and community-driven journalism.
+              Chicago first, then Cleveland. Breaking news, politics and the people living through both. Every story here aired or was published.
             </p>
           </div>
         </header>
@@ -474,6 +473,7 @@ const Work = () => {
         <section className="pb-16 md:pb-20">
           <div className="editorial-container">
             <SectionHead n={2} className="mb-4"><h2 className="font-serif text-2xl md:text-3xl text-foreground">More WGN stories</h2></SectionHead>
+            <p className="text-muted-foreground leading-relaxed mb-8">Breaking news, weather and politics from WGN-TV in 2026.</p>
             <ol className="border-b border-border">
               {rest.map((story, i) => (
                 <li key={story.slug} className="border-t border-border">
@@ -531,6 +531,7 @@ const Work = () => {
         <section className="py-12 md:py-16">
           <div className="editorial-container">
             <SectionHead n={4} className="mb-4"><h2 className="font-serif text-2xl text-foreground">Before Chicago</h2></SectionHead>
+            <p className="text-muted-foreground leading-relaxed mb-8">WKYC in Cleveland, 2024 to 2025. Breaking news, crime and courts, and community stories across Northeast Ohio. Three stories from that stretch earned 2026 Great Lakes Emmy nominations.</p>
             <ul className="border-b border-border">
               {beforeChicago.map((item) => (
                 <li key={item.link} className="border-t border-border">
@@ -551,13 +552,6 @@ const Work = () => {
             </ul>
           </div>
         </section>
-
-        {/* McCray Ventures Link */}
-        <div className="editorial-container pb-8">
-          <Link to="/mccray-ventures" onClick={() => window.scrollTo(0, 0)} className="inline-flex min-h-11 items-center text-[11px] text-muted-foreground hover:text-accent transition-colors duration-300 underline-offset-2 hover:underline">
-            McCray Ventures, LLC
-          </Link>
-        </div>
 
         <Footer />
         {videoOverlay}

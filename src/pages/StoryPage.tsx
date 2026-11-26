@@ -96,6 +96,19 @@ const StoryPage = () => {
                 ))}
                 </ol>
               )}
+              {story.related && (
+                <section className="mt-8" aria-labelledby="related-heading">
+                  <h2 id="related-heading" className="font-serif text-2xl text-foreground mb-5">Related reporting</h2>
+                  <ul className="divide-y divide-border border-y border-border">
+                    {story.related.map((item) => (
+                      <li key={item.url} className="py-4">
+                        <a href={item.url} target="_blank" rel="noopener" className="link-plain inline-flex min-h-11 items-center text-foreground leading-relaxed">{item.title}</a>
+                        <p className="text-sm text-muted-foreground">{item.outlet}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
               {story.coverage && (
                 <section className="mt-8" aria-labelledby="coverage-heading">
                   <h2 id="coverage-heading" className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-5">
@@ -114,7 +127,7 @@ const StoryPage = () => {
                 </section>
               )}
               <p className="text-xs text-muted-foreground mt-6 leading-relaxed">
-                Reported by Bryant McCray. WGN-TV Chicago.
+                {story.credit ?? "Reported by Bryant McCray. WGN-TV Chicago."}
               </p>
               <Link to="/work" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="link-plain inline-flex min-h-11 items-center text-sm text-foreground mt-12">
                 All work

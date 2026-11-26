@@ -1,4 +1,5 @@
 import { useLayoutEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import galleryEmmy from "@/assets/gallery-emmy.jpeg";
 import galleryInterview1 from "@/assets/gallery-interview-1.jpeg";
@@ -92,14 +93,14 @@ const awards = [
     year: "2026",
   },
   {
-    title: "Emmy Nomination, Eye on AI: Deepfake Technology",
-    org: "Chicago/Midwest Chapter, NATAS",
-    year: "2023",
-  },
-  {
     title: "Newcomer of the Year Nomination",
     org: "Greater Cleveland Association of Black Journalists",
     year: "2024",
+  },
+  {
+    title: "Emmy Nomination, Eye on AI: Deepfake Technology",
+    org: "Chicago/Midwest Chapter, NATAS",
+    year: "2023",
   },
 ];
 
@@ -165,6 +166,12 @@ const CareerPage = () => {
                               {b}
                             </li>
                           ))}
+                          {index === 0 && (
+                            <>
+                              <li className="text-muted-foreground text-sm leading-relaxed">My reporting also runs on NewsNation and on Nexstar stations across the Midwest.</li>
+                              <li className="text-muted-foreground text-sm leading-relaxed">Some of my stories are rewritten for the page under <Link to="/writing" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="link-plain inline-flex min-h-11 items-center">Writing</Link>.</li>
+                            </>
+                          )}
                         </ul>
                       </div>
                     </div>
@@ -252,6 +259,7 @@ const CareerPage = () => {
                   <p className="text-sm text-muted-foreground">
                     {edu.school}
                   </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">Founded Knight Talk, the student news show that became GreenKnightTV. Class of 2016.</p>
                 </div>
               ))}
             </Margin>

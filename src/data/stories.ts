@@ -11,6 +11,8 @@ export type Story = {
   videoSrc: string;
   chapters: string[];
   metaDescription: string;
+  credit?: string;
+  related?: { outlet: string; title: string; url: string }[];
   coverage?: { outlet: string; title: string; url: string }[];
 };
 
@@ -46,6 +48,7 @@ export const stories: Story[] = [
   },
   {
     slug: "bears-stadium-fight",
+    related: [{ outlet: "WGN-TV", title: "The Bears, Chicago, and the Indiana Question", url: "https://youtu.be/-Wcr1Zvmvfc" }],
     dateline: { city: "Arlington Heights", state: "Ill." },
     still: "/stills/bears-stadium-fight.jpg",
     youtubeId: "AeIe9BmfADo",
@@ -58,6 +61,8 @@ export const stories: Story[] = [
   },
   {
     slug: "nwi-storm-series",
+    credit: "Reported by Bryant McCray. WGN-TV Chicago. Aired August 13 to August 21, 2026.",
+    related: [{ outlet: "NewsNation", title: "Class-action lawsuit filed against NIPSCO, alleges lack of vegetation management", url: "https://www.newsnationnow.com/us-news/midwest/nipsco-class-action-lawsuit-vegetation-issues/" }],
     dateline: { city: "Munster", state: "Ind." },
     still: "/stills/nwi-storm-series.jpg",
     youtubeId: "5hQTl-y7-YQ",
@@ -74,6 +79,7 @@ export const stories: Story[] = [
   },
   {
     slug: "one-traffic-stop-an-unlikely-rescue",
+    credit: "Reported by Bryant McCray. WKYC, Cleveland.",
     dateline: { city: "Springfield Township", state: "Ohio" },
     youtubeId: "kdEjhUDVZiE",
     kicker: "WKYC · MAY 2025 · SPRINGFIELD TOWNSHIP, OHIO",
