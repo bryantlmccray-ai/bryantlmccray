@@ -307,9 +307,10 @@ html { scroll-padding-top: calc(5rem + env(safe-area-inset-top)); }
   font-variant-numeric: oldstyle-nums;
   color: hsl(var(--muted-foreground));
 }
+/* Datelines are true uppercase; the state abbreviation keeps its own casing. */
 .dateline-city {
-  font-variant-caps: all-small-caps;
-  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 /* Paper: a faint tiled grain behind the light sections. Sits in the background layer,

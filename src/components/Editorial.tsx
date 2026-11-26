@@ -30,27 +30,29 @@ const Photo = ({ img, imgClass }: { img: Img; imgClass: string }) => (
 );
 
 /**
- * A large photo with a smaller inset laid over one bottom corner in a thin cream frame,
- * the main caption set beside the inset. From 640px the inset rises into the photo by
- * `insetClass` (negative top margin in % of width); below that it stacks under the
- * main caption so nothing overlaps on phones.
+ * A large photo with a smaller inset laid over one bottom corner in a thin cream frame.
+ * One caption line runs under the whole composition at the full width of the big photo:
+ * the main caption, then the inset caption after "Inset:". From 640px the inset rises into
+ * the photo by `insetClass` (negative top margin in % of width); below that it stacks under
+ * the main photo, and the same single caption sits under the inset.
  */
+type Shot = Omit<Img, "caption"> & { caption: string };
+
+const sentence = (s: string) => s.trim().replace(/\.+$/, "");
+
 export const Overlap = ({ main, inset, insetClass, side = "left", className = "", zoom = false }: {
-  main: Img; inset: Img; insetClass: string; side?: "left" | "right"; className?: string; zoom?: boolean;
+  main: Shot; inset: Shot; insetClass: string; side?: "left" | "right"; className?: string; zoom?: boolean;
 }) => (
   <div className={className}>
     <div className="overflow-hidden">
       <Photo img={main} imgClass={zoom ? "transition-transform duration-500 group-hover:scale-105" : ""} />
     </div>
-    <div className={`sm:flex sm:items-start sm:gap-6 ${side === "right" ? "" : "sm:flex-row-reverse"}`}>
-      <p className="mt-2 text-sm leading-snug text-muted-foreground sm:flex-1">{main.caption}</p>
-      <figure className={`relative z-10 mt-6 w-3/4 shrink-0 ${insetClass}`}>
-        <div className="overflow-hidden border-4 border-background">
-          <Photo img={inset} imgClass="" />
-        </div>
-        <Caption>{inset.caption}</Caption>
-      </figure>
-    </div>
+    <figure className={`relative z-10 mt-6 w-3/4 ${side === "right" ? "sm:ml-auto" : "sm:mr-auto"} ${insetClass}`}>
+      <div className="overflow-hidden border-4 border-background">
+        <Photo img={inset} imgClass="" />
+      </div>
+    </figure>
+    <Caption>{sentence(main.caption)}. Inset: {sentence(inset.caption)}.</Caption>
   </div>
 );
 
