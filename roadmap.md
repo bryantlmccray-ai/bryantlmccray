@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Add supplied Career timeline stills and responsive renditions, preserving all existing content and Gallery.
+- [x] Verify Career at 390 WebKit and 1440, crops, sharpness and overflow; save without publishing.
+
 - [x] Add site-wide margin notes, section flags, hanging quotes, phone photo treatments and folios using existing facts.
 - [x] Verify every requested page and story at 390 WebKit and 1440, including reel behavior; save without publishing.
 

@@ -16,6 +16,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ScrollAnimations";
+import { stillSrcSet } from "@/lib/stills";
 
 const galleryImages = [
   { src: galleryWgnEnglewood, alt: "Live for WGN-TV on the West Englewood fire" },
@@ -34,6 +35,9 @@ const careerTimeline = [
     role: "General Assignment Reporter",
     org: "WGN-TV, Chicago, IL",
     period: "May 2026 – Present",
+    photos: [
+      { src: "/stills/bryant-skyline-lakefront.jpg", caption: "Live on the lakefront, Election Night 2026. WGN-TV broadcast still.", alt: "Bryant McCray reporting live on the Chicago lakefront." },
+    ],
     bullets: [
       "Breaking news, severe weather, and state and national politics for Chicago's WGN-TV.",
     ],
@@ -42,6 +46,10 @@ const careerTimeline = [
     role: "Reporter",
     org: "WKYC (NBC), Cleveland, OH",
     period: "2024 – 2025",
+    photos: [
+      { src: "/stills/career-wkyc-anchor.jpg", caption: "Anchoring at WKYC Studios, Cleveland. WKYC broadcast still.", alt: "Bryant McCray at the WKYC anchor desk." },
+      { src: "/stills/career-wkyc-field.jpg", caption: "In the field after Hurricane Helene. WKYC broadcast still.", alt: "Bryant McCray reporting in the field for WKYC." },
+    ],
     bullets: [
       "Breaking news, crime and courts, and community stories across Northeast Ohio.",
       "Three of those stories were nominated for Great Lakes Emmys in 2026.",
@@ -51,6 +59,10 @@ const careerTimeline = [
     role: "Broadcast Reporter",
     org: "CBS 58, Milwaukee, WI",
     period: "2022 – 2024",
+    photos: [
+      { src: "/stills/career-cbs58-live.jpg", caption: "Live breaking news, Milwaukee. CBS 58 broadcast still, restored from archival video.", alt: "Bryant McCray reporting live at night for CBS 58." },
+      { src: "/stills/career-cbs58-field.jpg", caption: "Reporting in Milwaukee. CBS 58 broadcast still, restored from archival video.", alt: "Bryant McCray reporting outside a Boys and Girls Club for CBS 58." },
+    ],
     bullets: [
       "Live breaking news and enterprise reporting in Milwaukee.",
       "Emmy nomination for Eye on AI, a story on deepfake technology.",
@@ -61,6 +73,10 @@ const careerTimeline = [
     role: "Producer & Broadcast Reporter",
     org: "WFRV (CBS), Green Bay, WI",
     period: "2016 – 2017",
+    photos: [
+      { src: "/stills/career-wfrv-phone.jpg", caption: "A stand-up shot on a phone, Green Bay. WFRV still, restored from archival video.", alt: "A phone showing Bryant McCray recording a stand-up." },
+      { src: "/stills/career-wfrv-snow.jpg", caption: "Live in the snow, Green Bay. WFRV still, restored from archival video.", alt: "Bryant McCray reporting live in winter gear for WFRV." },
+    ],
     bullets: [
       "Story development, guest booking, and segment production.",
       "Produced and reported daily for Northeast Wisconsin.",
@@ -149,11 +165,9 @@ const CareerPage = () => {
                   <div className="border-t border-border">
                   <Margin note={<div className="pt-9"><span className="block">{item.period}</span><span className="block">{item.org.split(",")[0]}</span></div>}>
                   <div className="py-8">
-                    <div className="grid md:grid-cols-12 gap-4">
-                      <div className="md:col-span-3 lg:hidden">
-                        <p className="text-sm text-muted-foreground">{item.period}</p>
-                      </div>
-                      <div className="md:col-span-9 lg:col-span-12">
+                    <div className="grid gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+                      <div className="min-w-0">
+                        <p className="hidden md:block xl:hidden text-sm text-muted-foreground mb-4">{item.period}</p>
                         <h3 className="font-serif text-xl text-foreground mb-1">
                           {item.role}
                         </h3>
@@ -174,6 +188,14 @@ const CareerPage = () => {
                             </>
                           )}
                         </ul>
+                      </div>
+                      <div className="order-first grid min-w-0 gap-6 md:order-last">
+                        {item.photos.map((photo) => (
+                          <figure key={photo.src} className="press-photo min-w-0">
+                            <img src={photo.src} srcSet={stillSrcSet(photo.src)} sizes="(min-width: 1280px) 590px, (min-width: 768px) 55vw, 100vw" alt={photo.alt} width={1920} height={1280} loading="lazy" decoding="async" className="aspect-[3/2] w-full object-cover object-center" />
+                            <figcaption className="mt-3 text-xs leading-relaxed text-muted-foreground">{photo.caption}</figcaption>
+                          </figure>
+                        ))}
                       </div>
                     </div>
                   </div>
