@@ -45,6 +45,11 @@ export const writingPhotos: Record<string, { src: string; alt: string; caption: 
     alt: "New students at orientation at the Illinois College of Osteopathic Medicine.",
     caption: "New student orientation. WGN-TV broadcast still.",
   },
+  "cta-union-safety": {
+    src: "/stills/writing-cta-union.jpg",
+    alt: "Penny McCoach of ATU Local 308 speaks to reporters at Damen and Lake, union members standing behind her.",
+    caption: "Penny McCoach of ATU Local 308 at Damen and Lake. WGN-TV broadcast still.",
+  },
 };
 
 // Reuse the published copy verbatim; the section front omits the AI opening.
