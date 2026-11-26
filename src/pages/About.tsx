@@ -49,61 +49,63 @@ const About = () => {
         </header>
 
         <section className="pb-20 md:pb-28">
-          <div className="wide-container grid gap-y-10 lg:grid-cols-3">
-            <article className="min-w-0 lg:col-span-2 lg:pr-10">
-              <h2 className="font-serif text-[32px] md:text-[44px] lg:text-[48px] leading-[1.08] text-foreground mb-6">
-                I grew up on the West Side. Now I report on the whole city.
-              </h2>
-              <Overlap
-                main={{ src: "/stills/bryant-field-action.jpg", alt: "Bryant McCray reporting for WGN-TV beside a tree that fell on a car during a storm", caption: "Reporting in the field after a storm. WGN-TV.", width: 1620, height: 1080, className: "object-left", eager: true, sizes: "(min-width: 1024px) 800px, 100vw" }}
-                inset={{ src: "/stills/bryant-field-westside.jpg", alt: "Bryant McCray reporting live for WGN-TV on Chicago's West Side", caption: "Reporting live on the West Side. WGN-TV.", sizes: "(min-width: 1024px) 280px, 75vw" }}
-                side="right"
-                insetClass="sm:-mt-[15%] sm:mr-[4%] sm:w-[36%]"
-              />
-              <Byline date="November 2026" />
-              <p className="mt-1 text-sm text-muted-foreground">WGN-TV · Chicago · Since 2026</p>
-              <div className="mt-6 space-y-6 font-serif text-xl text-foreground/80 leading-relaxed max-w-[65ch]">
-                <p className="first-letter:float-left first-letter:mr-2 first-letter:mt-1 first-letter:text-[64px] first-letter:leading-[0.85]">
-                  I was raised on Chicago's West Side, with Mario's Italian Ice in one hand and Italian Fiesta pizza in the other. I went to Alain Locke Charter School, then Loyola Academy up in Wilmette.
-                </p>
-                <p>
-                  TV news started for me at St. Norbert College, on a student show called Knight Talk. From there it was Green Bay, then Milwaukee, then Cleveland. Now I'm home, at WGN.
-                </p>
-                <blockquote className="border-y border-border py-5">
-                  <p className="text-2xl md:text-[32px] leading-snug">Chicago taught me early that people don't want to be impressed. They want to be understood.</p>
-                  <cite className="mt-3 block font-sans text-sm not-italic text-muted-foreground">Bryant McCray</cite>
-                </blockquote>
-                <p>
-                  Chicago taught me early that people don't want to be impressed. They want to be understood. So that's how I report. I show up, I listen, and I let the people in the story carry it.
-                </p>
-                <p>
-                  Four-time Regional Emmy® Award Nominee. Three of those nominations came this year.
-                </p>
-              </div>
-            </article>
-            <aside className="min-w-0 border-t border-border pt-8 lg:border-t-0 lg:border-l lg:pl-7 lg:pt-0">
-              <h2 className="font-serif text-3xl text-foreground mb-3">Honors</h2>
-              <p className="font-serif text-xl text-foreground mb-5">Four Regional Emmy® nominations.</p>
-              <ul className="border-b border-border">
-                {RECOGNITION.map((row) => (
-                  <li key={row.story} className="border-t border-border py-5">
-                    <p className="text-sm text-muted-foreground mb-2">{row.year} · {row.station}</p>
-                    <ItemLink href={row.href} className="font-serif text-xl text-foreground min-h-11">{row.story}</ItemLink>
-                    <p className="text-base text-muted-foreground mt-2 leading-relaxed">{row.honor}</p>
-                    <p className="text-base text-muted-foreground mt-1 leading-relaxed">{row.detail}</p>
-                  </li>
-                ))}
-              </ul>
-              <div className="border-b border-border py-6">
-                <h2 className="font-serif text-2xl text-foreground mb-3">Also carried on</h2>
-                <p className="text-base text-foreground/80 leading-relaxed">
-                  My WGN reporting also runs on{" "}
-                  <Link to="/work" className="link-plain underline">NewsNation and Nexstar stations</Link>{" "}
-                  across the Midwest.
-                </p>
-              </div>
-              <a href="mailto:bryant.l.mccray@gmail.com" className="mt-4 inline-flex min-h-11 items-center text-base text-foreground underline underline-offset-[3px]">Get in Touch</a>
-            </aside>
+          <div className="wide-container">
+            <h2 className="font-serif text-[32px] md:text-[44px] lg:text-[48px] leading-[1.08] text-foreground mb-6">
+              I grew up on the West Side. Now I report on the whole city.
+            </h2>
+            <Overlap
+              main={{ src: "/stills/bryant-rain-live.jpg", alt: "Bryant McCray reporting live in the rain in a WGN hat and rain jacket, holding a WGN microphone.", caption: "Reporting live in the rain during storm coverage. WGN-TV, July 2026. WGN-TV broadcast still.", width: 1920, height: 1080, className: "!aspect-video object-center", eager: true, sizes: "(min-width: 1024px) 1328px, 100vw" }}
+              inset={{ src: "/stills/bryant-field-westside.jpg", alt: "Bryant McCray reporting live for WGN-TV on Chicago's West Side", caption: "Reporting live on the West Side. WGN-TV.", sizes: "(min-width: 1024px) 320px, 75vw" }}
+              side="right"
+              insetClass="sm:-mt-[13%] sm:mr-[3%] sm:w-[24%]"
+            />
+            <div className="grid gap-y-10 lg:grid-cols-3">
+              <article className="min-w-0 lg:col-span-2 lg:pr-10">
+                <Byline date="November 2026" />
+                <p className="mt-1 text-sm text-muted-foreground">WGN-TV · Chicago · Since 2026</p>
+                <div className="mt-6 space-y-6 font-serif text-xl text-foreground/80 leading-relaxed max-w-[65ch]">
+                  <p className="first-letter:float-left first-letter:mr-2 first-letter:mt-1 first-letter:text-[64px] first-letter:leading-[0.85]">
+                    I was raised on Chicago's West Side, with Mario's Italian Ice in one hand and Italian Fiesta pizza in the other. I went to Alain Locke Charter School, then Loyola Academy up in Wilmette.
+                  </p>
+                  <p>
+                    TV news started for me at St. Norbert College, on a student show called Knight Talk. From there it was Green Bay, then Milwaukee, then Cleveland. Now I'm home, at WGN.
+                  </p>
+                  <blockquote className="border-y border-border py-5">
+                    <p className="text-2xl md:text-[32px] leading-snug">Chicago taught me early that people don't want to be impressed. They want to be understood.</p>
+                    <cite className="mt-3 block font-sans text-sm not-italic text-muted-foreground">Bryant McCray</cite>
+                  </blockquote>
+                  <p>
+                    Chicago taught me early that people don't want to be impressed. They want to be understood. So that's how I report. I show up, I listen, and I let the people in the story carry it.
+                  </p>
+                  <p>
+                    Four-time Regional Emmy® Award Nominee. Three of those nominations came this year.
+                  </p>
+                </div>
+              </article>
+              <aside className="min-w-0 border-t border-border pt-8 lg:border-t-0 lg:border-l lg:pl-7 lg:pt-0">
+                <h2 className="font-serif text-3xl text-foreground mb-3">Honors</h2>
+                <p className="font-serif text-xl text-foreground mb-5">Four Regional Emmy® nominations.</p>
+                <ul className="border-b border-border">
+                  {RECOGNITION.map((row) => (
+                    <li key={row.story} className="border-t border-border py-5">
+                      <p className="text-sm text-muted-foreground mb-2">{row.year} · {row.station}</p>
+                      <ItemLink href={row.href} className="font-serif text-xl text-foreground min-h-11">{row.story}</ItemLink>
+                      <p className="text-base text-muted-foreground mt-2 leading-relaxed">{row.honor}</p>
+                      <p className="text-base text-muted-foreground mt-1 leading-relaxed">{row.detail}</p>
+                    </li>
+                  ))}
+                </ul>
+                <div className="border-b border-border py-6">
+                  <h2 className="font-serif text-2xl text-foreground mb-3">Also carried on</h2>
+                  <p className="text-base text-foreground/80 leading-relaxed">
+                    My WGN reporting also runs on{" "}
+                    <Link to="/work" className="link-plain underline">NewsNation and Nexstar stations</Link>{" "}
+                    across the Midwest.
+                  </p>
+                </div>
+                <a href="mailto:bryant.l.mccray@gmail.com" className="mt-4 inline-flex min-h-11 items-center text-base text-foreground underline underline-offset-[3px]">Get in Touch</a>
+              </aside>
+            </div>
           </div>
         </section>
 

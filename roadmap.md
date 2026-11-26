@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Replace About's lead photo with the supplied rain live shot, full width with a smaller West Side inset and exact caption.
+- [x] Verify About at 390 WebKit and 1440, including image sharpness, clear face and microphone, unchanged share image, and no horizontal scroll; save without publishing.
+
 - [x] Extend the newspaper section front to About and Home while preserving existing copy, media and dark bands.
 - [x] Verify both pages at 390 WebKit and 1440, links, photo overlaps and muted reel settings; save without publishing. Existing YouTube iframe warning remains in WebKit.
 
