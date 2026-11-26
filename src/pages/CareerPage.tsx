@@ -48,7 +48,7 @@ const careerTimeline = [
     period: "2024 – 2025",
     photos: [
       { src: "/stills/career-wkyc-anchor.jpg", caption: "Anchoring at WKYC Studios, Cleveland. WKYC broadcast still.", alt: "Bryant McCray at the WKYC anchor desk." },
-      { src: "/stills/career-wkyc-field.jpg", caption: "In the field after Hurricane Helene. WKYC broadcast still.", alt: "Bryant McCray reporting in the field for WKYC." },
+      { src: "/stills/career-wkyc-field-v2.jpg", caption: "In the field after Hurricane Helene. WKYC broadcast still.", alt: "Bryant McCray reporting in the field for WKYC." },
     ],
     bullets: [
       "Breaking news, crime and courts, and community stories across Northeast Ohio.",
@@ -60,8 +60,8 @@ const careerTimeline = [
     org: "CBS 58, Milwaukee, WI",
     period: "2022 – 2024",
     photos: [
-      { src: "/stills/career-cbs58-live.jpg", caption: "Live breaking news, Milwaukee. CBS 58 broadcast still, restored from archival video.", alt: "Bryant McCray reporting live at night for CBS 58." },
-      { src: "/stills/career-cbs58-field.jpg", caption: "Reporting in Milwaukee. CBS 58 broadcast still, restored from archival video.", alt: "Bryant McCray reporting outside a Boys and Girls Club for CBS 58." },
+      { src: "/stills/career-cbs58-live-v2.jpg", caption: "Live breaking news, Milwaukee. CBS 58 broadcast still, restored from archival video.", alt: "Bryant McCray reporting live at night for CBS 58." },
+      { src: "/stills/career-cbs58-field-v2.jpg", caption: "Reporting in Milwaukee. CBS 58 broadcast still, restored from archival video.", alt: "Bryant McCray reporting outside a Boys and Girls Club for CBS 58." },
     ],
     bullets: [
       "Live breaking news and enterprise reporting in Milwaukee.",
@@ -75,7 +75,7 @@ const careerTimeline = [
     period: "2016 – 2017",
     photos: [
       { src: "/stills/career-wfrv-phone.jpg", caption: "A stand-up shot on a phone, Green Bay. WFRV still, restored from archival video.", alt: "A phone showing Bryant McCray recording a stand-up." },
-      { src: "/stills/career-wfrv-snow.jpg", caption: "Live in the snow, Green Bay. WFRV still, restored from archival video.", alt: "Bryant McCray reporting live in winter gear for WFRV." },
+      { src: "/stills/career-wfrv-snow-v2.jpg", caption: "Live in the snow, Green Bay. WFRV still, restored from archival video.", alt: "Bryant McCray reporting live in winter gear for WFRV." },
     ],
     bullets: [
       "Story development, guest booking, and segment production.",
