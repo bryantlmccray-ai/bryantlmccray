@@ -51,7 +51,7 @@ export const writingSamples: WritingSample[] = [
   {
     "slug": "save-a-lot-closures",
     "pdf": "/writing/pdf/Bryant_McCray_save-a-lot-closures.pdf",
-    "frame": null,
+    "frame": "/writing/frames/SAVEALOT.jpg",
     "date": "July 25, 2026",
     "head": "Seven Save A Lot stores close on Chicago's South and West sides, less than two years into a taxpayer-backed rescue",
     "dek": "The city put $13.5 million in taxpayer financing behind the deal. The stores closed less than two years later.",

@@ -50,6 +50,11 @@ export const writingPhotos: Record<string, { src: string; alt: string; caption: 
     alt: "Penny McCoach of ATU Local 308 speaks to reporters at Damen and Lake, union members standing behind her.",
     caption: "Penny McCoach of ATU Local 308 at Damen and Lake. WGN-TV broadcast still.",
   },
+  "save-a-lot-closures": {
+    src: "/writing/frames/SAVEALOT.jpg",
+    alt: "A Save A Lot store front with a nearly empty parking lot and a lone cart corral on closing day.",
+    caption: "The Save A Lot store as the lot emptied on closing day, July 25, 2026. WGN-TV broadcast still.",
+  },
 };
 
 // Reuse the published copy verbatim; the section front omits the AI opening.

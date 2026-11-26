@@ -83,3 +83,6 @@
 
 - [x] Add six Writing broadcast stills, responsive WebP versions, exact published openings and Ryan Field pull quote.
 - [x] Verify Writing at 390 WebKit and 1440, retina image sources, exact copy, all 11 PDF links, no overflow or errors; save without publishing.
+
+- [x] Add the Save A Lot closing day frame and its supplied caption; store the two new stills without adding story or Work entries.
+- [x] Verify Home, Writing and the Save A Lot story at 390 WebKit and 1440 retina, photo loading, quote layout and overflow; save without publishing.
