@@ -298,3 +298,23 @@ html { scroll-padding-top: calc(5rem + env(safe-area-inset-top)); }
   .group:hover .group-hover\:scale-105,
   .group:hover .group-hover\:scale-110 { transform: none; }
 }
+
+/* Section numbers: small old-style figures in the serif. */
+.section-number {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-variant-numeric: oldstyle-nums;
+  color: hsl(var(--muted-foreground));
+}
+.dateline-city {
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.05em;
+}
+
+/* Paper: a faint tiled grain behind the light sections. Sits in the background layer,
+   so it never covers text. Dark bands paint their own background over it. */
+main.bg-background {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}

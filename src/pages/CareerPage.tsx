@@ -9,6 +9,7 @@ import galleryRambleWalk from "@/assets/gallery-ramble-walk.jpg";
 import galleryRambleInterview from "@/assets/gallery-ramble-interview.jpg";
 import galleryWgnEnglewood from "@/assets/gallery-wgn-englewood.jpg";
 import galleryWgnLakefront from "@/assets/gallery-wgn-lakefront.jpg";
+import { Margin, SectionHead } from "@/components/Editorial";
 import Seo from "@/components/Seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -138,21 +139,19 @@ const CareerPage = () => {
         {/* Timeline */}
         <section className="py-16">
           <div className="editorial-container">
-            <FadeIn>
-              <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-8">
-                Experience
-              </h2>
-            </FadeIn>
+            <SectionHead n={1}><h2 className="font-serif text-3xl md:text-4xl text-foreground">Experience</h2></SectionHead>
 
             <StaggerContainer className="space-y-0">
               {careerTimeline.map((item, index) => (
                 <StaggerItem key={index}>
-                  <div className="py-8 border-t border-border">
+                  <div className="border-t border-border">
+                  <Margin note={<div className="pt-9"><span className="block">{item.period}</span><span className="block">{item.org.split(",")[0]}</span></div>}>
+                  <div className="py-8">
                     <div className="grid md:grid-cols-12 gap-4">
-                      <div className="md:col-span-3">
+                      <div className="md:col-span-3 lg:hidden">
                         <p className="text-sm text-muted-foreground">{item.period}</p>
                       </div>
-                      <div className="md:col-span-9">
+                      <div className="md:col-span-9 lg:col-span-12">
                         <h3 className="font-serif text-xl text-foreground mb-1">
                           {item.role}
                         </h3>
@@ -170,6 +169,8 @@ const CareerPage = () => {
                       </div>
                     </div>
                   </div>
+                  </Margin>
+                  </div>
                 </StaggerItem>
               ))}
             </StaggerContainer>
@@ -179,7 +180,8 @@ const CareerPage = () => {
         {/* Gallery */}
         <section className="py-16">
           <div className="editorial-container">
-            <h2 className="font-serif text-2xl text-foreground mb-10">Gallery</h2>
+            <SectionHead n={2}><h2 className="font-serif text-2xl text-foreground">Gallery</h2></SectionHead>
+            <Margin>
             <div className="flex flex-wrap gap-3 md:gap-4">
               {galleryImages.map((image) => (
                 <button
@@ -193,6 +195,7 @@ const CareerPage = () => {
                 </button>
               ))}
             </div>
+            </Margin>
           </div>
         </section>
 
@@ -208,34 +211,28 @@ const CareerPage = () => {
         {/* Skills */}
         <section className="py-16">
           <div className="editorial-container">
-            <FadeIn>
-              <h2 className="font-serif text-2xl text-foreground mb-10">
-                Skills
-              </h2>
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <p className="text-foreground/80 leading-relaxed max-w-[60ch]">{skills.join(" · ")}</p>
-            </FadeIn>
+            <SectionHead n={3}><h2 className="font-serif text-2xl text-foreground">Skills</h2></SectionHead>
+            <Margin><p className="text-foreground/80 leading-relaxed max-w-[60ch]">{skills.join(" · ")}</p></Margin>
           </div>
         </section>
 
         {/* Awards */}
         <section className="py-16">
           <div className="editorial-container">
-            <FadeIn>
-              <h2 className="font-serif text-2xl text-foreground mb-10">
-                Recognition
-              </h2>
-            </FadeIn>
+            <SectionHead n={4}><h2 className="font-serif text-2xl text-foreground">Recognition</h2></SectionHead>
 
             <ul className="border-b border-border">
               {awards.map((award, index) => (
-                <li key={index} className="grid gap-1 border-t border-border py-5 md:grid-cols-12 md:gap-4">
-                  <span className="text-sm tabular-nums text-muted-foreground md:col-span-3">{award.year}</span>
-                  <span className="md:col-span-9">
+                <li key={index} className="border-t border-border">
+                <Margin note={<div className="pt-6 tabular-nums">{award.year}</div>}>
+                <div className="grid gap-1 py-5 md:grid-cols-12 md:gap-4">
+                  <span className="text-sm tabular-nums text-muted-foreground md:col-span-3 lg:hidden">{award.year}</span>
+                  <span className="md:col-span-9 lg:col-span-12">
                     <span className="block font-serif text-lg text-foreground">{award.title}</span>
                     <span className="block text-sm text-muted-foreground">{award.org}</span>
                   </span>
+                </div>
+                </Margin>
                 </li>
               ))}
             </ul>
@@ -245,12 +242,8 @@ const CareerPage = () => {
         {/* Education */}
         <section className="py-16">
           <div className="editorial-container">
-            <FadeIn>
-              <h2 className="font-serif text-2xl text-foreground mb-10">
-                Education
-              </h2>
-            </FadeIn>
-            <FadeIn delay={0.2}>
+            <SectionHead n={5}><h2 className="font-serif text-2xl text-foreground">Education</h2></SectionHead>
+            <Margin>
               {education.map((edu, index) => (
                 <div key={index}>
                   <h3 className="font-serif text-lg text-foreground mb-1">
@@ -261,25 +254,21 @@ const CareerPage = () => {
                   </p>
                 </div>
               ))}
-            </FadeIn>
+            </Margin>
           </div>
         </section>
 
         {/* Affiliations */}
         <section className="py-16">
           <div className="editorial-container">
-            <FadeIn>
-              <h2 className="font-serif text-2xl text-foreground mb-10">
-                Affiliations
-              </h2>
-            </FadeIn>
-            <FadeIn delay={0.2}>
+            <SectionHead n={6}><h2 className="font-serif text-2xl text-foreground">Affiliations</h2></SectionHead>
+            <Margin>
               <div className="flex flex-wrap gap-x-8 gap-y-3">
                 {affiliations.map((org, index) => (
                   <p key={index} className="text-muted-foreground">{org}</p>
                 ))}
               </div>
-            </FadeIn>
+            </Margin>
           </div>
         </section>
 

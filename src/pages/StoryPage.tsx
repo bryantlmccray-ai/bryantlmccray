@@ -10,6 +10,8 @@ import { stillSrcSet } from "@/lib/stills";
 
 import NotFound from "@/pages/NotFound";
 import { stories } from "@/data/stories";
+import { Caption, Dateline } from "@/components/Editorial";
+import { stillCaption } from "@/lib/storyMeta";
 
 const StoryPage = () => {
   const { slug } = useParams();
@@ -55,11 +57,12 @@ const StoryPage = () => {
                 {story.headline}
               </h1>
               <p className="text-muted-foreground text-base leading-[1.6] max-w-[65ch]">
+                <Dateline {...story.dateline} />
                 {story.dek}
               </p>
             </header>
             {story.still && (
-              <div className="editorial-container mt-10">
+              <figure className="editorial-container mt-10">
                 <img
                   src={story.still}
                   srcSet={stillSrcSet(story.still)}
@@ -70,7 +73,8 @@ const StoryPage = () => {
                   height={1080}
                   className="w-full aspect-[3/2] md:aspect-[16/9] object-cover"
                 />
-              </div>
+                <Caption>{stillCaption(story)}</Caption>
+              </figure>
             )}
           </div>
           <section className="py-12 md:py-16">

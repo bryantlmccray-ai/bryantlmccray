@@ -1,6 +1,8 @@
 import NightBand from "@/components/NightBand";
 import FeaturedVideo from "@/components/FeaturedVideo";
 import Seo from "@/components/Seo";
+import { Caption, Dateline, Overlap } from "@/components/Editorial";
+import { stillCaption } from "@/lib/storyMeta";
 import { stillSrcSet, REEL_ID, REEL_TITLE, REEL_LINK, REEL_POSTER, REEL_ALT } from "@/lib/stills";
 import React, { Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -475,7 +477,8 @@ const Index = () => {
 
         {/* Identity band */}
         <section className="py-24 md:py-32 border-t border-border">
-          <div className="editorial-container">
+          <div className="editorial-container grid gap-12 lg:grid-cols-12 lg:gap-10">
+            <div className="lg:col-span-6">
             <h2 className="font-serif text-display text-foreground mb-6">
               <span className="block overflow-hidden">
                 <motion.span
@@ -510,6 +513,13 @@ const Index = () => {
             >
               I cover breaking news and politics for WGN-TV in Chicago. Four-time Regional Emmy® Award Nominee, with three of those nominations this year.
             </motion.p>
+            </div>
+            <Overlap
+              className="lg:col-span-6 lg:mt-6"
+              main={{ src: "/stills/election-night-2026.jpg", alt: "Voters at the booths on Election Day 2026 in Chicago", caption: stillCaption(stories.find((s) => s.slug === "election-night-2026")!), sizes: "(min-width: 1024px) 420px, 100vw" }}
+              inset={{ src: "/stills/bryant-field-nwi.jpg", alt: "Bryant McCray reporting for WGN-TV in Northwest Indiana after the August 2026 storm", caption: "Reporting in the field, Northwest Indiana. WGN-TV, August 2026. WGN-TV broadcast still.", sizes: "200px" }}
+              insetClass="sm:-mt-[13%] sm:ml-[3%] sm:w-[44%]"
+            />
           </div>
         </section>
 
@@ -578,7 +588,8 @@ const Index = () => {
                     className="block group py-8 border-t border-border"
                   >
                     <div className="flex flex-col md:flex-row md:items-start gap-6">
-                      <div className="w-full md:w-72 flex-shrink-0 overflow-hidden">
+                      <figure className="w-full md:w-72 flex-shrink-0">
+                        <div className="overflow-hidden">
                         <FreezeFrame
                           id={story.youtubeId}
                           still={story.still}
@@ -588,14 +599,16 @@ const Index = () => {
                           loading="lazy"
                           className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                      </div>
+                        </div>
+                        {story.still && <Caption>{stillCaption(story)}</Caption>}
+                      </figure>
                       <div className="flex-1 flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                         <div className="flex-1">
                           <p className="text-sm text-muted-foreground mb-2">{category} · WGN-TV · {date}</p>
                           <h3 className="link-plain-target font-serif text-2xl text-foreground mb-2">
                             {story.headline}
                           </h3>
-                          <p className="text-muted-foreground max-w-lg">{firstSentence(story.dek)}</p>
+                          <p className="text-muted-foreground max-w-lg"><Dateline {...story.dateline} />{firstSentence(story.dek)}</p>
                         </div>
                       </div>
                     </div>

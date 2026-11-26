@@ -4,6 +4,8 @@ export type Story = {
   /** Clean still from the WGN master; preferred over YouTube frames wherever the story is pictured. */
   still?: string;
   kicker: string;
+  /** Dateline city from the kicker, or the station's city when the kicker names neighborhoods. */
+  dateline: { city: string; state?: string };
   headline: string;
   dek: string;
   videoSrc: string;
@@ -16,6 +18,7 @@ export type Story = {
 export const stories: Story[] = [
   {
     slug: "election-night-2026",
+    dateline: { city: "Chicago" },
     still: "/stills/election-night-2026.jpg",
     youtubeId: "vEyqRmLleUk",
     kicker: "WGN NEWS · NOVEMBER 2026 · CHICAGO",
@@ -31,6 +34,7 @@ export const stories: Story[] = [
   },
   {
     slug: "amtrak-rail-yard",
+    dateline: { city: "Chicago" },
     still: "/stills/amtrak-rail-yard.jpg",
     youtubeId: "gCQBi65OJZ0",
     kicker: "WGN NEWS · 2026 · PILSEN, CHINATOWN AND BRIDGEPORT",
@@ -42,6 +46,7 @@ export const stories: Story[] = [
   },
   {
     slug: "bears-stadium-fight",
+    dateline: { city: "Arlington Heights", state: "Ill." },
     still: "/stills/bears-stadium-fight.jpg",
     youtubeId: "AeIe9BmfADo",
     kicker: "WGN NEWS · 2026 · ARLINGTON HEIGHTS AND CHICAGO",
@@ -53,6 +58,7 @@ export const stories: Story[] = [
   },
   {
     slug: "nwi-storm-series",
+    dateline: { city: "Munster", state: "Ind." },
     still: "/stills/nwi-storm-series.jpg",
     youtubeId: "5hQTl-y7-YQ",
     kicker: "WGN NEWS · AUGUST 2026 · MUNSTER, INDIANA",
@@ -68,6 +74,7 @@ export const stories: Story[] = [
   },
   {
     slug: "one-traffic-stop-an-unlikely-rescue",
+    dateline: { city: "Springfield Township", state: "Ohio" },
     youtubeId: "kdEjhUDVZiE",
     kicker: "WKYC · MAY 2025 · SPRINGFIELD TOWNSHIP, OHIO",
     headline: "One Traffic Stop, An Unlikely Rescue",

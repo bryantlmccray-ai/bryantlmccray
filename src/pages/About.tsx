@@ -5,6 +5,7 @@ import PageTransition from "@/components/PageTransition";
 import { FadeIn } from "@/components/ScrollAnimations";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { Margin, Overlap, SectionHead } from "@/components/Editorial";
 import { testimonials } from "@/data/testimonials";
 import aaccwiMark from "@/assets/aaccwi-mark.png";
 import loyolaAcademyLogo from "@/assets/loyola-academy-logo.png";
@@ -54,30 +55,18 @@ const About = () => {
 
         <section className="pt-4 pb-24 md:pt-8 md:pb-32">
           <div className="editorial-container">
+            <SectionHead n={1} />
+            <Margin note={<><span className="block">WGN-TV</span><span className="block">Chicago</span><span className="block">Since 2026</span></>}>
             <div className="grid lg:grid-cols-12 gap-12 lg:gap-12 max-md:overflow-x-clip">
               {/* Creative Photo Layout */}
               <FadeIn direction="left" className="lg:col-span-7 order-1">
-                <div className="relative">
-                  <div className="overflow-hidden">
-                    <img
-                      src="/stills/bryant-field-action.jpg"
-                      alt="Bryant McCray reporting for WGN-TV beside a tree that fell on a car during a storm"
-                      width={1620}
-                      height={1080}
-                      className="w-full aspect-[3/2] object-cover object-left"
-                    />
-                  </div>
-                  <div className="absolute bottom-0 right-0 w-1/3 overflow-hidden border-4 border-background">
-                    <img
-                      src="/stills/bryant-field-westside.jpg"
-                      alt="Bryant McCray reporting live for WGN-TV on Chicago's West Side"
-                      width={1920}
-                      height={1080}
-                      loading="lazy"
-                      className="w-full aspect-[3/2] object-cover"
-                    />
-                  </div>
-                </div>
+                <Overlap
+                  className=""
+                  main={{ src: "/stills/bryant-field-action.jpg", alt: "Bryant McCray reporting for WGN-TV beside a tree that fell on a car during a storm", caption: "Reporting in the field after a storm. WGN-TV.", width: 1620, height: 1080, className: "object-left", eager: true, sizes: "(min-width: 1024px) 480px, 100vw" }}
+                  inset={{ src: "/stills/bryant-field-westside.jpg", alt: "Bryant McCray reporting live for WGN-TV on Chicago's West Side", caption: "Reporting live on the West Side. WGN-TV.", sizes: "240px" }}
+                  side="right"
+                  insetClass="sm:-mt-[15%] sm:mr-[4%] sm:w-[36%]"
+                />
               </FadeIn>
 
               {/* Content */}
@@ -115,24 +104,31 @@ const About = () => {
                 </FadeIn>
               </div>
             </div>
+            </Margin>
           </div>
         </section>
 
         <section className="pb-20 md:pb-28">
           <div className="editorial-container">
-            <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-8">
-              Four Regional Emmy® nominations.
-            </h2>
+            <SectionHead n={2}>
+              <h2 className="font-serif text-3xl md:text-4xl text-foreground">
+                Four Regional Emmy® nominations.
+              </h2>
+            </SectionHead>
             <ul className="border-b border-border">
               {RECOGNITION.map((row) => (
-                <li key={row.story} className="grid gap-1 border-t border-border py-5 md:grid-cols-12 md:items-baseline md:gap-6">
-                  <span className="text-sm tabular-nums text-muted-foreground md:col-span-1">{row.year}</span>
-                  <span className="text-sm text-muted-foreground md:col-span-3">{row.honor}</span>
-                  <span className="md:col-span-6">
+                <li key={row.story} className="border-t border-border">
+                <Margin note={<div className="pt-6"><span className="block tabular-nums">{row.year}</span><span className="block">{row.station}</span></div>}>
+                <div className="grid gap-1 py-5 md:grid-cols-12 md:items-baseline md:gap-6">
+                  <span className="text-sm tabular-nums text-muted-foreground md:col-span-1 lg:hidden">{row.year}</span>
+                  <span className="text-sm text-muted-foreground md:col-span-3 lg:col-span-4">{row.honor}</span>
+                  <span className="md:col-span-6 lg:col-span-8">
                     <ItemLink href={row.href} className="font-serif text-xl text-foreground">{row.story}</ItemLink>
                     <span className="block text-sm text-muted-foreground mt-1">{row.detail}</span>
                   </span>
-                  <span className="text-sm text-muted-foreground md:col-span-2 md:text-right">{row.station}</span>
+                  <span className="text-sm text-muted-foreground md:col-span-2 md:text-right lg:hidden">{row.station}</span>
+                </div>
+                </Margin>
                 </li>
               ))}
             </ul>
@@ -142,7 +138,7 @@ const About = () => {
         {testimonials.length > 0 && (
           <section className="pb-20 md:pb-28">
             <div className="editorial-container">
-              <h2 className="font-serif text-2xl text-foreground mb-6">What colleagues say</h2>
+              <SectionHead n={3}><h2 className="font-serif text-2xl text-foreground">What colleagues say</h2></SectionHead>
               <div className="border-b border-border">
                 {testimonials.map((t) => (
                   <figure key={`${t.name}-${t.organization}`} className="border-t border-border py-8">
@@ -159,20 +155,26 @@ const About = () => {
 
         <section className="pb-24 md:pb-32">
           <div className="editorial-container">
-            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-8">
-              Rooms I've hosted. Places that told my story.
-            </h2>
+            <SectionHead n={testimonials.length > 0 ? 4 : 3}>
+              <h2 className="font-serif text-2xl md:text-3xl text-foreground">
+                Rooms I've hosted. Places that told my story.
+              </h2>
+            </SectionHead>
             <ul className="border-b border-border">
               {APPEARANCES.map((item) => (
-                <li key={item.title} className="flex gap-5 border-t border-border py-6">
+                <li key={item.title} className="border-t border-border">
+                <Margin note={<div className="pt-7"><span className="block">{item.label}</span><span className="block">{item.org}</span></div>}>
+                <div className="flex gap-5 py-6">
                   <div className="w-14 shrink-0 pt-1">
                     {item.logo && <img src={item.logo} alt={item.logoAlt} width={56} height={56} loading="lazy" decoding="async" className="h-auto max-h-12 w-14 object-contain object-left" />}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm text-muted-foreground mb-1">{item.label} · {item.org}</p>
+                    <p className="text-sm text-muted-foreground mb-1 lg:hidden">{item.label} · {item.org}</p>
                     <ItemLink href={item.href} className="font-serif text-xl text-foreground">{item.title}</ItemLink>
                     <p className="text-sm text-muted-foreground leading-relaxed mt-1 max-w-[60ch]">{item.detail}</p>
                   </div>
+                </div>
+                </Margin>
                 </li>
               ))}
             </ul>

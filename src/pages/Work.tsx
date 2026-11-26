@@ -10,6 +10,9 @@ import { Helmet } from "react-helmet-async";
 import Seo from "@/components/Seo";
 import { stories, type Story } from "@/data/stories";
 import { syndication } from "@/data/syndication";
+import { Dateline, Margin, Overlap, SectionHead } from "@/components/Editorial";
+import { stillCaption, storyDate } from "@/lib/storyMeta";
+import type { ReactNode } from "react";
 import { stillSrcSet, REEL_LINK, REEL_TITLE } from "@/lib/stills";
 import justiceThumb from "@/assets/12-years-justice-thumbnail.jpeg";
 import pressReelThumbnail from "@/assets/press-reel-thumbnail.png";
@@ -239,11 +242,6 @@ const STORY_CATEGORY: Record<string, string> = {
   "amtrak-rail-yard": "Community",
 };
 
-// "WGN NEWS · NOVEMBER 2026 · CHICAGO" -> "November 2026"
-const storyDate = (story: Story) => {
-  const part = story.kicker.split("·")[1]?.trim() ?? "";
-  return part.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
-};
 
 const firstSentence = (text: string) => {
   const match = text.match(/^.*?[.!?](\s|$)/);
@@ -253,11 +251,11 @@ const firstSentence = (text: string) => {
 const storyImage = (story: Story) => story.still ?? `https://i.ytimg.com/vi/${story.youtubeId}/hqdefault.jpg`;
 
 // One row of an editorial list: date and text left, small photo right, hairline above.
-type RowProps = { index?: number; image: string; alt: string; meta: string; headline: string; dek: string };
+type RowProps = { index?: number; image: string; alt: string; meta: ReactNode; headline: string; dek: ReactNode };
 
 const ListRow = ({ index, image, alt, meta, headline, dek }: RowProps) => (
   <div className="flex gap-5 py-6 md:gap-8">
-    {index !== undefined && <span className="w-6 shrink-0 pt-1 text-sm tabular-nums text-muted-foreground">{String(index).padStart(2, "0")}</span>}
+    {index !== undefined && <span className="section-number w-6 shrink-0">{String(index).padStart(2, "0")}</span>}
     <div className="min-w-0 flex-1">
       <p className="text-sm text-muted-foreground mb-1">{meta}</p>
       <h3 className="link-plain-target font-serif text-xl md:text-2xl text-foreground leading-snug mb-1">{headline}</h3>
@@ -268,6 +266,10 @@ const ListRow = ({ index, image, alt, meta, headline, dek }: RowProps) => (
     </div>
   </div>
 );
+
+// Margin note text: shown in the left column from 1024px, folded into the meta line below that.
+const Note = ({ lines }: { lines: string[] }) => <>{lines.map((l) => <span key={l} className="block">{l}</span>)}</>;
+const Folded = ({ children }: { children: ReactNode }) => <span className="lg:hidden">{children}</span>;
 
 const scrollTop = () => window.scrollTo({ top: 0, behavior: "instant" });
 
@@ -289,6 +291,7 @@ const Work = () => {
 
   const workRow = (item: (typeof workItems)[number]) => (
     <li key={item.link} className="border-t border-border">
+      <Margin note={<div className="pt-7"><Note lines={[item.year, item.station]} /></div>}>
       <button
         type="button"
         onClick={() => setSelectedVideo({ title: item.title, link: item.link })}
@@ -298,11 +301,12 @@ const Work = () => {
         <ListRow
           image={item.thumbnail}
           alt={item.alt ?? `Bryant McCray, ${item.station} reporter, ${item.title}`}
-          meta={`${item.year} · ${item.station}, ${item.market}`}
+          meta={<><Folded>{item.year} · {item.station}, </Folded>{item.market}</>}
           headline={item.title}
           dek={item.description}
         />
       </button>
+      </Margin>
     </li>
   );
 
@@ -420,49 +424,71 @@ const Work = () => {
         {/* Lead pair: hard news and people */}
         <section className="pb-12 md:pb-16">
           <div className="editorial-container">
-            <ul className="grid gap-10 border-t border-border pt-10 md:grid-cols-2">
-              {pair.map(({ slug, label, story }) => (
+            <SectionHead n={1} className="mb-10" />
+            <Margin note={<Note lines={["WGN-TV", "Chicago", "2026"]} />}>
+            <ul className="grid gap-12 md:grid-cols-2 md:gap-10">
+              {pair.map(({ slug, label, story }) => {
+                const alt = `From Bryant McCray's WGN-TV report: ${story.headline}`;
+                const main = { src: storyImage(story), alt, caption: stillCaption(story), sizes: "(min-width: 768px) 420px, 100vw", eager: true };
+                return (
                 <li key={slug}>
                   <Link to={`/stories/${slug}`} onClick={scrollTop} className="group block">
-                    <div className="overflow-hidden mb-5">
-                      <img
-                        src={storyImage(story)}
-                        srcSet={stillSrcSet(storyImage(story))}
-                        sizes="(min-width: 768px) 420px, 100vw"
-                        width={1920}
-                        height={1080}
-                        decoding="async"
-                        alt={`From Bryant McCray's WGN-TV report: ${story.headline}`}
-                        className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105"
+                    {slug === "nwi-storm-series" ? (
+                      <Overlap
+                        zoom
+                        className="mb-6"
+                        main={main}
+                        inset={{ src: "/stills/bryant-field-nwi.jpg", alt: "Bryant McCray reporting for WGN-TV in Northwest Indiana after the August 2026 storm", caption: "Reporting in the field, Northwest Indiana. WGN-TV, August 2026. WGN-TV broadcast still.", sizes: "200px" }}
+                        insetClass="sm:-mt-[11%] sm:ml-[6%] sm:w-[46%]"
                       />
-                    </div>
+                    ) : (
+                      <figure className="mb-6">
+                        <div className="overflow-hidden">
+                          <img
+                            src={main.src}
+                            srcSet={stillSrcSet(main.src)}
+                            sizes={main.sizes}
+                            width={1920}
+                            height={1080}
+                            decoding="async"
+                            alt={alt}
+                            className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        </div>
+                        <figcaption className="mt-2 text-sm leading-snug text-muted-foreground">{main.caption}</figcaption>
+                      </figure>
+                    )}
                     <p className="text-sm text-muted-foreground mb-2">{label} · WGN-TV · {storyDate(story)}</p>
                     <h2 className="link-plain-target font-serif text-2xl md:text-3xl text-foreground leading-tight mb-2">{story.headline}</h2>
-                    <p className="text-base text-muted-foreground leading-[1.6]">{firstSentence(story.dek)}</p>
+                    <p className="text-base text-muted-foreground leading-[1.6]"><Dateline {...story.dateline} />{firstSentence(story.dek)}</p>
                   </Link>
                 </li>
-              ))}
+                );
+              })}
             </ul>
+            </Margin>
           </div>
         </section>
 
         {/* Remaining WGN stories: numbered list */}
         <section className="pb-16 md:pb-20">
           <div className="editorial-container">
-            <h2 className="font-serif text-2xl md:text-3xl text-foreground mb-4">More WGN stories</h2>
+            <SectionHead n={2} className="mb-4"><h2 className="font-serif text-2xl md:text-3xl text-foreground">More WGN stories</h2></SectionHead>
             <ol className="border-b border-border">
               {rest.map((story, i) => (
                 <li key={story.slug} className="border-t border-border">
+                  <Margin note={<div className="pt-7"><Note lines={["WGN-TV", storyDate(story)]} /></div>}>
                   <Link to={`/stories/${story.slug}`} onClick={scrollTop} className="group block">
                     <ListRow
                       index={i + 1}
                       image={storyImage(story)}
                       alt={`From Bryant McCray's WGN-TV report: ${story.headline}`}
-                      meta={`${STORY_CATEGORY[story.slug] ?? "WGN-TV"} · WGN-TV · ${storyDate(story)}`}
+                      meta={<>{STORY_CATEGORY[story.slug] ?? "WGN-TV"}<Folded> · WGN-TV · {storyDate(story)}</Folded></>}
                       headline={story.headline}
-                      dek={firstSentence(story.dek)}
+                      dek={<><Dateline {...story.dateline} />{firstSentence(story.dek)}</>}
                     />
                   </Link>
+                  </Margin>
                 </li>
               ))}
               {moreWgn.map(workRow)}
@@ -473,24 +499,28 @@ const Work = () => {
         {/* Syndication */}
         <section className="py-12 md:py-16">
           <div className="editorial-container">
-            <h2 className="font-serif text-2xl text-foreground mb-4">Carried nationally</h2>
+            <SectionHead n={3} className="mb-4"><h2 className="font-serif text-2xl text-foreground">Carried nationally</h2></SectionHead>
+            <Margin>
             <p className="text-muted-foreground max-w-xl leading-relaxed mb-8">
               My WGN reporting, as published by NewsNation and Nexstar stations across the Midwest.
             </p>
+            </Margin>
             <ul className="border-b border-border">
               {syndication.map((piece) => (
-                <li key={piece.url}>
+                <li key={piece.url} className="border-t border-border">
+                  <Margin note={<div className="pt-7">{piece.outlet}</div>}>
                   <a
                     href={piece.url}
                     target="_blank"
                     rel="noopener"
-                    className="group block border-t border-border py-6"
+                    className="group block py-6"
                   >
-                    <p className="text-sm text-muted-foreground mb-2">{piece.outlet} · {piece.scope}</p>
+                    <p className="text-sm text-muted-foreground mb-2"><Folded>{piece.outlet} · </Folded>{piece.scope}</p>
                     <h3 className="link-plain-target font-serif text-lg md:text-xl text-foreground leading-snug">
                       {piece.headline}
                     </h3>
                   </a>
+                  </Margin>
                 </li>
               ))}
             </ul>
@@ -500,20 +530,22 @@ const Work = () => {
         {/* Before Chicago */}
         <section className="py-12 md:py-16">
           <div className="editorial-container">
-            <h2 className="font-serif text-2xl text-foreground mb-4">Before Chicago</h2>
+            <SectionHead n={4} className="mb-4"><h2 className="font-serif text-2xl text-foreground">Before Chicago</h2></SectionHead>
             <ul className="border-b border-border">
               {beforeChicago.map((item) => (
                 <li key={item.link} className="border-t border-border">
+                  <Margin note={<div className="pt-5"><Note lines={[item.year, item.station]} /></div>}>
                   <button
                     type="button"
                     onClick={() => setSelectedVideo({ title: item.title, link: item.link })}
                     aria-label={`Watch: ${item.title}`}
                     className="group grid w-full gap-1 py-4 text-left md:grid-cols-12 md:items-baseline md:gap-6"
                   >
-                    <span className="text-sm tabular-nums text-muted-foreground md:col-span-2">{item.year}</span>
-                    <span className="link-plain-target font-serif text-lg text-foreground md:col-span-7">{item.title}</span>
-                    <span className="text-sm text-muted-foreground md:col-span-3 md:text-right">{item.station}, {item.market}</span>
+                    <span className="text-sm tabular-nums text-muted-foreground md:col-span-2 lg:hidden">{item.year}</span>
+                    <span className="link-plain-target font-serif text-lg text-foreground md:col-span-7 lg:col-span-9">{item.title}</span>
+                    <span className="text-sm text-muted-foreground md:col-span-3 md:text-right"><Folded>{item.station}, </Folded>{item.market}</span>
                   </button>
+                  </Margin>
                 </li>
               ))}
             </ul>

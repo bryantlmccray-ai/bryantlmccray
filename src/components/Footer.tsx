@@ -13,6 +13,9 @@ const Footer = () => {
           </Button>
           
           <div className="mt-16 pt-8 border-t border-border w-full">
+            <p className="text-sm text-muted-foreground mb-2">
+              Written and reported by Bryant McCray in Chicago. Last updated November 2026.
+            </p>
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} Bryant McCray. All rights reserved.
             </p>
