@@ -43,8 +43,8 @@ const recognition = [
 ];
 
 const HeroActions = () => <>
-  <Button variant="solid" asChild className="min-h-11 w-full rounded-none md:w-auto"><a href="mailto:bryant.l.mccray@gmail.com">Email me</a></Button>
-  <Button variant="outline" asChild className="min-h-11 w-full rounded-none md:w-auto"><a href="/Bryant_McCray_Resume.pdf" target="_blank" rel="noopener noreferrer">Résumé (PDF)</a></Button>
+  <a href="mailto:bryant.l.mccray@gmail.com" className="font-sans text-base md:text-lg text-foreground underline underline-offset-4 decoration-1 min-h-11 inline-flex items-center hover:decoration-accent">Email me</a>
+  <a href="/Bryant_McCray_Resume.pdf" target="_blank" rel="noopener noreferrer" className="font-sans text-base md:text-lg text-foreground underline underline-offset-4 decoration-1 min-h-11 inline-flex items-center hover:decoration-accent">Résumé (PDF)</a>
 </>;
 
 const Index = () => {
@@ -85,7 +85,7 @@ const Index = () => {
                 onWatchWithSound={() => setSelectedVideo({ title: REEL_TITLE, link: REEL_LINK })}
               />
             </div>
-            <div className="grid grid-cols-2 gap-2 md:hidden">
+            <div className="flex items-center justify-start gap-x-6 md:hidden">
               <HeroActions />
             </div>
           </div>
