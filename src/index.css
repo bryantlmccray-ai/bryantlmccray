@@ -322,3 +322,45 @@ main.bg-background {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.09 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 180px 180px;
 }
+
+/* Newspaper margins share one measure, so notes stay beside their own reporting. */
+.editorial-margin { min-width: 0; }
+.margin-note { display: none; }
+.press-quote { overflow-wrap: break-word; }
+@media (min-width: 1280px) {
+  .newspaper-page .editorial-container,
+  .newspaper-page .wide-container { max-width: 1264px; }
+  .editorial-margin { display: grid; grid-template-columns: 10rem minmax(0, 1fr); column-gap: 2rem; }
+  .margin-note { display: block; padding-right: 1.25rem; padding-top: 0.5rem; border-right: 1px solid hsl(var(--border)); }
+  .hanging-quote { margin-left: -12rem; padding-left: 0; max-width: none; }
+  .hanging-quote p { max-width: 28ch; }
+  .newspaper-page > article .hanging-quote p { max-width: 44ch; }
+  .writing-front, .writing-remaining { display: block; }
+  .writing-front > div, .writing-remaining > div { padding-left: 0; padding-right: 0; border-left: 0; }
+  .writing-item-content::after { content: ""; display: block; clear: both; }
+  .writing-item-content > figure { float: left; width: 46%; margin-right: 2rem; }
+  .writing-item-content > h2 { font-size: 2rem; }
+}
+@media (max-width: 767px) {
+  .margin-note:not(.margin-note-empty) { display: block; margin-bottom: 1rem; padding-top: 0; color: hsl(var(--accent)); text-transform: uppercase; letter-spacing: 0.08em; }
+  .margin-note > div { padding-top: 0; }
+  .margin-note span { display: inline; }
+  .margin-note span + span::before { content: " · "; }
+  .press-quote { position: relative; border-left: 3px solid hsl(var(--accent)); padding-left: 1.25rem; padding-top: 2.25rem; }
+  .press-quote::before { content: "“"; position: absolute; top: -0.25rem; left: 0.75rem; font-family: var(--font-serif); font-size: 4rem; line-height: 1; color: hsl(var(--accent)); }
+  .press-quote > p { font-size: 2rem; line-height: 1.15; }
+  .newspaper-page > section:not(.night-band)::before,
+  .newspaper-page > article > section::before { content: ""; display: block; margin: 0 1.5rem 1.5rem; height: 4px; border-top: 3px solid hsl(var(--foreground)); border-bottom: 1px solid hsl(var(--foreground)); box-sizing: content-box; }
+  .section-head { border-top-width: 3px; }
+  .section-head::before { content: ""; display: block; border-top: 1px solid hsl(var(--foreground)); margin-top: -12px; margin-bottom: 1rem; }
+  .newspaper-page > section:has(.section-head)::before { display: none; }
+  .press-list-row { display: grid; gap: 1rem; }
+  .press-list-row > .press-list-photo { order: -1; width: calc(100% + 3rem); margin-left: -1.5rem; }
+  .press-list-row > .press-list-photo img { aspect-ratio: 16 / 9; }
+  .press-photo > img, .press-photo > picture { display: block; width: calc(100% + 3rem); max-width: none; margin-left: -1.5rem; }
+  .press-photo > picture img { width: 100%; max-width: none; }
+  .press-photo > .photo-frame { width: calc(100% + 3rem); margin-left: -1.5rem; }
+  .newspaper-page p:not(.page-flag):not(.margin-note):not(.text-xs):not(.text-\[11px\]),
+  .newspaper-page li.text-sm { font-size: max(1rem, 1em); }
+  .newspaper-page .press-quote > p { font-size: 2rem; }
+}

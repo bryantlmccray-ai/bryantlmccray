@@ -3,7 +3,7 @@ import Seo from "@/components/Seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
-import { Caption, Dateline } from "@/components/Editorial";
+import { Caption, Dateline, Margin, PageFlag } from "@/components/Editorial";
 import type { WritingSample } from "@/data/writing";
 import { writingFront, writingTopics, writingPhotos, writingOpening, writingLeadQuote } from "@/lib/writingFront";
 import { stillSrcSet } from "@/lib/stills";
@@ -14,9 +14,9 @@ const WritingItem = ({ sample, lead = false, rail = false }: { sample: WritingSa
   const photo = writingPhotos[sample.slug];
   const opening = writingOpening(sample);
   return (
-  <article data-writing-slug={sample.slug} className="min-w-0">
+  <Margin note={`${sample.date} · ${writingTopics[sample.slug]}`}><article data-writing-slug={sample.slug} className="writing-item-content min-w-0">
     {photo && (
-      <figure className="mb-5">
+      <figure className="press-photo mb-5">
         <picture>
           <source media="(min-resolution: 2dppx)" srcSet={photo.src.replace(/\.jpg$/, "-1600.webp")} type="image/webp" />
         <img src={photo.src} srcSet={stillSrcSet(photo.src)} sizes={lead ? "(min-width: 1024px) 800px, calc(100vw - 48px)" : "(min-width: 1024px) 400px, (min-width: 768px) 50vw, calc(100vw - 48px)"} width={1920} height={1080} alt={photo.alt} loading={lead ? "eager" : "lazy"} decoding="async" className="aspect-[3/2] w-full object-cover" />
@@ -44,7 +44,7 @@ const WritingItem = ({ sample, lead = false, rail = false }: { sample: WritingSa
           </p>
         ))}
         {lead && (
-          <blockquote className="my-6 border-y border-border py-5">
+          <blockquote className="press-quote my-6 border-y border-border py-5">
             <p className="text-2xl md:text-[32px] leading-snug">“{writingLeadQuote}”</p>
             <cite className="mt-3 block font-sans text-sm not-italic text-muted-foreground">Pat Ryan Jr.</cite>
           </blockquote>
@@ -52,7 +52,7 @@ const WritingItem = ({ sample, lead = false, rail = false }: { sample: WritingSa
         {sample.pdf && <a href={sample.pdf} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex min-h-11 items-center font-sans text-sm text-muted-foreground underline underline-offset-4">Continue reading (PDF)</a>}
       </div>
     )}
-  </article>
+  </article></Margin>
   );
 };
 
@@ -65,10 +65,11 @@ const Writing = () => {
   return (
     <PageTransition>
       <Seo title="Writing | Bryant McCray, Reporter, Chicago" description="WGN-TV stories by Bryant McCray, rewritten for the page: Chicago politics, transit, schools and neighborhoods." path="/writing" />
-      <main className="min-h-[100svh] bg-background">
+      <main className="min-h-[100svh] bg-background newspaper-page">
         <Navigation />
         <header className="pt-28 pb-10 md:pt-32 md:pb-12">
           <div className="wide-container">
+            <PageFlag>Writing · Print</PageFlag>
             <div className="border-t-[3px] border-foreground pt-1"><div className="border-t border-foreground" /></div>
             <h1 className="font-serif text-[56px] md:text-[80px] leading-none text-foreground py-6">Writing</h1>
             <div className="grid gap-2 border-y border-border py-3 text-sm text-muted-foreground md:grid-cols-3 md:items-center">
@@ -86,13 +87,13 @@ const Writing = () => {
         </header>
         <section className="pb-24 md:pb-32">
           <div className="wide-container">
-            <div className="grid border-t border-border lg:grid-cols-3">
+            <div className="writing-front grid border-t border-border lg:grid-cols-3">
               {lead && <div className="py-8 lg:col-span-2 lg:pr-10"><WritingItem sample={lead} lead /></div>}
               <div className="divide-y divide-border lg:border-l lg:border-border lg:pl-7">
                 {rail.map((sample) => <div key={sample.slug} className="border-t border-border py-8 lg:border-t-0"><WritingItem sample={sample} rail /></div>)}
               </div>
             </div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3">
+            <div className="writing-remaining grid md:grid-cols-2 lg:grid-cols-3">
               {remaining.map((sample) => (
                 <div key={sample.slug} className="min-w-0 border-t border-border py-8 md:px-6 md:[&:nth-child(2n)]:border-l lg:[&:nth-child(2n)]:border-l-0 lg:[&:nth-child(3n+2)]:border-l lg:[&:nth-child(3n)]:border-l">
                   <WritingItem sample={sample} />

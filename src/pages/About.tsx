@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { SectionHead, PublicationNameplate, Byline } from "@/components/Editorial";
+import { SectionHead, PublicationNameplate, Byline, Margin, PageFlag } from "@/components/Editorial";
 import { testimonials } from "@/data/testimonials";
 import aaccwiMark from "@/assets/aaccwi-mark.png";
 import loyolaAcademyLogo from "@/assets/loyola-academy-logo.png";
@@ -39,11 +39,12 @@ const About = () => {
   return (
     <PageTransition>
       <Seo title="About Bryant McCray | TV Reporter, Chicago" description="Bryant McCray grew up on Chicago's West Side and now reports for WGN-TV. Four-time Regional Emmy® nominee." path="/about" />
-      <main className="min-h-[100svh] bg-background">
+      <main className="min-h-[100svh] bg-background newspaper-page">
         <Navigation />
         
         <header className="pt-28 pb-10 md:pt-32 md:pb-12">
           <div className="wide-container">
+            <PageFlag>About · Profile</PageFlag>
             <PublicationNameplate title="About" center="Reporter, WGN-TV" />
           </div>
         </header>
@@ -53,9 +54,9 @@ const About = () => {
             <h2 className="font-serif text-[32px] md:text-[44px] lg:text-[48px] leading-[1.08] text-foreground mb-6">
               I grew up on the West Side. Now I report on the whole city.
             </h2>
-            <div className="grid gap-y-10 lg:grid-cols-5">
+            <Margin note="WGN-TV · Chicago · November 2026"><div className="grid gap-y-10 lg:grid-cols-5">
               <article className="min-w-0 lg:col-span-3 lg:pr-10">
-                <figure className="mb-8">
+                <figure className="press-photo mb-8">
                   <picture>
                     <source type="image/webp" srcSet="/stills/bryant-rain-portrait-800.webp 800w, /stills/bryant-rain-portrait-1200.webp 1200w" sizes="(min-width: 1024px) 760px, 100vw" />
                     <img src="/stills/bryant-rain-portrait.jpg" alt="Bryant McCray in a WGN hat and rain jacket, holding a WGN microphone." width={1206} height={1608} loading="eager" fetchPriority="high" decoding="async" className="block w-full aspect-[4/5] object-cover object-top" />
@@ -71,7 +72,7 @@ const About = () => {
                   <p>
                     TV news started for me at St. Norbert College, on a student show called Knight Talk. From there it was Green Bay, then Milwaukee, then Cleveland. Now I'm home, at WGN.
                   </p>
-                  <blockquote className="border-y border-border py-5">
+                  <blockquote className="press-quote hanging-quote border-y border-border py-5">
                     <p className="text-2xl md:text-[32px] leading-snug">Chicago taught me early that people don't want to be impressed. They want to be understood.</p>
                     <cite className="mt-3 block font-sans text-sm not-italic text-muted-foreground">Bryant McCray</cite>
                   </blockquote>
@@ -107,7 +108,7 @@ const About = () => {
                 <a href="mailto:bryant.l.mccray@gmail.com" className="mt-4 inline-flex min-h-11 items-center text-base text-foreground underline underline-offset-[3px]">Get in Touch</a>
               </aside>
             </div>
-          </div>
+          </Margin></div>
         </section>
 
         {testimonials.length > 0 && (

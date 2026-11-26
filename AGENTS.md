@@ -19,3 +19,5 @@
 - Paper grain is a background-image on main.bg-background in index.css, so it sits under text and dark bands cover it.
 - Story-specific credits and related reporting live in story data and render through StoryPage, so station attribution and supporting links do not leak between stories.
 - ReportingQuote shares the published-voice treatment across Home, Work and Writing, keeping scene-photo captions separate from speaker attribution; Home's alternating beat rows use complete story-data deks rather than sentence truncation.
+
+- Editorial Margin owns the shared 160px ruled desktop note column at 1280px and copper phone datelines; PageFlag and Folio share publication furniture, and explicit press-photo/press-quote classes keep full-bleed photos and hanging quotes out of unrelated tools and media controls.

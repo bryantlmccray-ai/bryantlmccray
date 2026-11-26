@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Add site-wide margin notes, section flags, hanging quotes, phone photo treatments and folios using existing facts.
+- [x] Verify every requested page and story at 390 WebKit and 1440, including reel behavior; save without publishing.
+
 - [x] Rebuild Home in five acts using Bryant's thesis, published quotes, full story deks, portrait and existing proof.
 - [x] Add the human openers to Work and Writing without changing their remaining content.
 - [x] Verify all three pages at 390 WebKit and 1440, PDF quotes, links, images and muted reel; save without publishing. Existing YouTube iframe warning remains in WebKit; desktop checks have no page errors.

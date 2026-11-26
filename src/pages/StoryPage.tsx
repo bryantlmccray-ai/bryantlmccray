@@ -10,8 +10,8 @@ import { stillSrcSet } from "@/lib/stills";
 
 import NotFound from "@/pages/NotFound";
 import { stories } from "@/data/stories";
-import { Caption, Dateline } from "@/components/Editorial";
-import { stillCaption } from "@/lib/storyMeta";
+import { Caption, Dateline, Margin, PageFlag } from "@/components/Editorial";
+import { stillCaption, storyDate, storyStation } from "@/lib/storyMeta";
 
 const StoryPage = () => {
   const { slug } = useParams();
@@ -22,6 +22,10 @@ const StoryPage = () => {
   }, [slug]);
 
   if (!story) return <NotFound />;
+
+  const firstSentence = story.dek.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() ?? story.dek;
+  const remainder = story.dek.slice(firstSentence.length).trim();
+  const note = `${story.dateline.city}${story.dateline.state ? `, ${story.dateline.state}` : ""} · ${storyDate(story)} · ${storyStation(story)} · ${story.chapters.length || 1} ${story.chapters.length > 1 ? "segments" : "segment"}`;
 
   return (
     <PageTransition>
@@ -45,24 +49,29 @@ const StoryPage = () => {
           </script>
         )}
       </Helmet>
-      <main className="min-h-[100svh] bg-background">
+      <main className="min-h-[100svh] bg-background newspaper-page">
         <Navigation />
         <article>
           <div className="pt-32 pb-10 md:pt-40 md:pb-12">
             <header className="editorial-container">
+              <PageFlag>Story · {storyStation(story)}</PageFlag>
+              <Margin note={note}>
               <p className="text-xs text-accent uppercase tracking-widest leading-relaxed mb-5">
                 {story.kicker}
               </p>
               <h1 className="font-serif text-foreground mb-6 text-balance" style={{ fontSize: "clamp(1.875rem, 6.5vw, 3rem)", lineHeight: 1.12, overflowWrap: "normal", hyphens: "manual" }}>
                 {story.headline}
               </h1>
+              <blockquote className="press-quote hanging-quote border-y border-border py-5 my-8">
+                <p className="font-serif text-[32px] md:text-[40px] leading-snug text-foreground">{firstSentence}</p>
+              </blockquote>
               <p className="text-muted-foreground text-base leading-[1.6] max-w-[65ch]">
-                <Dateline {...story.dateline} />
-                {story.dek}
+                <Dateline {...story.dateline} />{remainder}
               </p>
+              </Margin>
             </header>
             {story.still && (
-              <figure className="editorial-container mt-10">
+              <div className="editorial-container mt-10"><Margin><figure className="press-photo">
                 <img
                   src={story.still}
                   srcSet={stillSrcSet(story.still)}
@@ -74,11 +83,11 @@ const StoryPage = () => {
                   className="w-full aspect-[3/2] md:aspect-[16/9] object-cover"
                 />
                 <Caption>{stillCaption(story)}</Caption>
-              </figure>
+              </figure></Margin></div>
             )}
           </div>
           <section className="py-12 md:py-16">
-            <div className="editorial-container">
+            <div className="editorial-container"><Margin>
               <FeaturedVideo
                 key={story.slug}
                 youtubeId={story.youtubeId}
@@ -132,7 +141,7 @@ const StoryPage = () => {
               <Link to="/work" onClick={() => window.scrollTo({ top: 0, behavior: "instant" })} className="link-plain inline-flex min-h-11 items-center text-sm text-foreground mt-12">
                 All work
               </Link>
-            </div>
+            </Margin></div>
           </section>
         </article>
         <Footer />

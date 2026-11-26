@@ -4,8 +4,8 @@ import NightBand from "@/components/NightBand";
 import FeaturedVideo from "@/components/FeaturedVideo";
 import ReportingQuote from "@/components/ReportingQuote";
 import Seo from "@/components/Seo";
-import { Caption, Dateline, PublicationNameplate, DoubleRule, Byline } from "@/components/Editorial";
-import { stillCaption } from "@/lib/storyMeta";
+import { Caption, Dateline, PublicationNameplate, DoubleRule, Byline, Margin, PageFlag, Folio } from "@/components/Editorial";
+import { stillCaption, storyDate, storyStation } from "@/lib/storyMeta";
 import { stillSrcSet, REEL_ID, REEL_TITLE, REEL_LINK } from "@/lib/stills";
 import { stories } from "@/data/stories";
 import { writingSamples } from "@/data/writing";
@@ -54,7 +54,7 @@ const Index = () => {
   return (
     <PageTransition>
       <Seo title="Bryant McCray | TV News Reporter, WGN-TV Chicago" description="Bryant McCray, TV news reporter at WGN-TV Chicago and four-time Regional Emmy® nominee. Watch the 2026 reporter reel." path="/" />
-      <main className="min-h-[100svh] bg-background overflow-x-clip">
+      <main className="min-h-[100svh] bg-background overflow-x-clip newspaper-page">
         <Navigation />
         {/* Reel first: the application reel is the first screen */}
         <NightBand
@@ -63,6 +63,7 @@ const Index = () => {
         >
           <div className="wide-container relative z-10 grid w-full gap-8 md:grid-cols-12 md:items-center md:gap-12">
             <div className="md:col-span-5">
+              <PageFlag>Home · The beat</PageFlag>
               <p className="text-[11px] uppercase tracking-[0.2em] text-accent mb-4">TV News Reporter · WGN-TV Chicago</p>
               <h1 id="home-title" className="font-serif text-[36px] md:text-[44px] lg:text-[52px] leading-[1.06] text-foreground mb-5" >
                 People don't want to be impressed. They want to be understood.
@@ -90,28 +91,32 @@ const Index = () => {
           </div>
         </NightBand>
 
-        <div className="editorial-container pt-12 md:pt-16">
+        <div className="wide-container pt-12 md:pt-16">
           <PublicationNameplate center="Bryant McCray, WGN-TV" />
         </div>
 
         <section className="py-12 md:py-16" aria-labelledby="voices-title">
-          <div className="editorial-container">
+          <div className="wide-container">
             <h2 id="voices-title" className="mb-8 font-serif text-3xl md:text-4xl text-foreground">In their words.</h2>
             <div className="space-y-8 md:space-y-12">
-              {voices.map((voice, index) => <ReportingQuote key={voice.slug} {...voice} href={writingSamples.find(sample => sample.slug === voice.slug)?.pdf} photo={writingPhotos[voice.slug]} photoRight={index === 1} extraLarge={index > 1} />)}
+              {voices.map((voice, index) => {
+                const sample = writingSamples.find(sample => sample.slug === voice.slug);
+                const opening = sample?.body[0]?.split(" | ")[0];
+                return <Margin key={voice.slug} note={[opening, sample?.date, "WGN-TV"].filter(Boolean).join(" · ")}><ReportingQuote {...voice} href={sample?.pdf} photo={writingPhotos[voice.slug]} photoRight={index === 1} extraLarge={index > 1} /></Margin>;
+              })}
             </div>
           </div>
         </section>
 
         <section className="py-12 md:py-16" aria-labelledby="beat-title">
-          <div className="editorial-container">
+          <div className="wide-container">
             <div className="mb-6 flex items-baseline justify-between gap-6">
               <h2 id="beat-title" className="font-serif text-3xl md:text-4xl text-foreground">The beat.</h2>
               <Link to="/work" className="inline-flex min-h-11 items-center text-sm text-foreground underline underline-offset-[3px]">All work</Link>
             </div>
             <div className="border-b border-border">
-              {beat.map(({ slug, category, story }, index) => <article key={slug} data-home-story={slug} className="grid min-w-0 gap-7 border-t border-border py-8 md:grid-cols-2 md:items-center md:gap-10 md:py-12">
-                <figure className={`min-w-0 ${index % 2 ? "md:order-2" : ""}`}>
+              {beat.map(({ slug, category, story }, index) => <Margin key={slug} note={`${story.dateline.city}${story.dateline.state ? `, ${story.dateline.state}` : ""} · ${storyDate(story)} · ${storyStation(story)}`}><article data-home-story={slug} className="grid min-w-0 gap-7 border-t border-border py-8 md:grid-cols-2 md:items-center md:gap-10 md:py-12">
+                <figure className={`press-photo min-w-0 ${index % 2 ? "md:order-2" : ""}`}>
                   <img src={story.still} srcSet={stillSrcSet(story.still)} sizes="(min-width: 768px) 560px, calc(100vw - 48px)" width={1920} height={1080} alt={`From Bryant McCray's WGN-TV report: ${story.headline}`} loading="lazy" decoding="async" className="block aspect-video w-full object-cover" />
                   <Caption>{stillCaption(story)}</Caption>
                 </figure>
@@ -120,14 +125,14 @@ const Index = () => {
                   <h3 className="mb-5 font-serif text-[32px] md:text-[40px] leading-[1.1] text-foreground"><Link to={`/stories/${slug}`} className="link-plain inline-block min-h-11">{story.headline}</Link></h3>
                   <p className="font-serif text-xl leading-relaxed text-foreground/80"><Dateline {...story.dateline} />{story.dek}</p>
                 </div>
-              </article>)}
+              </article></Margin>)}
             </div>
           </div>
         </section>
 
         <section className="py-12 md:py-16">
-          <div className="editorial-container grid gap-8 border-t border-border pt-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:items-center md:gap-12 md:pt-12">
-            <figure className="min-w-0 md:max-w-sm">
+          <div className="wide-container grid gap-8 border-t border-border pt-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:items-center md:gap-12 md:pt-12">
+            <figure className="press-photo min-w-0 md:max-w-sm">
               <picture>
                 <source type="image/webp" srcSet="/stills/bryant-rain-portrait-800.webp 800w, /stills/bryant-rain-portrait-1200.webp 1200w" sizes="(min-width: 768px) 384px, calc(100vw - 48px)" />
                 <img src="/stills/bryant-rain-portrait.jpg" width={1206} height={1608} alt="Bryant McCray in a WGN hat and rain jacket, holding a WGN microphone." loading="lazy" decoding="async" className="block w-full aspect-[4/5] object-cover object-top" />
@@ -144,7 +149,7 @@ const Index = () => {
 
         {/* Recognition */}
         <section className="py-16 md:py-20">
-          <div className="editorial-container">
+          <div className="wide-container">
             <DoubleRule />
             <FadeIn className="pt-6">
               <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-6">Four Regional Emmy® nominations.</h2>
@@ -180,7 +185,7 @@ const Index = () => {
         </section>
 
         <section className="py-16 md:py-20 border-t border-border">
-          <div className="editorial-container">
+          <div className="wide-container">
             <div className="flex flex-wrap items-baseline justify-between gap-4 mb-6">
               <h2 className="font-serif text-2xl md:text-3xl text-foreground">From the Writing desk</h2>
               <Link to="/writing" className="inline-flex min-h-11 items-center text-sm text-foreground underline underline-offset-[3px]">All writing</Link>
@@ -189,7 +194,7 @@ const Index = () => {
               {writingDesk.map((sample) => {
                 const photo = writingPhotos[sample.slug];
                 return <article key={sample.slug} data-writing-desk={sample.slug} className="min-w-0 border-t border-border py-8 md:px-6 md:[&:not(:first-child)]:border-l">
-                  {photo && <figure className="mb-5">
+                  {photo && <figure className="press-photo mb-5">
                     <img src={photo.src} srcSet={stillSrcSet(photo.src)} sizes="(min-width: 768px) 360px, 100vw" width={1920} height={1080} loading="lazy" decoding="async" alt={photo.alt} className="w-full aspect-[3/2] object-cover" />
                     <Caption>{photo.caption}</Caption>
                   </figure>}
@@ -205,7 +210,7 @@ const Index = () => {
         </section>
         {/* Quiet CTA */}
         <FadeIn className="py-20">
-          <div className="editorial-container">
+          <div className="wide-container">
             <p className="text-foreground/80 mb-5">
               Got a story, or a role I should know about? Email me.
             </p>
@@ -215,6 +220,7 @@ const Index = () => {
           </div>
         </FadeIn>
 
+        <Folio page="Home" />
         <Suspense fallback={null}>
           <ContactSection />
         </Suspense>
@@ -224,14 +230,16 @@ const Index = () => {
           <DialogContent className="max-w-4xl w-[90vw] p-0 bg-background border-border overflow-hidden">
             <DialogTitle className="sr-only">{selectedVideo?.title}</DialogTitle>
             <div className="relative">
-              <button
+              <Button
                 type="button"
+                variant="ghost"
+                size="icon"
                 aria-label="Close video"
                 onClick={() => setSelectedVideo(null)}
-                className="absolute -top-12 right-0 z-50 p-2.5 text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute top-2 right-2 z-50 h-11 w-11 bg-background text-muted-foreground hover:text-foreground"
               >
                 <X className="h-6 w-6" />
-              </button>
+              </Button>
               {videoId && (
                 <div className="aspect-video w-full">
                   <iframe

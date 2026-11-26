@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button";
+import { useLocation } from "react-router-dom";
+import { Folio } from "@/components/Editorial";
 
 const Footer = () => {
+  const { pathname } = useLocation();
+  const page = pathname.startsWith("/stories/") ? "Story" : pathname.startsWith("/writing/") ? "Writing" : ({ "/work": "Work", "/writing": "Writing", "/about": "About", "/career": "Career" }[pathname] ?? "Home");
   return (
+    <>
+    <Folio page={page} />
     <footer className="pt-20 pb-[calc(5rem+env(safe-area-inset-bottom))] border-t border-border">
       <div className="editorial-container">
         <div className="flex flex-col items-start">
@@ -23,6 +29,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+    </>
   );
 };
 

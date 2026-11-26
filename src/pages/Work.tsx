@@ -10,7 +10,7 @@ import { Helmet } from "react-helmet-async";
 import Seo from "@/components/Seo";
 import { stories, type Story } from "@/data/stories";
 import { syndication } from "@/data/syndication";
-import { Dateline, Margin, Overlap, SectionHead } from "@/components/Editorial";
+import { Dateline, Margin, Overlap, SectionHead, PageFlag } from "@/components/Editorial";
 import ReportingQuote from "@/components/ReportingQuote";
 import { writingPhotos } from "@/lib/writingFront";
 import { stillCaption, storyDate } from "@/lib/storyMeta";
@@ -256,22 +256,22 @@ const storyImage = (story: Story) => story.still ?? `https://i.ytimg.com/vi/${st
 type RowProps = { index?: number; image: string; alt: string; meta: ReactNode; headline: string; dek: ReactNode };
 
 const ListRow = ({ index, image, alt, meta, headline, dek }: RowProps) => (
-  <div className="flex gap-5 py-6 md:gap-8">
+  <div className="press-list-row flex gap-5 py-6 md:gap-8">
     {index !== undefined && <span className="section-number w-6 shrink-0">{String(index).padStart(2, "0")}</span>}
     <div className="min-w-0 flex-1">
       <p className="text-sm text-muted-foreground mb-1">{meta}</p>
       <h3 className="link-plain-target font-serif text-xl md:text-2xl text-foreground leading-snug mb-1">{headline}</h3>
       <p className="text-sm text-muted-foreground leading-relaxed max-w-[60ch]">{dek}</p>
     </div>
-    <div className="w-24 shrink-0 overflow-hidden md:w-40">
-      <img src={image} srcSet={stillSrcSet(image)} sizes="160px" width={1920} height={1080} alt={alt} loading="lazy" decoding="async" className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105" />
+    <div className="press-list-photo w-24 shrink-0 overflow-hidden md:w-40">
+      <img src={image} srcSet={stillSrcSet(image)} sizes="(min-width: 768px) 160px, 100vw" width={1920} height={1080} alt={alt} loading="lazy" decoding="async" className="w-full aspect-[3/2] object-cover transition-transform duration-500 group-hover:scale-105" />
     </div>
   </div>
 );
 
 // Margin note text: shown in the left column from 1024px, folded into the meta line below that.
 const Note = ({ lines }: { lines: string[] }) => <>{lines.map((l) => <span key={l} className="block">{l}</span>)}</>;
-const Folded = ({ children }: { children: ReactNode }) => <span className="lg:hidden">{children}</span>;
+const Folded = ({ children }: { children: ReactNode }) => <span className="xl:hidden">{children}</span>;
 
 const scrollTop = () => window.scrollTo({ top: 0, behavior: "instant" });
 
@@ -410,11 +410,12 @@ const Work = () => {
           }).replace(/</g, "\\u003c")}
         </script>
       </Helmet>
-      <main className="min-h-[100svh] overflow-x-hidden bg-background">
+      <main className="min-h-[100svh] overflow-x-hidden bg-background newspaper-page">
         <Navigation />
         
         <header className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">
+            <PageFlag>Work · Selected reporting</PageFlag>
             <div className="mb-12 md:mb-16">
               <ReportingQuote quote="Oh, this is horrible. We haven't been hit like this." attribution="Early Walker, Markham, July 2026. From my WGN-TV report." photo={writingPhotos["markham-storm-relief"]} photoRight photoAfterOnMobile />
             </div>
@@ -446,8 +447,8 @@ const Work = () => {
                         insetClass="sm:-mt-[11%] sm:ml-[6%] sm:w-[46%]"
                       />
                     ) : (
-                      <figure className="mb-6">
-                        <div className="overflow-hidden">
+                      <figure className="press-photo mb-6">
+                        <div className="photo-frame overflow-hidden">
                           <img
                             src={main.src}
                             srcSet={stillSrcSet(main.src)}

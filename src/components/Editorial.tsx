@@ -71,7 +71,7 @@ export const Overlap = ({ main, inset, insetClass, side = "left", className = ""
   main: Shot; inset: Shot; insetClass: string; side?: "left" | "right"; className?: string; zoom?: boolean;
 }) => (
   <div className={className}>
-    <div className="overflow-hidden">
+    <div className="press-photo">
       <Photo img={main} imgClass={zoom ? "transition-transform duration-500 group-hover:scale-105" : ""} />
     </div>
     <figure className={`relative z-10 mt-6 w-3/4 ${side === "right" ? "sm:ml-auto" : "sm:mr-auto"} ${insetClass}`}>
@@ -83,17 +83,30 @@ export const Overlap = ({ main, inset, insetClass, side = "left", className = ""
   </div>
 );
 
-/** Two-column margin layout from 1024px: a narrow note column beside the copy. */
+export const PageFlag = ({ children }: { children: ReactNode }) => (
+  <p className="page-flag mb-5 text-xs uppercase tracking-widest text-muted-foreground">{children}</p>
+);
+
+export const Folio = ({ page }: { page: string }) => (
+  <div className="wide-container folio" aria-label={`${page} folio`}>
+    <div className="grid grid-cols-2 gap-2 border-t border-border py-5 text-xs text-muted-foreground md:grid-cols-3">
+      <span>bryantmccray.com</span><span className="text-right md:text-center">{page}</span>
+      <span className="col-span-2 md:col-span-1 md:text-right">Chicago · November 2026</span>
+    </div>
+  </div>
+);
+
+/** A ruled desktop margin, folded into a copper dateline on phones. */
 export const Margin = ({ note, children, className = "" }: { note?: ReactNode; children: ReactNode; className?: string }) => (
-  <div className={`lg:grid lg:grid-cols-[7rem_minmax(0,1fr)] lg:gap-x-10 ${className}`}>
-    <div className="hidden lg:block text-xs leading-relaxed text-muted-foreground">{note}</div>
-    <div className="min-w-0">{children}</div>
+  <div className={`editorial-margin ${className}`}>
+    <div className={`margin-note text-xs leading-relaxed text-muted-foreground ${note ? "" : "margin-note-empty"}`}>{note}</div>
+    <div className="margin-content min-w-0">{children}</div>
   </div>
 );
 
 /** Section opener used on Work, About and Career: one hairline, an old-style number, the heading. */
 export const SectionHead = ({ n, children, className = "" }: { n: number; children?: ReactNode; className?: string }) => (
-  <div className={`border-t border-foreground/25 pt-4 mb-8 lg:grid lg:grid-cols-[7rem_minmax(0,1fr)] lg:gap-x-10 ${className}`}>
+  <div className={`section-head border-t border-foreground/25 pt-4 mb-8 xl:grid xl:grid-cols-[10rem_minmax(0,1fr)] xl:gap-x-8 ${className}`}>
     <span className="section-number block mb-2 lg:mb-0">{String(n).padStart(2, "0")}</span>
     <div className="min-w-0">{children}</div>
   </div>

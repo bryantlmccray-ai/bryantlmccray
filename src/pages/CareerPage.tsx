@@ -10,7 +10,7 @@ import galleryRambleWalk from "@/assets/gallery-ramble-walk.jpg";
 import galleryRambleInterview from "@/assets/gallery-ramble-interview.jpg";
 import galleryWgnEnglewood from "@/assets/gallery-wgn-englewood.jpg";
 import galleryWgnLakefront from "@/assets/gallery-wgn-lakefront.jpg";
-import { Margin, SectionHead } from "@/components/Editorial";
+import { Margin, SectionHead, PageFlag } from "@/components/Editorial";
 import Seo from "@/components/Seo";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -118,12 +118,13 @@ const CareerPage = () => {
   return (
     <PageTransition>
       <Seo title="Career | Bryant McCray, TV Reporter" description="Bryant McCray's career in TV news: WGN-TV Chicago, WKYC Cleveland, CBS 58 Milwaukee and WFRV Green Bay." path="/career" />
-      <main className="min-h-[100svh] bg-background">
+      <main className="min-h-[100svh] bg-background newspaper-page">
         <Navigation />
 
         {/* Hero */}
         <header className="pt-32 pb-12 md:pt-40 md:pb-16">
           <div className="editorial-container">
+            <PageFlag>Career · Record</PageFlag>
             <FadeIn delay={0.1}>
               <h1 className="font-serif text-headline text-foreground mb-6">
                 Where I've Been
