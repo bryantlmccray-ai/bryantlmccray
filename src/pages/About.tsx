@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Overlap, SectionHead, PublicationNameplate, Byline } from "@/components/Editorial";
+import { SectionHead, PublicationNameplate, Byline } from "@/components/Editorial";
 import { testimonials } from "@/data/testimonials";
 import aaccwiMark from "@/assets/aaccwi-mark.png";
 import loyolaAcademyLogo from "@/assets/loyola-academy-logo.png";
@@ -53,14 +53,15 @@ const About = () => {
             <h2 className="font-serif text-[32px] md:text-[44px] lg:text-[48px] leading-[1.08] text-foreground mb-6">
               I grew up on the West Side. Now I report on the whole city.
             </h2>
-            <Overlap
-              main={{ src: "/stills/bryant-rain-live.jpg", alt: "Bryant McCray reporting live in the rain in a WGN hat and rain jacket, holding a WGN microphone.", caption: "Reporting live in the rain during storm coverage. WGN-TV, July 2026. WGN-TV broadcast still.", width: 1920, height: 1080, className: "!aspect-video object-center", eager: true, sizes: "(min-width: 1024px) 1328px, 100vw" }}
-              inset={{ src: "/stills/bryant-field-westside.jpg", alt: "Bryant McCray reporting live for WGN-TV on Chicago's West Side", caption: "Reporting live on the West Side. WGN-TV.", sizes: "(min-width: 1024px) 320px, 75vw" }}
-              side="right"
-              insetClass="sm:-mt-[13%] sm:mr-[3%] sm:w-[24%]"
-            />
-            <div className="grid gap-y-10 lg:grid-cols-3">
-              <article className="min-w-0 lg:col-span-2 lg:pr-10">
+            <div className="grid gap-y-10 lg:grid-cols-5">
+              <article className="min-w-0 lg:col-span-3 lg:pr-10">
+                <figure className="mb-8">
+                  <picture>
+                    <source type="image/webp" srcSet="/stills/bryant-rain-portrait-800.webp 800w, /stills/bryant-rain-portrait-1200.webp 1200w" sizes="(min-width: 1024px) 760px, 100vw" />
+                    <img src="/stills/bryant-rain-portrait.jpg" alt="Bryant McCray in a WGN hat and rain jacket, holding a WGN microphone." width={1206} height={1608} loading="eager" fetchPriority="high" decoding="async" className="block w-full aspect-[4/5] object-cover object-top" />
+                  </picture>
+                  <figcaption className="mt-2 text-sm text-muted-foreground">Reporting during storm coverage for WGN-TV, July 2026.</figcaption>
+                </figure>
                 <Byline date="November 2026" />
                 <p className="mt-1 text-sm text-muted-foreground">WGN-TV · Chicago · Since 2026</p>
                 <div className="mt-6 space-y-6 font-serif text-xl text-foreground/80 leading-relaxed max-w-[65ch]">
@@ -82,7 +83,7 @@ const About = () => {
                   </p>
                 </div>
               </article>
-              <aside className="min-w-0 border-t border-border pt-8 lg:border-t-0 lg:border-l lg:pl-7 lg:pt-0">
+              <aside className="min-w-0 border-t border-border pt-8 lg:col-span-2 lg:border-t-0 lg:border-l lg:pl-7 lg:pt-0">
                 <h2 className="font-serif text-3xl text-foreground mb-3">Honors</h2>
                 <p className="font-serif text-xl text-foreground mb-5">Four Regional Emmy® nominations.</p>
                 <ul className="border-b border-border">
