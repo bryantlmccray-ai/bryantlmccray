@@ -194,6 +194,8 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+  overflow: hidden;
+  contain: paint;
 }
 .night-trail > * {
   position: absolute;
@@ -205,6 +207,7 @@
 .night-trail[data-gpu-unavailable="true"] {
   background: linear-gradient(to top right, var(--night-corner), var(--night-background));
 }
+.night-trail[data-gpu-unavailable="true"] > * { visibility: hidden; }
 .night-band {
   background: var(--night-background);
   color: var(--night-foreground);

@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Swap the homepage inset and featured reel poster to the supplied skyline still with responsive WebP renditions.
+- [x] Investigate the desktop rectangle and verify photo crops at 390, 1190 at 2x, and 1440 without publishing; rectangle not reproduced, shader paint containment and unavailable fallback verified.
+
 - [x] Apply the exact Home, Work, Writing, story and Career copy changes; preserve design and flagged WKYC entries.
 - [x] Check seven pages at 390 and 1440, report flagged source data, and save without publishing.
 

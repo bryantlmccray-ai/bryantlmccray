@@ -335,8 +335,8 @@ const Index = () => {
             <div className="md:col-span-7">
               <FeaturedVideo
                 youtubeId={REEL_ID}
-                poster={REEL_POSTER}
-                alt={REEL_ALT}
+                poster="/stills/bryant-skyline-lakefront.jpg"
+                alt="Bryant McCray reporting live on the Chicago lakefront with the skyline behind him."
                 title={REEL_TITLE}
                 loop
                 onWatchWithSound={() => setSelectedVideo({ title: REEL_TITLE, link: REEL_LINK })}
@@ -517,7 +517,7 @@ const Index = () => {
             <Overlap
               className="lg:col-span-6 lg:mt-6"
               main={{ src: "/stills/election-night-2026.jpg", alt: "Voters at the booths on Election Day 2026 in Chicago", caption: stillCaption(stories.find((s) => s.slug === "election-night-2026")!), sizes: "(min-width: 1024px) 420px, 100vw" }}
-              inset={{ src: "/stills/bryant-field-nwi.jpg", alt: "Bryant McCray reporting for WGN-TV in Northwest Indiana after the August 2026 storm", caption: "Reporting in the field, Northwest Indiana. WGN-TV, August 2026. WGN-TV broadcast still.", sizes: "200px" }}
+              inset={{ src: "/stills/bryant-skyline-lakefront.jpg", alt: "Bryant McCray reporting live on the Chicago lakefront with the skyline behind him.", caption: "Live on the lakefront, Election Night 2026. WGN-TV broadcast still.", sizes: "(min-width: 640px) 200px, 75vw", className: "object-top" }}
               insetClass="sm:-mt-[13%] sm:ml-[3%] sm:w-[44%]"
             />
           </div>
